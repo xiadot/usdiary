@@ -20,6 +20,13 @@ class Point extends Sequelize.Model {
           type: Sequelize.STRING(255),
           allowNull: false,
         },
+        user_id: {
+          type: Sequelize.BIGINT,
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true
+
+        }
       },
       {
         sequelize,
@@ -35,7 +42,7 @@ class Point extends Sequelize.Model {
   }
   
 
-  // User와 Point 간의 1:1 관계 설정
+  // User와 Point 간의 1:n 관계 설정
     static associate(db) { // DB 관계설정
       db.Point.belongsTo(db.User, {
         foreignKey: "user_id",

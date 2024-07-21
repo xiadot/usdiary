@@ -14,6 +14,13 @@ class QnA extends Sequelize.Model {
           type: Sequelize.BOOLEAN,
           allowNull: false
         },
+        user_id: {
+          type: Sequelize.BIGINT,
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true
+
+        }
       },
       {
         sequelize,

@@ -13,6 +13,13 @@ class Answer extends Sequelize.Model {
         ans_content: {
           type: Sequelize.STRING(255),
           allowNull: false
+        },
+        user_id: {
+          type: Sequelize.BIGINT,
+          allowNull: false,
+          primaryKey: true,
+          autoIncrement: true
+
         }
       },
       {
@@ -30,7 +37,7 @@ class Answer extends Sequelize.Model {
   
 // Answer과 Question 간의 1:1 관계 설정
     static associate(db) { // DB 관계설정
-      db.QnA.belongsTo(db.QnA, {
+      db.Answer.belongsTo(db.QnA, {
         foreignKey: "qna_id",
         sourceKey: "qna_id",
         onDelete: "CASCADE",
@@ -39,7 +46,7 @@ class Answer extends Sequelize.Model {
 
 // Answer과 Admin 간의 1:1 관계 설정
 static associate(db) { // DB 관계설정
-    db.QnA.belongsTo(db.Admin, {
+    db.Answer.belongsTo(db.Admin, {
       foreignKey: "admin_id",
       sourceKey: "admin_id",
       onDelete: "CASCADE",
