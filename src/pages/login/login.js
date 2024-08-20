@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../../assets/css/login.css'; // CSS 파일 임포트
+import Logo_US from '../assets/images/Logo_US.png';
+import Logo_EARTH from '../assets/images/Logo_EARTH.png';
+import alarm_white from '../assets/images/alarm_white.png';
+import alarm_black from '../assets/images/alarm_black.png';
 
 Modal.setAppElement('#main'); // 모달 접근성을 위한 설정
 
@@ -58,6 +62,27 @@ const Login = () => {
     }
 
     return (
+        <><div className='wrap'>
+            {/* 메뉴 */}
+            <div className="menu">
+                {/* 로고 */}
+                <div className="logo">
+                    <img src={Logo_US} className="logo_us" alt="Logo US" />
+                    <img src={Logo_EARTH} className="logo_earth" alt="Logo Earth" />
+                </div>
+                {/* 버튼 */}
+                <div className="button">
+                    <div className="btn" id="home">HOME</div>
+                    <div className="btn" id="diary">DIARY</div>
+                    <div className="btn" id="map">MAP</div>
+                    <div className="btn" id="profile">PROFILE</div>
+                    <div className="btn" id="alarm">
+                        <img src={alarm_white} className="alarm_white" alt="Alarm White" />
+                        <img src={alarm_black} className="alarm_black" alt="Alarm Black" />
+                    </div>
+                </div>
+            </div>
+        </div>
         <div className="login-page__container">
             <div className="login-page__left">
                 <div
@@ -89,7 +114,7 @@ const Login = () => {
             </div>
             <div className="login-page__right">
                 <div className="login-page__form">
-                    <form className="login-page__form-container"onSubmit={handleSubmit}>
+                    <form className="login-page__form-container" onSubmit={handleSubmit}>
                         <div className="login-page__title">Login</div>
                         <div className="login-page__input-container">
                             <input
@@ -99,8 +124,7 @@ const Login = () => {
                                 value={sign_id}
                                 onChange={(e) => setSignId(e.target.value)}
                                 placeholder="ID"
-                                className="login-page__input"
-                            />
+                                className="login-page__input" />
                             <svg className="login-page__input-icon" width="20" height="19.33" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="15" cy="7" r="6.25" stroke="#757575" strokeWidth="1.5" />
                                 <path d="M29 28V20.5C29 18.8431 27.6569 17.5 26 17.5H4C2.34315 17.5 1 18.8431 1 20.5V28" stroke="#757575" strokeWidth="1.5" />
@@ -115,8 +139,7 @@ const Login = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="********"
-                                className="login-page__input"
-                            />
+                                className="login-page__input" />
                             <svg className="login-page__input-icon" width="20" height="23.08" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="10.2046" y="0.75" width="5.59091" height="14.5" rx="1.25" stroke="#757575" strokeWidth="1.5" />
                                 <path d="M25.25 19C25.25 24.5484 19.8878 29.25 13 29.25C6.11218 29.25 0.75 24.5484 0.75 19C0.75 13.4516 6.11218 8.75 13 8.75C19.8878 8.75 25.25 13.4516 25.25 19Z" fill="white" stroke="#757575" strokeWidth="1.5" />
@@ -149,7 +172,7 @@ const Login = () => {
                 <p className="login-page__modal-message">{error}</p>
                 <button onClick={() => setModalIsOpen(false)} className="login-page__modal-button">닫기</button>
             </Modal>
-        </div>
+        </div></>
     );
 };
 
