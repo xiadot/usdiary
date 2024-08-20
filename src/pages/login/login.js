@@ -52,6 +52,11 @@ const Login = () => {
         }
     };
 
+    const handleFindIdClick = (e) => {
+        e.preventDefault();
+        navigate('/findId')
+    }
+
     return (
         <div className="login-page__container">
             <div className="login-page__left">
@@ -120,7 +125,7 @@ const Login = () => {
                             </svg>
                         </div>
                         <div className="login-page__links">
-                            <a href="#find" className="login-page__link">아이디 찾기 / 비밀번호 찾기</a>
+                            <a href="/findId" className="login-page__link" onClick={handleFindIdClick}>아이디 찾기 / 비밀번호 찾기</a>
                         </div>
                         <button type="submit" className="login-page__button">Log in</button>
                         <div className="login-page__divider"></div>
