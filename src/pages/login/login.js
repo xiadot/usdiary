@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../../assets/css/login.css'; // CSS 파일 임포트
-import Logo_US from '../assets/images/Logo_US.png';
-import Logo_EARTH from '../assets/images/Logo_EARTH.png';
-import alarm_white from '../assets/images/alarm_white.png';
-import alarm_black from '../assets/images/alarm_black.png';
+import Logo_US from '../../assets/images/Logo_US.png';
+import Logo_EARTH from '../../assets/images/Logo_EARTH.png';
+import alarm_white from '../../assets/images/alarm_white.png';
+import alarm_black from '../../assets/images/alarm_black.png';
 
 Modal.setAppElement('#main'); // 모달 접근성을 위한 설정
 
