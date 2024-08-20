@@ -15,6 +15,7 @@ const App = () => {
         <Route path="/findId" element={<FindId />} />
 
         <Route path="/findPwd" element={<FindPwd />} />
+
       </Routes>
     </Router>
   );
