@@ -6,6 +6,7 @@ import FindPwd from './pages/login/pw-find';
 import ForestDiary from './diaries/diaries_forest';
 import CityDiary from './diaries/diaries_city';
 import SeaDiary from './diaries/diaries_sea';
+import Signup from './pages/signup/signup';
 
 const App = () => {
 
@@ -25,6 +26,10 @@ const App = () => {
         <Route path="/city_diary" element={<CityDiary />}></Route>
         {/* 바다 다이어리 페이지 경로 */}
         <Route path="/sea_diary" element={<SeaDiary />}></Route>
+
+        {/* 회원가입 페이지 경로 */}
+        <Route path="/signup" element={<Signup/>} />       
+
       </Routes>
     </Router>
   );
