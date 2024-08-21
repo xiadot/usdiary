@@ -7,11 +7,6 @@
     box-sizing: border-box;
 }
 
-/* Wrap */
-.wrap {
-    min-width: 1100px;
-    min-height: 974px;
-}
 
 /* City Component */
 .wrap .city {

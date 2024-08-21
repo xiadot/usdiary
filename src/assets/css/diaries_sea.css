@@ -6,11 +6,6 @@
     box-sizing: border-box;
 }
 
-.wrap {
-    min-width: 1100px;
-    min-height: 974px;
-}
-
 .wrap .sea {
     display: flex;
 }
