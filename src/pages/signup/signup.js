@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../../assets/css/signup.css'; // 기존 CSS 파일 임포트
+import Menu from '../../components/menu';
 
 Modal.setAppElement('#main'); // 모달 접근성을 위한 설정
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
         username: '',
-        nickname: '', 
+        nickname: '',
         userId: '',
         password: '',
         passwordConfirm: '',
@@ -44,7 +45,7 @@ const SignUp = () => {
         const newErrors = {};
 
         if (!formData.username) newErrors.username = '이름을 입력해주세요.';
-        if (!formData.nickname) newErrors.nickname = '닉네임을 입력해주세요.'; 
+        if (!formData.nickname) newErrors.nickname = '닉네임을 입력해주세요.';
         if (!formData.userId) newErrors.userId = '아이디를 입력해주세요.';
         if (!formData.password) newErrors.password = '비밀번호를 입력해주세요.';
         if (!formData.passwordConfirm) newErrors.passwordConfirm = '비밀번호 확인을 입력해주세요.';
@@ -123,7 +124,7 @@ const SignUp = () => {
                 body: JSON.stringify({ code: verificationCode.join('') }),
             });
             const result = await response.json();
-    
+
             if (result.success) {
                 setIsCodeValid(true);
                 setEmailVerificationStatus('이메일 인증이 완료되었습니다.');
@@ -134,7 +135,7 @@ const SignUp = () => {
         } catch (error) {
             setEmailVerificationStatus('오류가 발생했습니다. 나중에 다시 시도해 주세요.');
         }
-    };    
+    };
 
     const handleOpenPopup = () => setIsVerificationModalOpen(true); // 이메일 인증 모달 열기
     const handleClosePopup = () => {
@@ -190,7 +191,7 @@ const SignUp = () => {
                 }
             } else {
                 console.error('닉네임 체크 실패:', result.message);
-                setErrors(prevErrors => ({ ...prevErrors, nickname: result.message }));  
+                setErrors(prevErrors => ({ ...prevErrors, nickname: result.message }));
             }
         } catch (error) {
             console.error('닉네임 체크 중 오류 발생:', error);
@@ -199,195 +200,199 @@ const SignUp = () => {
     };
 
     return (
-        <div className="SignUp">
-            <form onSubmit={handleSubmit} className="SignUp-page__form">
-                <h2 className="SignUp-page__form-title">회원가입 하기</h2>
-                
-                <div className="SignUp-page__input-group">
-                    <label htmlFor="username" className="SignUp-page__label">이름 *</label>
-                    <div className="SignUp-page__input-wrapper">
-                        <input 
-                            type="text" 
-                            id="username" 
-                            name="username" 
-                            value={formData.username} 
-                            onChange={handleInputChange}
-                            className="SignUp-page__input"
-                            placeholder="이름 입력"
-                        />
-                    </div>
-                    {errors.username && <small className="SignUp-page__error-message">{errors.username}</small>}
-                </div>
+        <div className='wrap'>
+            <Menu />
+            <div className="SignUp">
+                <form onSubmit={handleSubmit} className="SignUp-page__form">
+                    <h2 className="SignUp-page__form-title">회원가입 하기</h2>
 
-                <div className="SignUp-page__input-group">
-                    <label htmlFor="nickname" className="SignUp-page__label">닉네임 *</label>
-                    <div className="SignUp-page__input-wrapper">
-                        <input 
-                            type="text" 
-                            id="nickname" 
-                            name="nickname" 
-                            value={formData.nickname} 
-                            onChange={handleInputChange}
-                            className="SignUp-page__input"
-                            placeholder="닉네임 입력"
-                        />
-                        <button type="button" className="SignUp-page__input-check-button" onClick={handleNicknameCheck}>중복 확인</button>
-                    </div>
-                    {errors.nickname && <small className="SignUp-page__error-message">{errors.nickname}</small>}
-                </div>
-
-                <div className="SignUp-page__input-group">
-                    <label htmlFor="userId" className="SignUp-page__label">아이디 *</label>
-                    <div className="SignUp-page__input-wrapper">
-                        <input 
-                            type="text" 
-                            id="userId" 
-                            name="userId" 
-                            value={formData.userId} 
-                            onChange={handleInputChange}
-                            className="SignUp-page__input"
-                            placeholder="아이디 입력"
-                        />
-                        <button type="button" className="SignUp-page__input-check-button" onClick={handleIdCheck}>중복 확인</button>
-                    </div>
-                    {errors.userId && <small className="SignUp-page__error-message">{errors.userId}</small>}
-                </div>
-
-                <div className="SignUp-page__input-group">
-                    <label htmlFor="password" className="SignUp-page__label">비밀번호 *</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        value={formData.password} 
-                        onChange={handleInputChange}
-                        className="SignUp-page__input"
-                        placeholder="비밀번호 입력 (특수문자 포함, 6~15글자)"
-                    />
-                    {errors.password && <small className="SignUp-page__error-message">{errors.password}</small>}
-                </div>
-
-                <div className="SignUp-page__input-group">
-                    <label htmlFor="passwordConfirm" className="SignUp-page__label">비밀번호 확인 *</label>
-                    <input 
-                        type="password" 
-                        id="passwordConfirm" 
-                        name="passwordConfirm" 
-                        value={formData.passwordConfirm} 
-                        onChange={handleInputChange}
-                        className="SignUp-page__input"
-                        placeholder="비밀번호를 다시 입력해주세요."
-                    />
-                    {errors.passwordConfirm && <small className="SignUp-page__error-message">{errors.passwordConfirm}</small>}
-                </div>
-
-                <div className="SignUp-page__input-group">
-                    <label htmlFor="email" className="SignUp-page__label">이메일 *</label>
-                    <div className="SignUp-page__input-wrapper">
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            value={formData.email} 
-                            onChange={handleInputChange}
-                            className="SignUp-page__input"
-                            placeholder="이메일 입력"
-                        />
-                        <button type="button" className="SignUp-page__input-check-button" onClick={handleOpenPopup}>이메일 인증</button>
-                    </div>
-                    {errors.email && <small className="SignUp-page__error-message">{errors.email}</small>}
-                </div>
-
-                <div className="SignUp-page__input-group">
-                    <label htmlFor="tel" className="SignUp-page__label">전화번호</label>
-                    <input 
-                        type="tel" 
-                        id="tel" 
-                        name="tel" 
-                        value={formData.tel} 
-                        onChange={handleInputChange}
-                        className="SignUp-page__input"
-                        placeholder="010-XXXX-XXXX"
-                    />
-                </div>
-
-                <div className="SignUp-page__date-gender-wrapper">
-                    <div className="SignUp-page__input-date">
-                        <label htmlFor="birthdate" className="SignUp-page__label">생일 *</label>
-                        <input 
-                            type="date" 
-                            id="birthdate" 
-                            name="birthdate" 
-                            value={formData.birthdate} 
-                            onChange={handleInputChange}
-                            className="SignUp-page__input-date"
-                        />
-                        {errors.birthdate && <small className="SignUp-page__error-message">{errors.birthdate}</small>}
-                    </div>
-
-                    <div className="SignUp-page__input-gender">
-                        <label htmlFor="gender" className="SignUp-page__label">성별 *</label>
-                        <select 
-                            id="gender" 
-                            name="gender" 
-                            value={formData.gender} 
-                            onChange={handleInputChange}
-                            className="SignUp-page__input-gender"
-                        >
-                            <option value="">선택하세요</option>
-                            <option value="male">남성</option>
-                            <option value="female">여성</option>
-                        </select>
-                        {errors.gender && <small className="SignUp-page__error-message">{errors.gender}</small>}
-                    </div>
-                </div>
-
-                <button type="submit" className="SignUp-page__submit-button">Create Account</button>
-
-                {/* 오류 모달 */}
-                <Modal 
-                    isOpen={modalIsOpen} 
-                    onRequestClose={handleClosePopup} 
-                    className="SignUp-page__popup"
-                >
-                    <div className="SignUp-page__popup-content">
-                        <span className="SignUp-page__popup-close" onClick={handleClosePopup}>×</span>
-                        <h2 className="SignUp-page__popup-title">회원가입 오류</h2>
-                        <p>{error}</p>
-                        <button className="SignUp-page__code-submit-button" onClick={handleClosePopup}>확인</button>
-                    </div>
-                </Modal>
-
-                {/* 이메일 인증 모달 */}
-                <Modal 
-                    isOpen={isVerificationModalOpen} 
-                    onRequestClose={handleClosePopup} 
-                    className="SignUp-page__popup"
-                >
-                    <div className="SignUp-page__popup-content">
-                        <span className="SignUp-page__popup-close" onClick={handleClosePopup}>×</span>
-                        <h2 className="SignUp-page__popup-title">이메일 인증</h2>
-                        <p>{formData.username} 님의 메일로 인증번호를 전송했습니다.</p>
-                        <p>확인된 인증번호를 작성해주세요.</p>
-                        <div className="SignUp-page__code-inputs">
-                            {verificationCode.map((code, index) => (
-                                <input 
-                                    key={index} 
-                                    type="text" 
-                                    id={`code-${index}`} 
-                                    className="SignUp-page__code-input" 
-                                    maxLength="1"
-                                    value={code}
-                                    onChange={(e) => handleCodeChange(e, index)}
-                                />
-                            ))}
+                    <div className="SignUp-page__input-group">
+                        <label htmlFor="username" className="SignUp-page__label">이름 *</label>
+                        <div className="SignUp-page__input-wrapper">
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                value={formData.username}
+                                onChange={handleInputChange}
+                                className="SignUp-page__input"
+                                placeholder="이름 입력"
+                            />
                         </div>
-                        <button className="SignUp-page__code-submit-button" onClick={handleCodeVerification}>인증하기</button>
-                        <p>{emailVerificationStatus}</p>
+                        {errors.username && <small className="SignUp-page__error-message">{errors.username}</small>}
                     </div>
-                </Modal>
-            </form>
+
+                    <div className="SignUp-page__input-group">
+                        <label htmlFor="nickname" className="SignUp-page__label">닉네임 *</label>
+                        <div className="SignUp-page__input-wrapper">
+                            <input
+                                type="text"
+                                id="nickname"
+                                name="nickname"
+                                value={formData.nickname}
+                                onChange={handleInputChange}
+                                className="SignUp-page__input"
+                                placeholder="닉네임 입력"
+                            />
+                            <button type="button" className="SignUp-page__input-check-button" onClick={handleNicknameCheck}>중복 확인</button>
+                        </div>
+                        {errors.nickname && <small className="SignUp-page__error-message">{errors.nickname}</small>}
+                    </div>
+
+                    <div className="SignUp-page__input-group">
+                        <label htmlFor="userId" className="SignUp-page__label">아이디 *</label>
+                        <div className="SignUp-page__input-wrapper">
+                            <input
+                                type="text"
+                                id="userId"
+                                name="userId"
+                                value={formData.userId}
+                                onChange={handleInputChange}
+                                className="SignUp-page__input"
+                                placeholder="아이디 입력"
+                            />
+                            <button type="button" className="SignUp-page__input-check-button" onClick={handleIdCheck}>중복 확인</button>
+                        </div>
+                        {errors.userId && <small className="SignUp-page__error-message">{errors.userId}</small>}
+                    </div>
+
+                    <div className="SignUp-page__input-group">
+                        <label htmlFor="password" className="SignUp-page__label">비밀번호 *</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            className="SignUp-page__input"
+                            placeholder="비밀번호 입력 (특수문자 포함, 6~15글자)"
+                        />
+                        {errors.password && <small className="SignUp-page__error-message">{errors.password}</small>}
+                    </div>
+
+                    <div className="SignUp-page__input-group">
+                        <label htmlFor="passwordConfirm" className="SignUp-page__label">비밀번호 확인 *</label>
+                        <input
+                            type="password"
+                            id="passwordConfirm"
+                            name="passwordConfirm"
+                            value={formData.passwordConfirm}
+                            onChange={handleInputChange}
+                            className="SignUp-page__input"
+                            placeholder="비밀번호를 다시 입력해주세요."
+                        />
+                        {errors.passwordConfirm && <small className="SignUp-page__error-message">{errors.passwordConfirm}</small>}
+                    </div>
+
+                    <div className="SignUp-page__input-group">
+                        <label htmlFor="email" className="SignUp-page__label">이메일 *</label>
+                        <div className="SignUp-page__input-wrapper">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                className="SignUp-page__input"
+                                placeholder="이메일 입력"
+                            />
+                            <button type="button" className="SignUp-page__input-check-button" onClick={handleOpenPopup}>이메일 인증</button>
+                        </div>
+                        {errors.email && <small className="SignUp-page__error-message">{errors.email}</small>}
+                    </div>
+
+                    <div className="SignUp-page__input-group">
+                        <label htmlFor="tel" className="SignUp-page__label">전화번호</label>
+                        <input
+                            type="tel"
+                            id="tel"
+                            name="tel"
+                            value={formData.tel}
+                            onChange={handleInputChange}
+                            className="SignUp-page__input"
+                            placeholder="010-XXXX-XXXX"
+                        />
+                    </div>
+
+                    <div className="SignUp-page__date-gender-wrapper">
+                        <div className="SignUp-page__input-date">
+                            <label htmlFor="birthdate" className="SignUp-page__label">생일 *</label>
+                            <input
+                                type="date"
+                                id="birthdate"
+                                name="birthdate"
+                                value={formData.birthdate}
+                                onChange={handleInputChange}
+                                className="SignUp-page__input-date"
+                            />
+                            {errors.birthdate && <small className="SignUp-page__error-message">{errors.birthdate}</small>}
+                        </div>
+
+                        <div className="SignUp-page__input-gender">
+                            <label htmlFor="gender" className="SignUp-page__label">성별 *</label>
+                            <select
+                                id="gender"
+                                name="gender"
+                                value={formData.gender}
+                                onChange={handleInputChange}
+                                className="SignUp-page__input-gender"
+                            >
+                                <option value="">선택하세요</option>
+                                <option value="male">남성</option>
+                                <option value="female">여성</option>
+                            </select>
+                            {errors.gender && <small className="SignUp-page__error-message">{errors.gender}</small>}
+                        </div>
+                    </div>
+
+                    <button type="submit" className="SignUp-page__submit-button">Create Account</button>
+
+                    {/* 오류 모달 */}
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={handleClosePopup}
+                        className="SignUp-page__popup"
+                    >
+                        <div className="SignUp-page__popup-content">
+                            <span className="SignUp-page__popup-close" onClick={handleClosePopup}>×</span>
+                            <h2 className="SignUp-page__popup-title">회원가입 오류</h2>
+                            <p>{error}</p>
+                            <button className="SignUp-page__code-submit-button" onClick={handleClosePopup}>확인</button>
+                        </div>
+                    </Modal>
+
+                    {/* 이메일 인증 모달 */}
+                    <Modal
+                        isOpen={isVerificationModalOpen}
+                        onRequestClose={handleClosePopup}
+                        className="SignUp-page__popup"
+                    >
+                        <div className="SignUp-page__popup-content">
+                            <span className="SignUp-page__popup-close" onClick={handleClosePopup}>×</span>
+                            <h2 className="SignUp-page__popup-title">이메일 인증</h2>
+                            <p>{formData.username} 님의 메일로 인증번호를 전송했습니다.</p>
+                            <p>확인된 인증번호를 작성해주세요.</p>
+                            <div className="SignUp-page__code-inputs">
+                                {verificationCode.map((code, index) => (
+                                    <input
+                                        key={index}
+                                        type="text"
+                                        id={`code-${index}`}
+                                        className="SignUp-page__code-input"
+                                        maxLength="1"
+                                        value={code}
+                                        onChange={(e) => handleCodeChange(e, index)}
+                                    />
+                                ))}
+                            </div>
+                            <button className="SignUp-page__code-submit-button" onClick={handleCodeVerification}>인증하기</button>
+                            <p>{emailVerificationStatus}</p>
+                        </div>
+                    </Modal>
+                </form>
+            </div>
         </div>
+
     );
 };
 
