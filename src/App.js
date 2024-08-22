@@ -10,6 +10,7 @@ import Signup from './pages/signup/signup';
 import Home from './pages/home/home';
 import Sea from './pages/home/sea';
 import Friend from './pages/home/friend';
+import Question from './tendency/question';
 
 const App = () => {
 
@@ -31,7 +32,10 @@ const App = () => {
         <Route path="/sea_diary" element={<SeaDiary />}></Route>
 
         {/* 회원가입 페이지 경로 */}
-        <Route path="/signup" element={<Signup/>} />       
+        <Route path="/signup" element={<Signup/>} />   
+
+        {/* 성향 질문 페이지 경로 */}
+        <Route path="/question" element={<Question/>} />    
 
 
         <Route path="/home" element={<Home />} />
