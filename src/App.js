@@ -12,6 +12,7 @@ import Sea from './pages/home/sea';
 import Friend from './pages/home/friend';
 
 const App = () => {
+
   return (
     <Router>
       <Routes>
@@ -33,7 +34,7 @@ const App = () => {
         <Route path="/signup" element={<Signup/>} />       
 
 
-        <Route path="/home" element={<Home userTendency={user_tendency} />} />
+        <Route path="/home" element={<Home />} />
 
         <Route path="/sea" element={<Sea />}></Route>
 

@@ -2,7 +2,9 @@ import React from "react";
 import Forest from "./forest";
 import City from "./city";
 
-const Home = ({ userTendency }) => {
+const Home = ({ location }) => {
+    const userTendency = location.state?.userTendency; // location.state에서 userTendency 가져오기
+
     if (userTendency === '숲') {
         return <Forest />;
     } else if (userTendency === '도시') {

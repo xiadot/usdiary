@@ -35,7 +35,8 @@ const Login = () => {
             const result = await response.json();
 
             if (response.ok) {
-                navigate('/home');
+                const { user_tendency } = result; // user_tendency 값을 추출
+                navigate('/home', { state: { userTendency: user_tendency } });
                 // 로그인 성공 처리 (예: 사용자 정보 저장, 리디렉션 등)
                 console.log('로그인 성공:', result);
                 setError(''); // 오류 상태 초기화
