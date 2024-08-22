@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../src/assets/css/questions.css';
-import Menu from '../../components/menu';
+import Menu from '../../src/components/menu';
 
 const questions = [
   {
@@ -28,7 +28,7 @@ const questions = [
 
 const Question = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState([null, null]); // 선택된 답변을 저장
+  const [selectedAnswers, setSelectedAnswers] = useState([null, null]);
   const [forestCount, setForestCount] = useState(0);
   const [cityCount, setCityCount] = useState(0);
   const navigate = useNavigate();
@@ -52,21 +52,21 @@ const Question = () => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
       } else {
-        // 결과 계산 및 이동
         if (forestCount > cityCount) {
-          navigate('/foresttendency');
+          navigate('/forest_tendency');
         } else {
-          navigate('/citytendency');
+          navigate('/city_tendency');
         }
       }
     } else {
-      alert('답변을 선택해 주세요.'); // 선택되지 않은 경우 경고 메시지
+      alert('답변을 선택해 주세요.'); 
     }
   };
 
   return (
-      <div className="Question-container">
+    <div className='Question'>
       <Menu/>
+      <div className="Question-container">
       <div className="Question-box">
         <div className="navigation">
           {currentQuestion > 0 && (
@@ -89,6 +89,7 @@ const Question = () => {
           <button className="nav-button" onClick={handleNext}>&gt;</button>
         </div>
       </div>
+    </div>
     </div>
   );
 };

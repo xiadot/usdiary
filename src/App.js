@@ -11,6 +11,8 @@ import Home from './pages/home/home';
 import Sea from './pages/home/sea';
 import Friend from './pages/home/friend';
 import Question from './tendency/question';
+import ForestTendency from "./tendency/forest_tendency";
+import CityTendency from "./tendency/city_tendency";
 
 const App = () => {
 
@@ -35,8 +37,11 @@ const App = () => {
         <Route path="/signup" element={<Signup/>} />   
 
         {/* 성향 질문 페이지 경로 */}
-        <Route path="/question" element={<Question/>} />    
+        <Route path="/question" element={<Question/>} />
 
+        <Route path="/forest_tendency" element={<ForestTendency/>} />
+
+        <Route path="/city_tendency" element={<CityTendency/>} />       
 
         <Route path="/home" element={<Home />} />
 
