@@ -12,7 +12,6 @@ import Sea from './pages/home/sea';
 import Friend from './pages/home/friend';
 
 const App = () => {
-  const user_tendency = '도시';
 
   return (
     <Router>

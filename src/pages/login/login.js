@@ -46,7 +46,6 @@ const Login = () => {
                 setModalIsOpen(true); // 모달 열기
             }
         } catch (error) {
-            navigate('/home');
             console.error('로그인 중 오류 발생:', error);
             setError('로그인 중 오류가 발생했습니다.'); // 오류 상태 설정
             setModalIsOpen(true); // 모달 열기
