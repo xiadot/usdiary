@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
 import DiaryCard from '../../components/diaryCard';
-import '../../assets/css/forest.css';
-import Menu from "../../components/menu";
+import '../../assets/css/friend.css';
+import Menu from '../../components/menu';
 import axios from "axios";
 
-const Forest = () => {
+const Friend = () => {
     const [diaries, setDiaries] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageGroup, setPageGroup] = useState(0);
     const diariesPerPage = 12;
     const pagesPerGroup = 5;
     const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(true); // Add a loading state
-    const [error, setError] = useState(null); // Add an error state
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/api/forest'); // Replace with your API URL
+                const response = await axios.get('/api/friend'); // Replace with your API URL
                 const data = response.data;
                 setDiaries(data);
                 setTotalPages(Math.ceil(data.length / diariesPerPage));
@@ -65,26 +64,25 @@ const Forest = () => {
         (_, index) => pageGroup * pagesPerGroup + index + 1
     );
 
-
     return (
         <div className="wrap">
             <Menu />
-            <div className="forest-page__container">
-                <div className="forest-page__header">
-                    <h1 className="forest-page__heading">
+            <div className="friend-page__container">
+                <div className="friend-page__header">
+                    <h1 className="friend-page__heading">
                         Today's<br />
-                        Forest
+                        Friend
                     </h1>
-                    <p className="forest-page__description">
+                    <p className="friend-page__description">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ligula sapien, rutrum sed vestibulum eget, rhoncus ac erat. Aliquam erat volutpat. Sed convallis scelerisque enim at fermentum.
                     </p>
                 </div>
-                <div className="forest-page__filter-box">
-                    <div className="forest-page__filter-option">Latest</div>
-                    <div className="forest-page__filter-option">Top Views</div>
-                    <div className="forest-page__filter-option">Top Likes</div>
+                <div className="friend-page__filter-box">
+                    <div className="friend-page__filter-option">Latest</div>
+                    <div className="friend-page__filter-option">Top Views</div>
+                    <div className="friend-page__filter-option">Top Likes</div>
                 </div>
-                <div className="forest-page__diary-cards">
+                <div className="friend-page__diary-cards">
                     {loading && <p>Loading...</p>}
                     {error && <p>{error}</p>}
                     {!loading && !error && currentDiaries.map((diary) => (
@@ -96,12 +94,13 @@ const Forest = () => {
                             imageUrl={diary.post_photo}
                             boardName={diary.board_name}
                             nickname={diary.nickname}
+                            isFriendPage={true}
                             diaryId={diary.diary_id}
                         />
                     ))}
                 </div>
 
-                <div className="forest-page__pagination">
+                <div className="friend-page__pagination">
                     <button
                         onClick={handlePrevGroup}
                         disabled={pageGroup === 0}
@@ -127,10 +126,10 @@ const Forest = () => {
                     </button>
                 </div>
 
-                <div className="forest-page__tree-background"></div>
+                <div className="friend-page__tree-background"></div>
             </div>
         </div>
     );
 }
 
-export default Forest;
+export default Friend;

@@ -50,6 +50,7 @@ const Login = () => {
                 setModalIsOpen(true); // 모달 열기
             }
         } catch (error) {
+            navigate('/home');
             console.error('로그인 중 오류 발생:', error);
             setError('로그인 중 오류가 발생했습니다.'); // 오류 상태 설정
             setModalIsOpen(true); // 모달 열기
@@ -124,7 +125,8 @@ const Login = () => {
                                 value={sign_id}
                                 onChange={(e) => setSignId(e.target.value)}
                                 placeholder="ID"
-                                className="login-page__input" />
+                                className="login-page__input"
+                                required />
                             <svg className="login-page__input-icon" width="20" height="19.33" viewBox="0 0 30 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="15" cy="7" r="6.25" stroke="#757575" strokeWidth="1.5" />
                                 <path d="M29 28V20.5C29 18.8431 27.6569 17.5 26 17.5H4C2.34315 17.5 1 18.8431 1 20.5V28" stroke="#757575" strokeWidth="1.5" />
@@ -139,7 +141,8 @@ const Login = () => {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="********"
-                                className="login-page__input" />
+                                className="login-page__input"
+                                required />
                             <svg className="login-page__input-icon" width="20" height="23.08" viewBox="0 0 26 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect x="10.2046" y="0.75" width="5.59091" height="14.5" rx="1.25" stroke="#757575" strokeWidth="1.5" />
                                 <path d="M25.25 19C25.25 24.5484 19.8878 29.25 13 29.25C6.11218 29.25 0.75 24.5484 0.75 19C0.75 13.4516 6.11218 8.75 13 8.75C19.8878 8.75 25.25 13.4516 25.25 19Z" fill="white" stroke="#757575" strokeWidth="1.5" />
