@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../../assets/css/findId.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Menu from '../../components/menu';
 
 const FindPwd = () => {
     const [name, setName] = useState('');
@@ -48,80 +49,84 @@ const FindPwd = () => {
     };
 
     return (
-        <div className='find-id-page__container'>
-            <div className="find-id-page__buttons">
-                <div
-                    className="find-id-page__button find-id-page__button2--white"
-                    onClick={() => navigate('/findId')}
-                >
-                    <button className="find-id-page__button-text">아이디 찾기</button>
+        <div className='wrap'>
+            <Menu />
+            <div className='find-id-page__container'>
+                <div className="find-id-page__buttons">
+                    <div
+                        className="find-id-page__button find-id-page__button2--white"
+                        onClick={() => navigate('/findId')}
+                    >
+                        <button className="find-id-page__button-text">아이디 찾기</button>
+                    </div>
+                    <div className="find-id-page__button find-id-page__button2--black">
+                        <button className="find-id-page__button-text">비밀번호 찾기</button>
+                    </div>
                 </div>
-                <div className="find-id-page__button find-id-page__button2--black">
-                    <button className="find-id-page__button-text">비밀번호 찾기</button>
-                </div>
-            </div>
-            <h2>비밀번호 찾기</h2>
-            {!showResult ? (
-                <form onSubmit={handleSubmit} className="find-id-page__form-container">
-                    <div className="find-id-page__input-container">
-                        <label htmlFor="name" className="find-id-page__label">이름 *</label>
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="이름 입력"
-                            required
-                            className="find-id-page__input"
-                        />
-                    </div>
-                    <div className="find-id-page__input-container">
-                        <label htmlFor="id" className="find-id-page__label">아이디 *</label>
-                        <input
-                            id="signId"
-                            name="signId"
-                            type="text"
-                            value={signId}
-                            onChange={(e) => setSignId(e.target.value)}
-                            placeholder="아이디 입력"
-                            required
-                            className="find-id-page__input"
-                        />
-                    </div>
-                    <div className="find-id-page__input-container">
-                        <label htmlFor="email" className="find-id-page__label">이메일 *</label>
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="이메일 입력"
-                            required
-                            className="find-id-page__input"
-                        />
-                    </div>
-                    <button type="submit" className="find-id-page__find-button">Find My Password </button>
-                </form>
-            ) : (
-                <div className="find-id-page__result-container">
-                    <div className="find-id-page__result-box">
-                        <p>{name} 님의 임시 비밀번호입니다. <br>
-                        </br>로그인 후 비밀번호를 변경해주세요.</p>
-                        <div className="find-id-page__pw-box">
-                            <p>{temporaryPassword}</p>
-                            <button onClick={copyToClipboard} className="find-id-page__copy-button">
-                                복사
-                            </button>
+                <h2>비밀번호 찾기</h2>
+                {!showResult ? (
+                    <form onSubmit={handleSubmit} className="find-id-page__form-container">
+                        <div className="find-id-page__input-container">
+                            <label htmlFor="name" className="find-id-page__label">이름 *</label>
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="이름 입력"
+                                required
+                                className="find-id-page__input"
+                            />
                         </div>
+                        <div className="find-id-page__input-container">
+                            <label htmlFor="id" className="find-id-page__label">아이디 *</label>
+                            <input
+                                id="signId"
+                                name="signId"
+                                type="text"
+                                value={signId}
+                                onChange={(e) => setSignId(e.target.value)}
+                                placeholder="아이디 입력"
+                                required
+                                className="find-id-page__input"
+                            />
+                        </div>
+                        <div className="find-id-page__input-container">
+                            <label htmlFor="email" className="find-id-page__label">이메일 *</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="이메일 입력"
+                                required
+                                className="find-id-page__input"
+                            />
+                        </div>
+                        <button type="submit" className="find-id-page__find-button">Find My Password </button>
+                    </form>
+                ) : (
+                    <div className="find-id-page__result-container">
+                        <div className="find-id-page__result-box">
+                            <p>{name} 님의 임시 비밀번호입니다. <br>
+                            </br>로그인 후 비밀번호를 변경해주세요.</p>
+                            <div className="find-id-page__pw-box">
+                                <p>{temporaryPassword}</p>
+                                <button onClick={copyToClipboard} className="find-id-page__copy-button">
+                                    복사
+                                </button>
+                            </div>
+                        </div>
+                        <button onClick={() => navigate('/')} className="find-id-page__login-button">
+                            Go to Login
+                        </button>
                     </div>
-                    <button onClick={() => navigate('/')} className="find-id-page__login-button">
-                        Go to Login
-                    </button>
-                </div>
-            )}
+                )}
+            </div>
         </div>
+
     );
 }
 

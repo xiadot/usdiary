@@ -2,18 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-import '../assets/css/login.css';
-import Logo_US from '../assets/images/Logo_US.png';
-import Logo_EARTH from '../assets/images/Logo_EARTH.png';
-import alarm_white from '../assets/images/alarm_white.png';
-import alarm_black from '../assets/images/alarm_black.png';
+import '../../assets/css/login.css';
+import Logo_US from '../../assets/images/Logo_US.png';
+import Logo_EARTH from '../../assets/images/Logo_EARTH.png';
+import alarm_white from '../../assets/images/alarm_white.png';
+import alarm_black from '../../assets/images/alarm_black.png';
 
 
-import '../assets/css/diaries_forest.css';
-import tree from '../assets/images/tree.png';
-import left_arrow from '../assets/images/left_arrow.png';
-import right_arrow from '../assets/images/right_arrow.png';
-import todays_question from '../assets/images/Todays_Question_forest.png';
+import '../../assets/css/diaries_forest.css';
+import tree from '../../assets/images/tree.png';
+import left_arrow from '../../assets/images/left_arrow.png';
+import right_arrow from '../../assets/images/right_arrow.png';
+import todays_question from '../../assets/images/Todays_Question_forest.png';
 
 const ForestDiary = () => {
 

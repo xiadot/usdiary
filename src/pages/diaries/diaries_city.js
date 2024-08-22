@@ -2,20 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-import '../assets/css/login.css';
-import Logo_US from '../assets/images/Logo_US.png';
-import Logo_EARTH from '../assets/images/Logo_EARTH.png';
-import alarm_white from '../assets/images/alarm_white.png';
-import alarm_black from '../assets/images/alarm_black.png';
+import '../../assets/css/login.css';
+import Logo_US from '../../assets/images/Logo_US.png';
+import Logo_EARTH from '../../assets/images/Logo_EARTH.png';
+import alarm_white from '../../assets/images/alarm_white.png';
+import alarm_black from '../../assets/images/alarm_black.png';
 
 
-import '../assets/css/diaries_sea.css';
-import sea from '../assets/images/sea.png';
-import left_arrow from '../assets/images/left_arrow.png';
-import right_arrow from '../assets/images/right_arrow.png';
-import todays_place from '../assets/images/Todays_Place_sea.png';
+import '../../assets/css/diaries_city.css';
+import city from '../../assets/images/city.png';
+import left_arrow from '../../assets/images/left_arrow.png';
+import right_arrow from '../../assets/images/right_arrow.png';
+import todays_check from '../../assets/images/Todays_Check_city.png';
 
-const SeaDiary = () => {
+const CityDiary = () => {
 
   const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
   const [selectedDate, setSelectedDate] = useState(new Date()); // 선택된 날짜
@@ -112,70 +112,71 @@ const SeaDiary = () => {
       </div>
       
       {/* 다이어리 */}
-      <div className="sea">
-        <div className="sea__check">
-          <img src={todays_place} className="sea__check-image" alt="todays_place"/>
+      <div className="city">
+        {/* 체크리스트 */}
+        <div className="city__check">
+          <img src={todays_check} className="city__check-image" alt="todays_check"/>
         </div>
-        <div className="sea__diary">
-          <img src={sea} className="sea__diary-image" alt="sea" />
-          <div className="sea__diary-title">Today's Sea</div>
-          <div className="sea__diary-date">
-            <img src={left_arrow} className="sea__diary-date-arrow" alt="left_arrow" onClick={() => changeDate('prev')}/>
-            <div className="sea__diary-date-container">
+        {/* 일기작성 */}
+        <div className="city__diary">
+          <img src={city} className="city__diary-image" alt="city" />
+          <div className="city__diary-title">Today's City</div>
+          <div className="city__diary-date">
+            <img src={left_arrow} className="city__diary-date-arrow" alt="left_arrow" onClick={() => changeDate('prev')}/>
+            <div className="city__diary-date-container">
               {getDaysArray().map((day, i) => (
                 <div
                   key={i}
-                  className={`sea__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'sea__diary-date-round--today' : ''}`}
+                  className={`city__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'city__diary-date-round--today' : ''}`}
                   onClick={() => handleDateClick(day)}
                 >
-                  {getDay(day)}
+                  {getDay(day)} {/* 일(day)만 표시 */}
                 </div>
               ))}
             </div>
-            <img src={right_arrow} className="sea__diary-date-arrow" alt="right_arrow" onClick={() => changeDate('next')}/>
+            <img src={right_arrow} className="city__diary-date-arrow" alt="right_arrow" onClick={() => changeDate('next')}/>
           </div>
-          <div
-            className="sea__diary-title-edit"
+          <div className="city__diary-title-edit"
             contentEditable
             suppressContentEditableWarning
             onBlur={handleTitleChange}
           >
             {title}
           </div>
-          <div className="sea__diary-another">
-          <div className="sea__diary-another-reveal">
+          <div className="city__diary-another">
+            <div className="city__diary-another-reveal">
               {['only', 'subscribe', 'all'].map((className, index) => (
                 <div
                   key={index}
-                  className={`sea__diary-another-reveal-btn sea__diary-another-reveal-btn--${className} ${selectedDiv === index ? 'sea__diary-another-reveal-btn--selected' : ''}`}
+                  className={`city__diary-another-reveal-btn city__diary-another-reveal-btn--${className} ${selectedDiv === index ? 'city__diary-another-reveal-btn--selected' : ''}`}
                   onClick={() => handleDivClick(index)}
                 >
                   {className}
                 </div>
               ))}
             </div>
-            <div className="sea__diary-another-submit" onClick={handleSubmit}>발행</div>
+            <div className="city__diary-another-submit" onClick={handleSubmit}>발행</div>
           </div>
-          <div className="sea__diary-texts">
+          <div className="city__diary-texts">
             <Editor
               toolbarItems={[
+                // 툴바 옵션 설정
                 ['heading', 'bold', 'italic', 'strike'],
                 ['image', 'link']
               ]}
-              height="100%"
-              initialEditType="wysiwyg"
-              ref={editorRef}
-              onChange={onChangeGetHTML}
-              hideModeSwitch={true}
+              height="100%" // 에디터 창 높이
+              initialEditType="wysiwyg" // 기본 에디터 타입 (or wysiwyg)
+              ref={editorRef} // ref 참조
+              onChange={onChangeGetHTML} // onChange 이벤트
+              hideModeSwitch={true} // Markdown과 WYSIWYG 탭이 사라짐 
             />
           </div>
         </div>
       </div>
     </div>
-    
   );
 };
 
 
 
-export default SeaDiary;
+export default CityDiary;

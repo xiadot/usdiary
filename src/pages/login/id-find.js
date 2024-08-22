@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../../assets/css/findId.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Menu from '../../components/menu';
 
 const FindId = () => {
     const [name, setName] = useState('');
@@ -52,80 +53,84 @@ const FindId = () => {
 
 
     return (
-        <div className='find-id-page__container'>
-            <div className="find-id-page__buttons">
-                <div className="find-id-page__button find-id-page__button--black">
-                    <button className="find-id-page__button-text">아이디 찾기</button>
+        <div className='wrap'>
+            <Menu />
+            <div className='find-id-page__container'>
+                <div className="find-id-page__buttons">
+                    <div className="find-id-page__button find-id-page__button--black">
+                        <button className="find-id-page__button-text">아이디 찾기</button>
+                    </div>
+                    <div
+                        className="find-id-page__button find-id-page__button--white"
+                        onClick={() => navigate('/findPwd')}>
+                        <button className="find-id-page__button-text">비밀번호 찾기</button>
+                    </div>
                 </div>
-                <div
-                    className="find-id-page__button find-id-page__button--white"
-                    onClick={() => navigate('/findPwd')}>
-                    <button className="find-id-page__button-text">비밀번호 찾기</button>
-                </div>
-            </div>
-            <h2>아이디 찾기</h2>
-            {!showResult ? (
-                <form onSubmit={handleSubmit} className="find-id-page__form-container">
-                    <div className="find-id-page__input-container">
-                        <label htmlFor="name" className="find-id-page__label">이름 *</label>
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="이름 입력"
-                            required
-                            className="find-id-page__input"
-                        />
-                    </div>
-                    <div className="find-id-page__input-container">
-                        <label htmlFor="email" className="find-id-page__label">이메일 *</label>
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="이메일 입력"
-                            required
-                            className="find-id-page__input"
-                        />
-                    </div>
-                    <div className="find-id-page__input-container">
-                        <label htmlFor="birthdate" className="find-id-page__label">생일 *</label>
-                        <DatePicker
-                            className="find-id-page__input"
-                            id="birthdate"
-                            selected={birthdate}
-                            onChange={(date) => setBirthdate(date)}
-                            dateFormat="yyyy-MM-dd"
-                            placeholderText="YYYY-MM-DD"
-                            showYearDropdown
-                            showMonthDropdown
-                            dropdownMode="select"
-                            maxDate={new Date()} // 현재 날짜 이전만 선택 가능
-                            required
-                        />
-                    </div>
-                    <button type="submit" className="find-id-page__find-button">Find My ID</button>
-                </form>
-            ) : (
-                <div>
-
-                    <div className="find-id-page__result-container">
-                        <div className="find-id-page__result-box">
-                            <p>{name} 님의 아이디입니다.</p>
-                            <div className="find-id-page__id-box">
-                                <p>{foundId}</p>
-                            </div>
+                <h2>아이디 찾기</h2>
+                {!showResult ? (
+                    <form onSubmit={handleSubmit} className="find-id-page__form-container">
+                        <div className="find-id-page__input-container">
+                            <label htmlFor="name" className="find-id-page__label">이름 *</label>
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="이름 입력"
+                                required
+                                className="find-id-page__input"
+                            />
                         </div>
+                        <div className="find-id-page__input-container">
+                            <label htmlFor="email" className="find-id-page__label">이메일 *</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="이메일 입력"
+                                required
+                                className="find-id-page__input"
+                            />
+                        </div>
+                        <div className="find-id-page__input-container">
+                            <label htmlFor="birthdate" className="find-id-page__label">생일 *</label>
+                            <DatePicker
+                                className="find-id-page__input"
+                                id="birthdate"
+                                selected={birthdate}
+                                onChange={(date) => setBirthdate(date)}
+                                dateFormat="yyyy-MM-dd"
+                                placeholderText="YYYY-MM-DD"
+                                showYearDropdown
+                                showMonthDropdown
+                                dropdownMode="select"
+                                maxDate={new Date()} // 현재 날짜 이전만 선택 가능
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="find-id-page__find-button">Find My ID</button>
+                    </form>
+                ) : (
+                    <div>
 
+                        <div className="find-id-page__result-container">
+                            <div className="find-id-page__result-box">
+                                <p>{name} 님의 아이디입니다.</p>
+                                <div className="find-id-page__id-box">
+                                    <p>{foundId}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button onClick={() => navigate('/')} className="find-id-page__login-button">Go to Login</button>
                     </div>
-                    <button onClick={() => navigate('/')} className="find-id-page__login-button">Go to Login</button>
-                </div>
-            )}
+                )}
+            </div>
         </div>
+
     );
 };
 

@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 페이지 전체 높이 */
+    height: 80vh; /* 페이지 전체 높이 */
 }
 
 /* 폼과 결과 메시지를 감싸는 컨테이너 */
@@ -107,6 +107,7 @@
     position: relative;
     width: 100%;
     margin: 0.4rem 1rem;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 .find-id-page__label {
