@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../src/assets/css/questions.css';
-import Menu from '../../src/components/menu';
+import '../../assets/css/questions.css';
+import Menu from '../../components/menu';
 
 const questions = [
   {

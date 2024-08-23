@@ -10,9 +10,9 @@ import Signup from './pages/signup/signup';
 import Home from './pages/home/home';
 import Sea from './pages/home/sea';
 import Friend from './pages/home/friend';
-import Question from './tendency/question';
-import ForestTendency from "./tendency/forest_tendency";
-import CityTendency from "./tendency/city_tendency";
+import Question from './pages/tendency/question';
+import ForestTendency from "./pages/tendency/forest_tendency";
+import CityTendency from "./pages/tendency/city_tendency";
 
 const App = () => {
 
