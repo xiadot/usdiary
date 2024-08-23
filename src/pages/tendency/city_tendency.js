@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import Menu from '../../src/components/menu';
-import '../../src/assets/css/city_tendency.css';
-import BigcityImage from '../../src/assets/images/bigcity.png'; 
-import MintreeImage from '../../src/assets/images/mintree.png'; 
+import Menu from '../../components/menu';
+import '../../assets/css/city_tendency.css';
+import BigcityImage from '../../assets/images/bigcity.png'; 
+import MintreeImage from '../../assets/images/mintree.png'; 
 
 function CityTendency() {
   const navigate = useNavigate(); 

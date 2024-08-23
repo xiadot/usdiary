@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import Menu from '../../src/components/menu';
-import '../../src/assets/css/forest_tendency.css';
-import BigtreeImage from '../../src/assets/images/bigtree.png';
-import MincityImage from '../../src/assets/images/mincity.png'; 
+import Menu from '../../components/menu';
+import '../../assets/css/forest_tendency.css';
+import BigtreeImage from '../../assets/images/bigtree.png';
+import MincityImage from '../../assets/images/mincity.png'; 
 
 function ForestTendency() {
   const navigate = useNavigate(); 
