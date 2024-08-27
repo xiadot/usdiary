@@ -13,6 +13,7 @@ import Friend from './pages/home/friend';
 import Question from './tendency/question';
 import ForestTendency from "./tendency/forest_tendency";
 import CityTendency from "./tendency/city_tendency";
+import ForestQuestion from "./pages/diaries/forest_question";
 
 const App = () => {
 
@@ -41,7 +42,10 @@ const App = () => {
 
         <Route path="/forest_tendency" element={<ForestTendency/>} />
 
-        <Route path="/city_tendency" element={<CityTendency/>} />       
+        <Route path="/city_tendency" element={<CityTendency/>} />
+
+        {/* 숲 다이어리 오늘의 질문 경로 */}
+        <Route path="/forest_question" element={<ForestQuestion/>}></Route>       
 
         <Route path="/home" element={<Home />} />
 

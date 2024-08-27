@@ -1,0 +1,205 @@
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.ForestQuestion {
+    display: flex;
+    width: 100vw; /* 전체 페이지 너비 */
+    height: 100vh; /* 전체 페이지 높이 */
+}
+
+.ForestQuestion .forest_todayquestion {
+    width: 40%; /* 페이지의 40% 차지 */
+    height: 100%; /* 전체 높이 */
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    background-color: #E8F3DA; /* 배경색 */
+    position: relative; /* 자식 요소를 기준으로 위치를 조정할 수 있게 함 */
+}
+
+.ForestQuestion .forest_todayquestion img {
+    width: 80%; /* 이미지 너비를 컨테이너의 80%로 설정 */
+    height: auto; /* 비율 유지 */
+}
+
+.ForestQuestion .forest {
+    width: 60%; /* 페이지의 60% 차지 */
+    height: 100%; /* 전체 높이 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px; /* 여백 추가 */
+    overflow: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+}
+
+.ForestQuestion .forest__diary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ForestQuestion .forest__diary-tree {
+    height: 50px; /* 크기 조정 */
+    margin-bottom: 10px;
+}
+
+.ForestQuestion .forest__diary-title {
+    font-size: 24px; /* 크기 조정 */
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700;
+    font-style: bold;
+    color: #7E9660;
+    margin-bottom: 16px;
+}
+
+.ForestQuestion .forest__diary-date {
+    width: 400px; /* 크기 조정 */
+    height: 30px; /* 크기 조정 */
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ForestQuestion .forest__diary-date-arrow {
+    width: 15px; /* 크기 조정 */
+    height: 15px; /* 크기 조정 */
+    margin-top: 7px;
+}
+
+.ForestQuestion .forest__diary-date-container {
+    width: 340px; /* 크기 조정 */
+    display: flex;
+    justify-content: space-between;
+}
+
+.ForestQuestion .forest__diary-date-round {
+    width: 30px; /* 크기 조정 */
+    height: 30px; /* 크기 조정 */
+    background-color: #E8F3DA;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 600;
+    font-size: 14px; /* 크기 조정 */
+    color: #9e9e9e;
+}
+
+.ForestQuestion .forest__diary-date-round--today {
+    background-color: #9FC393;
+    color: #ffffff;
+}
+
+.ForestQuestion .forest__diary-title-edit {
+    width: 400px; /* 크기 조정 */
+    height: 25px; /* 크기 조정 */
+    color: #C6C9CE;
+    font-size: 18px; /* 크기 조정 */
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 18px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    border-style: solid;
+    border-width: 0 0 1px;
+    border-color: #99B477;
+    outline: none;
+}
+
+.ForestQuestion .forest__diary-actions {
+    width: 700px; /* 크기 조정 */
+    height: 35px; /* 크기 조정 */
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ForestQuestion .forest__diary-actions-reveal {
+    width: 130px; /* 크기 조정 */
+    height: 28px; /* 크기 조정 */
+    background-color: #F5F5F5;
+    border-radius: 8px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.ForestQuestion .forest__diary-actions-reveal-btn {
+    height: 16px; /* 크기 조정 */
+    background-color: #FFFFFF;
+    font-size: 9px; /* 크기 조정 */
+    font-weight: 600;
+    color: #7D7D7D;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    padding-top: 1px;
+}
+
+.ForestQuestion .forest__diary-actions-reveal-btn--only {
+    width: 35px; /* 크기 조정 */
+}
+
+.ForestQuestion .forest__diary-actions-reveal-btn--subscribe {
+    width: 45px; /* 크기 조정 */
+}
+
+.ForestQuestion .forest__diary-actions-reveal-btn--all {
+    width: 35px; /* 크기 조정 */
+}
+
+.ForestQuestion .forest__diary-actions-reveal-btn--selected {
+    background-color: #E8E6E6;
+    color: #7D7D7D;
+}
+
+.ForestQuestion .forest__diary-submit {
+    width: 50px; /* 크기 조정 */
+    height: 28px; /* 크기 조정 */
+    background-color: #9FC393;
+    margin-right: 3px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px; /* 크기 조정 */
+    color: #ffffff;
+}
+
+.ForestQuestion .forest__diary-submit:hover {
+    background-color: #D6E8C0;
+}
+
+.ForestQuestion .forest__diary-texts {
+    width: 700px; /* 크기 조정 */
+    height: 400px; /* 크기 조정 */
+    border-style: solid;
+    border-width: 1px;
+    border-color: #99B477;
+    margin-bottom: 40px;
+}
+
+.ForestQuestion .forest__diary-texts p {
+    font-size: medium; /* 크기 조정 */
+}
+
+/* 다이어리 버튼 색 다르게 */
+.ForestQuestion .menu .button #diary {
+    height: 29px;
+    border-radius: 22.5px;
+    background-color: #ffffff;
+    color: #2C2C2C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    box-shadow: 0px 4px 4px #B8B8B8;
+}
