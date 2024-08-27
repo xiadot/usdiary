@@ -44,7 +44,6 @@ const Map = () => {
             <img src={forestImage} alt="Forest" onClick={handleForestClick} className="bottom-image forest-image" />
             <img src={citymage} alt="City" onClick={handleCityClick} className="bottom-image city-image" />
         </div>
-
     );
 };
 
