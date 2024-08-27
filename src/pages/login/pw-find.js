@@ -16,7 +16,7 @@ const FindPwd = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/users/findPwd', {
+            const response = await axios.post('/users/findPwd', {
                 user_name: name,
                 user_email: email,
                 sign_id: signId

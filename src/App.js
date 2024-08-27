@@ -13,6 +13,9 @@ import Friend from './pages/home/friend';
 import Question from './pages/tendency/question';
 import ForestTendency from "./pages/tendency/forest_tendency";
 import CityTendency from "./pages/tendency/city_tendency";
+import Map from './pages/map/map';
+import Forest from './pages/home/forest';
+import City from './pages/home/city';
 
 const App = () => {
 
@@ -45,9 +48,15 @@ const App = () => {
 
         <Route path="/home" element={<Home />} />
 
+        <Route path="/forest" element={<Forest />}></Route>
+
+        <Route path="/city" element={<City />}></Route>
+
         <Route path="/sea" element={<Sea />}></Route>
 
         <Route path="/friend" element={<Friend />}></Route>
+
+        <Route path="/map" element={<Map />}></Route>
       </Routes>
     </Router>
   );
