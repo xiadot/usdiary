@@ -16,6 +16,7 @@ import CityTendency from "./pages/tendency/city_tendency";
 import Map from './pages/map/map';
 import Forest from './pages/home/forest';
 import City from './pages/home/city';
+import CheckList from './pages/checklist/checklist';
 
 const App = () => {
 
@@ -35,6 +36,9 @@ const App = () => {
         <Route path="/city_diary" element={<CityDiary />}></Route>
         {/* 바다 다이어리 페이지 경로 */}
         <Route path="/sea_diary" element={<SeaDiary />}></Route>
+
+        {/* 체크리스트 페이지 경로 */}
+        <Route path="/city_diary/checklist" element={<CheckList />}></Route>
 
         {/* 회원가입 페이지 경로 */}
         <Route path="/signup" element={<Signup/>} />   
