@@ -1,0 +1,1004 @@
+/* Reset */
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Wrap */
+.wrap {
+    min-width: 1100px;
+    min-height: 974px;
+}
+
+/* City Component */
+.wrap .city__checklist {
+    display: flex;
+}
+
+/* Check Section */
+.wrap .city__checklist__check {
+    width: 415px;
+    height: 803px;
+    background-color: #FFFDB9;
+    margin-top: 45px;
+    padding: 50px 50px 0px 42px; 
+    border-radius: 0px 50px 50px 0px;
+}
+
+.wrap .city__checklist__check-title {
+    display: flex;
+    margin-bottom: 52px;
+    align-items: center;
+}
+
+.wrap .city__checklist__check-title-name {
+    font-size: 30px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700; /* Bold font weight */
+    color: #828282;
+    margin-right: 8px;
+}
+
+.wrap .city__checklist__check-title-plusbtn {
+    width: 19px;
+    height: 19px;
+    background-color: #E6E4AE;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    line-height: 15px;
+    color: #828282;
+    margin-top: 3px;
+}
+
+.wrap .city__checklist__check-routine {
+    margin-bottom: 42px;
+}
+
+.wrap .city__checklist__check-routine-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.wrap .city__checklist__check-routine-top-circle {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #828282;
+    margin: 2px 5px 0px 0px;
+}
+
+.wrap .city__checklist__check-routine-top-name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 3px;
+}
+
+.wrap .city__checklist__check-routine-top-num {
+    width: 12px;
+    height: 12px;
+    background-color: #D9D9D9;
+    color: #ffffff;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 8px;
+    text-align: center;
+    line-height: 11px;
+    margin-top: 4px;
+}
+
+.wrap .city__checklist__check-routine hr {
+    background-color: #828282;
+    border:0;
+    height:2px;
+    margin-bottom: 19px;
+}
+
+.wrap .city__checklist__check-routine-bottom {
+    /* 2개까지 보이게*/
+    height: 173px;
+    overflow: auto;
+}
+
+.wrap .city__checklist__check-routine-bottom::-webkit-scrollbar {
+    width: 5px;
+}
+.wrap .city__checklist__check-routine-bottom::-webkit-scrollbar-thumb {
+    background-color: #828282;
+    border-radius: 10px;
+}
+.wrap .city__checklist__check-routine-bottom::-webkit-scrollbar-track {
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+
+.wrap .city__checklist__check-routine-bottom-box {
+    background-color: #ffffff;
+    height: 77px;
+    border-radius: 10px;
+    padding: 10px 12px 0px 12px;
+    margin-bottom: 19px;
+}
+
+.wrap .city__checklist__check-routine-bottom-box {
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.wrap .city__checklist__check-routine-bottom-box-toggleSwitch {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.wrap .city__checklist__check-routine-bottom-box-toggleSwitch input {
+    display: none;
+}
+
+.wrap .city__checklist__check-routine-bottom-box-toggleSwitch label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.wrap .city__checklist__check-routine-bottom-box-toggleSwitch span {
+    width: 35px;
+    height: 15px;
+    display: block;
+    position: relative;
+    border-radius: 30px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+
+.wrap .city__checklist__check-routine-bottom-box-toggleSwitch span:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    width: 11px;
+    height: 11px;
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.wrap .city__checklist__check-routine-bottom-box-toggleSwitch input:checked + label span:before {
+    left: calc(100% - 15px);
+}
+
+.wrap .city__checklist__check-routine-bottom-box-toggleSwitch input:checked + label span {
+    background-color: #fdee6bd5;
+}
+
+.wrap .city__checklist__check-routine-bottom-box-title {
+    margin-top: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+}
+
+.wrap .city__checklist__check-routine-bottom-box-content {
+    margin-top: 4px;
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+}
+
+
+.wrap .city__checklist__check-todo {
+    margin-bottom: 62px;
+}
+
+.wrap .city__checklist__check-todo-top {
+    display: flex;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.wrap .city__checklist__check-todo-top-circle {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #828282;
+    margin: 2px 5px 0px 0px;
+}
+
+.wrap .city__checklist__check-todo-top-name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 3px;
+}
+
+.wrap .city__checklist__check-todo-top-num {
+    width: 12px;
+    height: 12px;
+    background-color: #D9D9D9;
+    color: #ffffff;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 8px;
+    text-align: center;
+    line-height: 11px;
+    margin-top: 4px;
+}
+
+.wrap .city__checklist__check-todo hr {
+    background-color: #828282;
+    border:0;
+    height:2px;
+    margin-bottom: 19px;
+}
+
+.wrap .city__checklist__check-todo-bottom {
+    /* 3개까지 보이게*/
+    height: 269px;
+    overflow: auto;
+}
+
+.wrap .city__checklist__check-todo-bottom::-webkit-scrollbar {
+    width: 5px;
+}
+.wrap .city__checklist__check-todo-bottom::-webkit-scrollbar-thumb {
+    background-color: #828282;
+    border-radius: 10px;
+}
+.wrap .city__checklist__check-todo-bottom::-webkit-scrollbar-track {
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+
+.wrap .city__checklist__check-todo-bottom-box {
+    background-color: #ffffff;
+    height: 77px;
+    border-radius: 10px;
+    padding: 10px 12px 0px 12px;
+    margin-bottom: 19px;
+}
+
+.wrap .city__checklist__check-todo-bottom-box {
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.wrap .city__checklist__check-todo-bottom-box-toggleSwitch {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.wrap .city__checklist__check-todo-bottom-box-toggleSwitch input {
+    display: none;
+}
+
+.wrap .city__checklist__check-todo-bottom-box-toggleSwitch label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.wrap .city__checklist__check-todo-bottom-box-toggleSwitch span {
+    width: 35px;
+    height: 15px;
+    display: block;
+    position: relative;
+    border-radius: 30px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+}
+
+.wrap .city__checklist__check-todo-bottom-box-toggleSwitch span:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    width: 11px;
+    height: 11px;
+    background-color: #fff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.wrap .city__checklist__check-todo-bottom-box-toggleSwitch input:checked + label span:before {
+    left: calc(100% - 15px);
+}
+
+.wrap .city__checklist__check-todo-bottom-box-toggleSwitch input:checked + label span {
+    background-color: #fdee6bd5;
+}
+
+.wrap .city__checklist__check-todo-bottom-box-title {
+    margin-top: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+}
+
+.wrap .city__checklist__check-todo-bottom-box-content {
+    margin-top: 4px;
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+}
+
+/* Diary Section */
+.wrap .city__checklist__diary {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+
+.wrap .city__checklist__diary-top {
+    display: flex;
+    width: 588px;
+    margin-top: 42px;
+    margin-bottom: 20px;    
+}
+
+/* City Image */
+.wrap .city__checklist__diary-top-image {
+    height: 60px;
+    margin-right: 17px;
+}
+
+/* Today's City Title */
+.wrap .city__checklist__diary-top-title {
+    font-size: 32px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700; /* Bold font weight */
+    color: #828282;
+    padding-top: 12px;
+}
+
+/* Date Section */
+.wrap .city__checklist__diary-date {
+    width: 566px;
+    height: 40px;
+    margin-bottom: 19px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Date Arrow */
+.wrap .city__checklist__diary-date-arrow {
+    width: 20px;
+    height: 20px;
+    margin-top: 10px;
+}
+
+/* Date Container */
+.wrap .city__checklist__diary-date-container {
+    width: 468px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Date Round */
+.wrap .city__checklist__diary-date-round {
+    width: 40px;
+    height: 40px;
+    background-color: #FFFDB9;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #9e9e9e;
+}
+
+.wrap .city__checklist__diary-date-round--today {
+    background-color: #FDEF6B;
+    color: #ffffff;
+}
+
+/* Title Edit */
+.wrap .city__checklist__diary-title-edit {
+    width: 591px;
+    height: 33px;
+    color: #C6C9CE;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 26px;
+    line-height: 20px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 600;
+    border-style: solid;
+    border-width: 0 0 1px;
+    border-color: #BBBBBB;
+    outline: none;
+}
+
+/* Another Section */
+.wrap .city__checklist__diary-another {
+    width: 90%;
+    height: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Reveal Component */
+.wrap .city__checklist__diary-another-reveal {
+    width: 159px;
+    height: 30px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    margin-right: 13px;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+}
+
+/* Reveal Button */
+.wrap .city__checklist__diary-another-reveal-btn {
+    height: 18px;
+    background-color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 600;
+    color: #7D7D7D;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    padding-top: 2px;
+}
+
+.wrap .city__checklist__diary-another-reveal-btn--only {
+    width: 42px;
+}
+
+.wrap .city__checklist__diary-another-reveal-btn--subscribe {
+    width: 53px;
+}
+
+.wrap .city__checklist__diary-another-reveal-btn--all {
+    width: 43px;
+}
+
+.wrap .city__checklist__diary-another-reveal-btn--selected {
+    background-color: #E8E6E6;
+    color: #7D7D7D;
+}
+
+/* Submit Button */
+.wrap .city__checklist__diary-another-submit {
+    width: 55px;
+    height: 30px;
+    background-color: #FDEF6B;
+    margin-right: 4px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color: #ffffff;
+}
+
+.wrap .city__checklist__diary-another-submit:hover {
+    background-color: #FFFDB9;
+}
+
+/* Text Editor */
+.wrap .city__checklist__diary-texts {
+    width: 90%;
+    height: 519px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #828282;
+    margin-bottom: 50px;
+}
+
+.wrap .city__checklist__diary-texts p {
+    font-size: large;
+}
+
+
+/* popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(81, 81, 81, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: flex-start; /* 위쪽에 맞춤 */
+    overflow: auto; /* 스크롤이 가능하도록 설정 */
+    z-index: 1000; /* 다른 요소들 위에 표시 */
+    padding: 20px 0px;
+}
+
+.popup-background {
+    background: #FFFDB9;
+    border-radius: 42px;
+    width: 450px;
+    height: 624.1px;
+    /* padding: 70px 0px 0px 0px; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    position: relative; /* 위치 설정을 위한 상대적 위치 */
+    margin: auto;
+    overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤 */
+}
+
+.popup-content {
+    width: 365px;
+    margin: auto;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700; /* Bold font weight */
+    width: 365px;
+    color: #828282;
+    margin: 57px 0px 21px 10px;
+}
+
+.popup-close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700; /* Bold font weight */
+    color: #828282;
+    cursor: pointer;
+    margin-right: 14px;
+}
+
+.popup-routine {
+    background: #ffffff;
+    border-radius: 8px;
+    width: 365px;
+    height: 463px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.popup-routine {
+    padding: 45px 34px 0px 34px;
+    position: relative;
+}
+
+.popup-routine-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-routine-top-title {
+    display: flex;
+}
+
+.popup-routine-top-title-circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 2.5px;
+    background-color: #828282;
+    margin: 11px 6px 0px 0px;
+
+}
+
+.popup-routine-top-title-name {
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 3px;
+    color: #7D7D7D;
+}
+
+.popup-routine-top-arrow {
+    height: 15px;
+    margin-top: 6px;
+}
+
+.popup-content hr {
+    width: 100%;
+    background-color: #828282;
+    border: 0;
+    height: 2px;
+    margin-top: 20px;
+}
+
+.popup-routine-middle {
+    width: 100%;
+    margin-top: 8px;
+    max-height: 290px; /* 원하는 최대 높이로 조정 */
+    overflow: auto; /* 내용이 넘칠 경우 수직 스크롤 추가 */
+}
+
+.popup-routine-middle::-webkit-scrollbar {
+    width: 5px;
+}
+.popup-routine-middle::-webkit-scrollbar-thumb {
+    background-color: #828282;
+    border-radius: 10px;
+}
+.popup-routine-middle::-webkit-scrollbar-track {
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+
+.popup-routine-middle-box {
+    width: 100%;
+    height: 77px;
+    border-radius: 10px;
+    padding: 0px 14px 0px 14px;
+    border: 1px solid #9EA3AB;
+    margin-bottom: 11px;
+}
+
+.popup-routine-middle-box-1 {
+    height: 16px;
+}
+
+.popup-routine-middle-box-toggleSwitch {
+    width: 35px;
+    height: 15px;
+    display: block;
+    position: relative;
+    border-radius: 30px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.2s ease-in;
+}
+
+/* 토글 버튼 스타일 */
+.popup-routine-middle-box-toggleButton {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #ffffff;
+    transition: all 0.2s ease-in;
+}
+
+/* 체크된 상태에서 토글 스위치 배경 색상 변경 */
+input[type="checkbox"]:checked + .popup-routine-middle-box-toggleSwitch {
+    background: #fdee6bd5;
+}
+
+/* 체크된 상태에서 토글 버튼 위치 변경 */
+input[type="checkbox"]:checked + .popup-routine-middle-box-toggleSwitch .popup-routine-middle-box-toggleButton {
+    left: calc(100% - 15px);
+    background: #ffffff;
+}
+
+/* 토글 스위치와 버튼의 전환 애니메이션 */
+.popup-routine-middle-box-toggleSwitch, 
+.popup-routine-middle-box-toggleButton {
+    transition: all 0.2s ease-in;
+}
+
+.popup-routine-middle-box-2 {
+    height: 16px;
+}
+
+.popup-routine-middle-box-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-routine-middle-box-title::placeholder {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-routine-middle-box-title:focus {
+    outline:none;
+}
+
+.popup-routine-middle-box-3 {
+    height: 18px;
+}
+
+.popup-routine-middle-box-content {
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-routine-middle-box-content::placeholder {
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-routine-middle-box-content:focus {
+    outline:none;
+}
+
+.popup-routine-middle-box-delete {
+    font-size: 10px;
+    font-weight: 400;
+    color: #0D062D;
+    float: right;
+}
+
+.popup-routine-middle-box-delete:hover {
+    color: #c41313;
+}
+
+.popup-routine-middle-plusbtn {
+    height: 20px;
+    font-size: 10px;
+    /* font-weight: 600; */
+    text-align: center;
+    line-height: 20px;
+    color: #ffffff;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+}
+
+.popup-routine-middle-plusbtn:hover {
+    background-color: #7D7D7D;
+}
+
+.popup-routine-savebtn {
+    margin-left: 250px;
+    bottom: 28px;
+	position: absolute;
+    font-size: 7px;
+    text-align: center;
+    line-height: 24px;
+    width: 43px;
+	height: 24px;
+    color: #ffffff;
+	background-color: #FDEF6B;
+    border-radius: 20px;
+}
+
+.popup-routine-savebtn:hover {
+    background-color: #FFFDB9;
+}
+
+.popup-todo {
+    background: #ffffff;
+    border-radius: 8px;
+    width: 365px;
+    height: 463px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.popup-todo {
+    padding: 45px 34px 0px 34px;
+    position: relative;
+}
+
+.popup-todo-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-todo-top-title {
+    display: flex;
+}
+
+.popup-todo-top-title-circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 2.5px;
+    background-color: #828282;
+    margin: 11px 6px 0px 0px;
+
+}
+
+.popup-todo-top-title-name {
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 3px;
+    color: #7D7D7D;
+}
+
+.popup-todo-top-arrow {
+    height: 15px;
+    margin-top: 6px;
+}
+
+.popup-todo-middle {
+    width: 100%;
+    margin-top: 8px;
+    max-height: 290px; /* 원하는 최대 높이로 조정 */
+    overflow: auto; /* 내용이 넘칠 경우 수직 스크롤 추가 */
+}
+
+.popup-todo-middle::-webkit-scrollbar {
+    width: 5px;
+}
+.popup-todo-middle::-webkit-scrollbar-thumb {
+    background-color: #828282;
+    border-radius: 10px;
+}
+.popup-todo-middle::-webkit-scrollbar-track {
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+
+.popup-todo-middle-box {
+    width: 100%;
+    height: 77px;
+    border-radius: 10px;
+    padding: 0px 14px 0px 14px;
+    border: 1px solid #9EA3AB;
+    margin-bottom: 11px;
+}
+
+.popup-todo-middle-box-1 {
+    height: 16px;
+}
+
+.popup-todo-middle-box-toggleSwitch {
+    width: 35px;
+    height: 15px;
+    display: block;
+    position: relative;
+    border-radius: 30px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.2s ease-in;
+}
+
+/* 토글 버튼 스타일 */
+.popup-todo-middle-box-toggleButton {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #ffffff;
+    transition: all 0.2s ease-in;
+}
+
+/* 체크된 상태에서 토글 스위치 배경 색상 변경 */
+input[type="checkbox"]:checked + .popup-todo-middle-box-toggleSwitch {
+    background: #fdee6bd5;
+}
+
+/* 체크된 상태에서 토글 버튼 위치 변경 */
+input[type="checkbox"]:checked + .popup-todo-middle-box-toggleSwitch .popup-todo-middle-box-toggleButton {
+    left: calc(100% - 15px);
+    background: #ffffff;
+}
+
+/* 토글 스위치와 버튼의 전환 애니메이션 */
+.popup-todo-middle-box-toggleSwitch, 
+.popup-todo-middle-box-toggleButton {
+    transition: all 0.2s ease-in;
+}
+
+.popup-todo-middle-box-2 {
+    height: 16px;
+}
+
+.popup-todo-middle-box-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-todo-middle-box-title::placeholder {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-todo-middle-box-title:focus {
+    outline:none;
+}
+
+.popup-todo-middle-box-3 {
+    height: 18px;
+}
+
+.popup-todo-middle-box-content {
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-todo-middle-box-content::placeholder {
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+    width:100%;
+    border-width: 0;
+}
+
+.popup-todo-middle-box-content:focus {
+    outline:none;
+}
+
+.popup-todo-middle-box-delete {
+    font-size: 10px;
+    font-weight: 400;
+    color: #0D062D;
+    float: right;
+}
+
+.popup-todo-middle-box-delete:hover {
+    color: #c41313;
+}
+
+.popup-todo-middle-plusbtn {
+    height: 20px;
+    font-size: 10px;
+    /* font-weight: 600; */
+    text-align: center;
+    line-height: 20px;
+    color: #ffffff;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+}
+
+.popup-todo-middle-plusbtn:hover {
+    background-color: #7D7D7D;
+}
+
+.popup-todo-savebtn {
+    margin-left: 250px;
+    bottom: 28px;
+	position: absolute;
+    font-size: 7px;
+    text-align: center;
+    line-height: 24px;
+    width: 43px;
+	height: 24px;
+    color: #ffffff;
+	background-color: #FDEF6B;
+    border-radius: 20px;
+}
+
+.popup-todo-savebtn:hover {
+    background-color: #FFFDB9;
+}
+
+
+/* Diary Button in Menu */
+.menu .button #diary {
+    height: 29px;
+    border-radius: 22.5px;
+    background-color: #ffffff;
+    color: #2C2C2C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    box-shadow: 0px 4px 4px #B8B8B8;
+}
+
+  
+  
