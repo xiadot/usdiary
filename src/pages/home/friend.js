@@ -18,7 +18,7 @@ const Friend = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/api/friend'); // Replace with your API URL
+                const response = await axios.get('/friend'); // Replace with your API URL
                 const data = response.data;
                 setDiaries(data);
                 setTotalPages(Math.ceil(data.length / diariesPerPage));

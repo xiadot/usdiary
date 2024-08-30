@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import '../assets/css/diaryCard.css';
 import axios from 'axios';
 
-const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFriendPage, diaryId}) => {
+const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFriendPage, diaryId, onClick}) => {
     const [liked, setLiked] = useState(false);
 
     const formatDate = (date) => {
@@ -17,7 +17,7 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
         // Fetch initial liked status
         const fetchLikeStatus = async () => {
             try {
-                const response = await axios.get(`/api/diaries/${diaryId}/like`);
+                const response = await axios.get(`/diaries/${diaryId}/like`);
                 setLiked(response.data.liked);
             } catch (error) {
                 console.error('Failed to fetch like status', error);
@@ -26,7 +26,8 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
         fetchLikeStatus();
     }, [diaryId]);
 
-    const toggleLike = () => {
+    const toggleLike = (e) => {
+        e.stopPropagation();
         setLiked(!liked);
     };
 
@@ -60,7 +61,7 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
 
 
     return (
-        <div className={`diary-card ${getBorderClass()}`}>
+        <div className={`diary-card ${getBorderClass()}`} onClick={onClick}>
             <div className="diary-header">
                 <span className="diary-nickname">{nickname} 님</span>
                 <span className="diary-like" onClick={toggleLike}>
