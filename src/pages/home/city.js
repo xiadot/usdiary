@@ -18,7 +18,7 @@ const City = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/api/city'); // Replace with your API URL
+                const response = await axios.get('/city'); // Replace with your API URL
                 const data = response.data;
                 setDiaries(data);
                 setTotalPages(Math.ceil(data.length / diariesPerPage));
