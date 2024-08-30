@@ -85,7 +85,7 @@ const SignUp = () => {
 
             try {
                 // 서버에 POST 요청 보내기
-                const response = await fetch('http://localhost:3001/register/register', {
+                const response = await fetch('http://localhost:3001/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -121,7 +121,10 @@ const SignUp = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ code: verificationCode.join('') }),
+            body: JSON.stringify({
+                verificationCode: verificationCode.join(''), // 인증 코드
+                email: formData.email // 이메일 추가
+            }),
             });
             const result = await response.json();
 
@@ -169,7 +172,7 @@ const SignUp = () => {
 
     const handleIdCheck = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/register/idcheck?userId=${formData.userId}`, {
+            const response = await fetch(`http://localhost:3001/register/idcheck?uid=${formData.userId}`, {
                 method: 'GET',
             });
 
@@ -193,7 +196,7 @@ const SignUp = () => {
 
     const handleNicknameCheck = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/register/nicknamecheck?nickname=${formData.nickname}`, {
+            const response = await fetch(`http://localhost:3001/register/nicknamecheck?unick=${formData.nickname}`, {
                 method: 'GET',
             });
 
