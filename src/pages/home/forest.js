@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DiaryCard from '../../components/diaryCard';
+import DiaryPopup from "../../components/diaryPopup";
 import '../../assets/css/forest.css';
 import Menu from "../../components/menu";
 import axios from "axios";
@@ -13,23 +14,35 @@ const Forest = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true); // Add a loading state
     const [error, setError] = useState(null); // Add an error state
-
-
+    const [selectedDiaryId, setSelectedDiaryId] = useState(null);
+    
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get('/api/forest'); // Replace with your API URL
-                const data = response.data;
-                setDiaries(data);
-                setTotalPages(Math.ceil(data.length / diariesPerPage));
-            } catch (error) {
-                setError('Failed to load data');
-            } finally {
-                setLoading(false);
+        // 하드 코딩된 일기 데이터
+        const hardcodedDiaries = [
+            {
+                diary_id: 1,
+                diary_title: "A Walk in the Forest",
+                date: "2024-08-28",
+                diary_content: "Today, I walked through the forest and saw many beautiful trees and flowers. The air was fresh, and I felt at peace.",
+                post_photo: "https://example.com/path-to-image.jpg", // 이미지 URL이 필요하다면 적절한 URL로 교체하세요.
+                board_name: "숲",
+                nickname: "ForestLover",
+            },
+            {
+                diary_id: 4,
+                diary_title: "Evening in the Forest",
+                date: "2024-08-28",
+                diary_content: "I went back to the forest in the evening, and it was even more serene. The sunset through t",
+                post_photo: "https://example.com/path-to-image.jpg", // 이미지 URL이 필요하다면 적절한 URL로 교체하세요.
+                board_name: "숲",
+                nickname: "ForestLover",
             }
-        };
-        fetchData();
+        ];
+
+        // 데이터를 상태에 설정
+        setDiaries(hardcodedDiaries);
+        setTotalPages(Math.ceil(hardcodedDiaries.length / diariesPerPage));
+        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -65,6 +78,13 @@ const Forest = () => {
         (_, index) => pageGroup * pagesPerGroup + index + 1
     );
 
+    const handleDiaryClick = (diary_id) => {
+        setSelectedDiaryId(diary_id); // 클릭한 다이어리 ID를 설정
+    };
+
+    const handleClosePopup = () => {
+        setSelectedDiaryId(null); // 팝업 닫기
+    };
 
     return (
         <div className="wrap">
@@ -97,6 +117,7 @@ const Forest = () => {
                             boardName={diary.board_name}
                             nickname={diary.nickname}
                             diaryId={diary.diary_id}
+                            onClick={() => handleDiaryClick(diary.diary_id)}
                         />
                     ))}
                 </div>
@@ -128,6 +149,10 @@ const Forest = () => {
                 </div>
 
                 <div className="forest-page__tree-background"></div>
+
+                {selectedDiaryId && (
+                    <DiaryPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
+                )}
             </div>
         </div>
     );

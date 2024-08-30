@@ -18,7 +18,7 @@ const Sea = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/api/sea'); // Replace with your API endpoint
+                const response = await axios.get('/sea'); // Replace with your API endpoint
                 const data = response.data;
                 setDiaries(data);
                 setTotalPages(Math.ceil(data.length / diariesPerPage));
