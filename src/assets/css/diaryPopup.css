@@ -161,12 +161,8 @@
     border: none;
     cursor: pointer;
     font-size: 12px;
-    color: #007BFF; /* 수정 버튼 색상 */
+    color: #7D7D7D; /* 수정 버튼 색상 */
     margin-bottom: 5px;
-}
-
-.delete-button {
-    color: #FF0000; /* 삭제 버튼 색상 */
 }
 
 .edit-comment-input {
