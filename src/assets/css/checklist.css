@@ -518,9 +518,8 @@
     font-size: large;
 }
 
-
 /* popup */
-.routine-popup-overlay {
+.ck-popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -536,7 +535,7 @@
     padding: 20px 0px;
 }
 
-.routine-popup-background {
+.ck-popup-background {
     background: #FFFDB9;
     border-radius: 42px;
     width: 450px;
@@ -548,12 +547,12 @@
     overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤 */
 }
 
-.routine-popup-content {
+.ck-popup-content {
     width: 365px;
     margin: auto;
 }
 
-.routine-popup-header {
+.ck-popup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -565,11 +564,11 @@
     margin: 57px 0px 21px 10px;
 }
 
-.routine-popup-header h2 {
+.ck-popup-header h2 {
     margin: 0;
 }
 
-.routine-popup-close {
+.ck-popup-close {
     background: transparent;
     border: none;
     font-size: 24px;
@@ -580,26 +579,29 @@
     margin-right: 14px;
 }
 
-.routine-popup-routine {
+.ck-popup-routine {
     background: #ffffff;
     border-radius: 8px;
     width: 365px;
     height: 463px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.ck-popup-routine {
     padding: 45px 34px 0px 34px;
     position: relative;
 }
 
-.routine-popup-routine-top {
+.ck-popup-routine-top {
     display: flex;
     justify-content: space-between;
 }
 
-.routine-popup-routine-top-title {
+.ck-popup-routine-top-title {
     display: flex;
 }
 
-.routine-popup-routine-top-title-circle {
+.ck-popup-routine-top-title-circle {
     width: 5px;
     height: 5px;
     border-radius: 2.5px;
@@ -607,19 +609,19 @@
     margin: 11px 6px 0px 0px;
 }
 
-.routine-popup-routine-top-title-name {
+.ck-popup-routine-top-title-name {
     font-size: 18px;
     font-weight: 500;
     margin-right: 3px;
     color: #7D7D7D;
 }
 
-.routine-popup-routine-top-arrow {
+.ck-popup-routine-top-arrow {
     height: 15px;
     margin-top: 6px;
 }
 
-.routine-popup-content hr {
+.ck-popup-content hr {
     width: 100%;
     background-color: #828282;
     border: 0;
@@ -627,26 +629,26 @@
     margin-top: 20px;
 }
 
-.routine-popup-routine-middle {
+.ck-popup-routine-middle {
     width: 100%;
     margin-top: 8px;
     max-height: 290px; /* 원하는 최대 높이로 조정 */
     overflow: auto; /* 내용이 넘칠 경우 수직 스크롤 추가 */
 }
 
-.routine-popup-routine-middle::-webkit-scrollbar {
+.ck-popup-routine-middle::-webkit-scrollbar {
     width: 5px;
 }
-.routine-popup-routine-middle::-webkit-scrollbar-thumb {
+.ck-popup-routine-middle::-webkit-scrollbar-thumb {
     background-color: #828282;
     border-radius: 10px;
 }
-.routine-popup-routine-middle::-webkit-scrollbar-track {
+.ck-popup-routine-middle::-webkit-scrollbar-track {
     background-color: #D9D9D9;
     border-radius: 10px;
 }
 
-.routine-popup-routine-middle-box {
+.ck-popup-routine-middle-box {
     width: 100%;
     height: 77px;
     border-radius: 10px;
@@ -655,11 +657,11 @@
     margin-bottom: 11px;
 }
 
-.routine-popup-routine-middle-box-1 {
+.ck-popup-routine-middle-box-1 {
     height: 16px;
 }
 
-.routine-popup-routine-middle-box-toggleSwitch {
+.ck-popup-routine-middle-box-toggleSwitch {
     width: 35px;
     height: 15px;
     display: block;
@@ -672,7 +674,7 @@
 }
 
 /* 토글 버튼 스타일 */
-.routine-popup-routine-middle-box-toggleButton {
+.ck-popup-routine-middle-box-toggleButton {
     width: 11px;
     height: 11px;
     position: absolute;
@@ -685,27 +687,27 @@
 }
 
 /* 체크된 상태에서 토글 스위치 배경 색상 변경 */
-input[type="checkbox"]:checked + .routine-popup-routine-middle-box-toggleSwitch {
+input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch {
     background: #fdee6bd5;
 }
 
 /* 체크된 상태에서 토글 버튼 위치 변경 */
-input[type="checkbox"]:checked + .routine-popup-routine-middle-box-toggleSwitch .routine-popup-routine-middle-box-toggleButton {
+input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-popup-routine-middle-box-toggleButton {
     left: calc(100% - 15px);
     background: #ffffff;
 }
 
 /* 토글 스위치와 버튼의 전환 애니메이션 */
-.routine-popup-routine-middle-box-toggleSwitch, 
-.routine-popup-routine-middle-box-toggleButton {
+.ck-popup-routine-middle-box-toggleSwitch, 
+.ck-popup-routine-middle-box-toggleButton {
     transition: all 0.2s ease-in;
 }
 
-.routine-popup-routine-middle-box-2 {
+.ck-popup-routine-middle-box-2 {
     height: 16px;
 }
 
-.routine-popup-routine-middle-box-title {
+.ck-popup-routine-middle-box-title {
     font-size: 13.5px;
     font-weight: 600;
     color: #0D062D;
@@ -713,7 +715,7 @@ input[type="checkbox"]:checked + .routine-popup-routine-middle-box-toggleSwitch 
     border-width: 0;
 }
 
-.routine-popup-routine-middle-box-title::placeholder {
+.ck-popup-routine-middle-box-title::placeholder {
     font-size: 13.5px;
     font-weight: 600;
     color: #0D062D;
@@ -721,15 +723,15 @@ input[type="checkbox"]:checked + .routine-popup-routine-middle-box-toggleSwitch 
     border-width: 0;
 }
 
-.routine-popup-routine-middle-box-title:focus {
+.ck-popup-routine-middle-box-title:focus {
     outline:none;
 }
 
-.routine-popup-routine-middle-box-3 {
+.ck-popup-routine-middle-box-3 {
     height: 18px;
 }
 
-.routine-popup-routine-middle-box-content {
+.ck-popup-routine-middle-box-content {
     font-size: 9px;
     font-weight: 400;
     color: #787486;
@@ -737,7 +739,7 @@ input[type="checkbox"]:checked + .routine-popup-routine-middle-box-toggleSwitch 
     border-width: 0;
 }
 
-.routine-popup-routine-middle-box-content::placeholder {
+.ck-popup-routine-middle-box-content::placeholder {
     font-size: 9px;
     font-weight: 400;
     color: #787486;
@@ -745,22 +747,22 @@ input[type="checkbox"]:checked + .routine-popup-routine-middle-box-toggleSwitch 
     border-width: 0;
 }
 
-.routine-popup-routine-middle-box-content:focus {
+.ck-popup-routine-middle-box-content:focus {
     outline:none;
 }
 
-.routine-popup-routine-middle-box-delete {
+.ck-popup-routine-middle-box-delete {
     font-size: 10px;
     font-weight: 400;
     color: #0D062D;
     float: right;
 }
 
-.routine-popup-routine-middle-box-delete:hover {
+.ck-popup-routine-middle-box-delete:hover {
     color: #c41313;
 }
 
-.routine-popup-routine-middle-plusbtn {
+.ck-popup-routine-middle-plusbtn {
     height: 20px;
     font-size: 10px;
     /* font-weight: 600; */
@@ -771,221 +773,11 @@ input[type="checkbox"]:checked + .routine-popup-routine-middle-box-toggleSwitch 
     border-radius: 5px;
 }
 
-.routine-popup-routine-middle-plusbtn:hover {
+.ck-popup-routine-middle-plusbtn:hover {
     background-color: #7D7D7D;
 }
 
-.routine-popup-routine-savebtn {
-    margin-left: 250px;
-    bottom: 28px;
-    position: absolute;
-    font-size: 7px;
-    text-align: center;
-    line-height: 24px;
-    width: 43px;
-    height: 24px;
-    color: #ffffff;
-    background-color: #FDEF6B;
-    border-radius: 20px;
-}
-
-.routine-popup-routine-savebtn:hover {
-    background-color: #FFFDB9;
-}
-
-
-.popup-todo {
-    background: #ffffff;
-    border-radius: 8px;
-    width: 365px;
-    height: 463px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-}
-
-.popup-todo {
-    padding: 45px 34px 0px 34px;
-    position: relative;
-}
-
-.popup-todo-top {
-    display: flex;
-    justify-content: space-between;
-}
-
-.popup-todo-top-title {
-    display: flex;
-}
-
-.popup-todo-top-title-circle {
-    width: 5px;
-    height: 5px;
-    border-radius: 2.5px;
-    background-color: #828282;
-    margin: 11px 6px 0px 0px;
-
-}
-
-.popup-todo-top-title-name {
-    font-size: 18px;
-    font-weight: 500;
-    margin-right: 3px;
-    color: #7D7D7D;
-}
-
-.popup-todo-top-arrow {
-    height: 15px;
-    margin-top: 6px;
-}
-
-.popup-todo-middle {
-    width: 100%;
-    margin-top: 8px;
-    max-height: 290px; /* 원하는 최대 높이로 조정 */
-    overflow: auto; /* 내용이 넘칠 경우 수직 스크롤 추가 */
-}
-
-.popup-todo-middle::-webkit-scrollbar {
-    width: 5px;
-}
-.popup-todo-middle::-webkit-scrollbar-thumb {
-    background-color: #828282;
-    border-radius: 10px;
-}
-.popup-todo-middle::-webkit-scrollbar-track {
-    background-color: #D9D9D9;
-    border-radius: 10px;
-}
-
-.popup-todo-middle-box {
-    width: 100%;
-    height: 77px;
-    border-radius: 10px;
-    padding: 0px 14px 0px 14px;
-    border: 1px solid #9EA3AB;
-    margin-bottom: 11px;
-}
-
-.popup-todo-middle-box-1 {
-    height: 16px;
-}
-
-.popup-todo-middle-box-toggleSwitch {
-    width: 35px;
-    height: 15px;
-    display: block;
-    position: relative;
-    border-radius: 30px;
-    background-color: #D9D9D9;
-    cursor: pointer;
-    margin-top: 5px;
-    transition: background-color 0.2s ease-in;
-}
-
-/* 토글 버튼 스타일 */
-.popup-todo-middle-box-toggleButton {
-    width: 11px;
-    height: 11px;
-    position: absolute;
-    top: 50%;
-    left: 4px;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    background: #ffffff;
-    transition: all 0.2s ease-in;
-}
-
-/* 체크된 상태에서 토글 스위치 배경 색상 변경 */
-input[type="checkbox"]:checked + .popup-todo-middle-box-toggleSwitch {
-    background: #fdee6bd5;
-}
-
-/* 체크된 상태에서 토글 버튼 위치 변경 */
-input[type="checkbox"]:checked + .popup-todo-middle-box-toggleSwitch .popup-todo-middle-box-toggleButton {
-    left: calc(100% - 15px);
-    background: #ffffff;
-}
-
-/* 토글 스위치와 버튼의 전환 애니메이션 */
-.popup-todo-middle-box-toggleSwitch, 
-.popup-todo-middle-box-toggleButton {
-    transition: all 0.2s ease-in;
-}
-
-.popup-todo-middle-box-2 {
-    height: 16px;
-}
-
-.popup-todo-middle-box-title {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #0D062D;
-    width:100%;
-    border-width: 0;
-}
-
-.popup-todo-middle-box-title::placeholder {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #0D062D;
-    width:100%;
-    border-width: 0;
-}
-
-.popup-todo-middle-box-title:focus {
-    outline:none;
-}
-
-.popup-todo-middle-box-3 {
-    height: 18px;
-}
-
-.popup-todo-middle-box-content {
-    font-size: 9px;
-    font-weight: 400;
-    color: #787486;
-    width:100%;
-    border-width: 0;
-}
-
-.popup-todo-middle-box-content::placeholder {
-    font-size: 9px;
-    font-weight: 400;
-    color: #787486;
-    width:100%;
-    border-width: 0;
-}
-
-.popup-todo-middle-box-content:focus {
-    outline:none;
-}
-
-.popup-todo-middle-box-delete {
-    font-size: 10px;
-    font-weight: 400;
-    color: #0D062D;
-    float: right;
-}
-
-.popup-todo-middle-box-delete:hover {
-    color: #c41313;
-}
-
-.popup-todo-middle-plusbtn {
-    height: 20px;
-    font-size: 10px;
-    /* font-weight: 600; */
-    text-align: center;
-    line-height: 20px;
-    color: #ffffff;
-    background-color: #D9D9D9;
-    border-radius: 5px;
-}
-
-.popup-todo-middle-plusbtn:hover {
-    background-color: #7D7D7D;
-}
-
-.popup-todo-savebtn {
+.ck-popup-routine-savebtn {
     margin-left: 250px;
     bottom: 28px;
 	position: absolute;
@@ -999,7 +791,215 @@ input[type="checkbox"]:checked + .popup-todo-middle-box-toggleSwitch .popup-todo
     border-radius: 20px;
 }
 
-.popup-todo-savebtn:hover {
+.ck-popup-routine-savebtn:hover {
+    background-color: #FFFDB9;
+}
+
+.ck-popup-todo {
+    background: #ffffff;
+    border-radius: 8px;
+    width: 365px;
+    height: 463px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.ck-popup-todo {
+    padding: 45px 34px 0px 34px;
+    position: relative;
+}
+
+.ck-popup-todo-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ck-popup-todo-top-title {
+    display: flex;
+}
+
+.ck-popup-todo-top-title-circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 2.5px;
+    background-color: #828282;
+    margin: 11px 6px 0px 0px;
+}
+
+.ck-popup-todo-top-title-name {
+    font-size: 18px;
+    font-weight: 500;
+    margin-right: 3px;
+    color: #7D7D7D;
+}
+
+.ck-popup-todo-top-arrow {
+    height: 15px;
+    margin-top: 6px;
+}
+
+.ck-popup-todo-middle {
+    width: 100%;
+    margin-top: 8px;
+    max-height: 290px; /* 원하는 최대 높이로 조정 */
+    overflow: auto; /* 내용이 넘칠 경우 수직 스크롤 추가 */
+}
+
+.ck-popup-todo-middle::-webkit-scrollbar {
+    width: 5px;
+}
+.ck-popup-todo-middle::-webkit-scrollbar-thumb {
+    background-color: #828282;
+    border-radius: 10px;
+}
+.ck-popup-todo-middle::-webkit-scrollbar-track {
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+
+.ck-popup-todo-middle-box {
+    width: 100%;
+    height: 77px;
+    border-radius: 10px;
+    padding: 0px 14px 0px 14px;
+    border: 1px solid #9EA3AB;
+    margin-bottom: 11px;
+}
+
+.ck-popup-todo-middle-box-1 {
+    height: 16px;
+}
+
+.ck-popup-todo-middle-box-toggleSwitch {
+    width: 35px;
+    height: 15px;
+    display: block;
+    position: relative;
+    border-radius: 30px;
+    background-color: #D9D9D9;
+    cursor: pointer;
+    margin-top: 5px;
+    transition: background-color 0.2s ease-in;
+}
+
+/* 토글 버튼 스타일 */
+.ck-popup-todo-middle-box-toggleButton {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: #ffffff;
+    transition: all 0.2s ease-in;
+}
+
+/* 체크된 상태에서 토글 스위치 배경 색상 변경 */
+input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch {
+    background: #fdee6bd5;
+}
+
+/* 체크된 상태에서 토글 버튼 위치 변경 */
+input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popup-todo-middle-box-toggleButton {
+    left: calc(100% - 15px);
+    background: #ffffff;
+}
+
+/* 토글 스위치와 버튼의 전환 애니메이션 */
+.ck-popup-todo-middle-box-toggleSwitch, 
+.ck-popup-todo-middle-box-toggleButton {
+    transition: all 0.2s ease-in;
+}
+
+.ck-popup-todo-middle-box-2 {
+    height: 16px;
+}
+
+.ck-popup-todo-middle-box-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+    width:100%;
+    border-width: 0;
+}
+
+.ck-popup-todo-middle-box-title::placeholder {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0D062D;
+    width:100%;
+    border-width: 0;
+}
+
+.ck-popup-todo-middle-box-title:focus {
+    outline:none;
+}
+
+.ck-popup-todo-middle-box-3 {
+    height: 18px;
+}
+
+.ck-popup-todo-middle-box-content {
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+    width:100%;
+    border-width: 0;
+}
+
+.ck-popup-todo-middle-box-content::placeholder {
+    font-size: 9px;
+    font-weight: 400;
+    color: #787486;
+    width:100%;
+    border-width: 0;
+}
+
+.ck-popup-todo-middle-box-content:focus {
+    outline:none;
+}
+
+.ck-popup-todo-middle-box-delete {
+    font-size: 10px;
+    font-weight: 400;
+    color: #0D062D;
+    float: right;
+}
+
+.ck-popup-todo-middle-box-delete:hover {
+    color: #c41313;
+}
+
+.ck-popup-todo-middle-plusbtn {
+    height: 20px;
+    font-size: 10px;
+    /* font-weight: 600; */
+    text-align: center;
+    line-height: 20px;
+    color: #ffffff;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+}
+
+.ck-popup-todo-middle-plusbtn:hover {
+    background-color: #7D7D7D;
+}
+
+.ck-popup-todo-savebtn {
+    margin-left: 250px;
+    bottom: 28px;
+	position: absolute;
+    font-size: 7px;
+    text-align: center;
+    line-height: 24px;
+    width: 43px;
+	height: 24px;
+    color: #ffffff;
+	background-color: #FDEF6B;
+    border-radius: 20px;
+}
+
+.ck-popup-todo-savebtn:hover {
     background-color: #FFFDB9;
 }
 
