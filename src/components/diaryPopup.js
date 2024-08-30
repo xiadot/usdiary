@@ -215,7 +215,7 @@ const DiaryPopup = ({ diary_id, onClose }) => {
                         type="text"
                         value={newComment}
                         onChange={handleCommentChange}
-                        placeholder="댓글 달기..."
+                        placeholder="댓글 달기 ..."
                         className="comment-input"
                     />
                     <button onClick={handleCommentSubmit} className="comment-submit-button">댓글 작성</button>
