@@ -9,269 +9,68 @@ import city from '../../assets/images/city.png';
 import left_arrow from '../../assets/images/left_arrow.png';
 import right_arrow from '../../assets/images/right_arrow.png';
 
-// 루틴 팝업 컴포넌트
-const Popup = ({ onClose, onArrowClick, onSubmit }) => {
-  const [routines, setRoutines] = useState([
-    {
-      title: '',
-      content: '',
-      toggle: false // 토글 상태 추가
-    }
-  ]);
+import Routine from './routine';
+import Todo from './todo';
 
-  // 새로운 루틴 항목 추가 함수
-  const handleAddRoutine = () => {
-    if (routines.length < 3) {
-      setRoutines([
-        ...routines, 
-        { title: '', content: '', toggle: false } // 새 항목에도 토글 상태 추가
-      ]);
-    }
-  };
+import axios from 'axios';
 
-  // 루틴 항목 수정 함수
-  const handleRoutineChange = (index, field, value) => {
-    const updatedRoutines = routines.map((routine, i) => 
-      i === index ? { ...routine, [field]: value } : routine
-    );
-    setRoutines(updatedRoutines);
-  };
-
-  // 토글 상태 변경 함수
-  const handleToggleChange = (index) => {
-    const updatedRoutines = routines.map((routine, i) =>
-      i === index ? { ...routine, toggle: !routine.toggle } : routine
-    );
-    setRoutines(updatedRoutines);
-  };
-
-  // 루틴 항목 삭제 함수
-  const handleDeleteRoutine = (index) => {
-    const updatedRoutines = routines.filter((_, i) => i !== index);
-    setRoutines(updatedRoutines);
-  };
-
-  // 저장 핸들러
-  const handleSave = () => {
-    console.log("루틴 목록:");
-    routines.forEach((routine, index) => {
-      console.log(`루틴 번호: ${index},
-        루틴 토글: ${routine.toggle},
-        루틴 제목: ${routine.title},
-        루틴 내용: ${routine.content}`);
-    });
-    onSubmit(routines); // 루틴 데이터를 부모로 전달
-  };
-
-  return (
-    <div className="routine-popup-overlay">
-      <div className="routine-popup-background">
-        <div className="routine-popup-content">
-          <div className="routine-popup-header">
-            <h2>Check List</h2>
-            <button className="routine-popup-close" onClick={onClose}>X</button>
-          </div>
-          <div className="routine-popup-routine">
-            <div className="routine-popup-routine-top">
-              <div className="routine-popup-routine-top-title">
-                <div className="routine-popup-routine-top-title-circle"></div>
-                <div className="routine-popup-routine-top-title-name">Routine</div>
-              </div>
-              <img 
-                src={right_arrow} 
-                className="routine-popup-routine-top-arrow" 
-                alt="right_arrow"
-                onClick={onArrowClick} 
-              />
-            </div>
-            <hr/>
-            <div className="routine-popup-routine-middle">
-              {routines.map((routine, index) => (
-                <div className="routine-popup-routine-middle-box" key={index}>
-                  <div className="routine-popup-routine-middle-box-1">
-                    <input 
-                      type="checkbox" 
-                      id={`routine-toggle-${index}`} 
-                      hidden 
-                      checked={routine.toggle} // 토글 상태를 반영
-                      onChange={() => handleToggleChange(index)} // 토글 변경 핸들러
-                    /> 
-                    <label htmlFor={`routine-toggle-${index}`} className="routine-popup-routine-middle-box-toggleSwitch">
-                      <span className="routine-popup-routine-middle-box-toggleButton"></span>
-                    </label>
-                  </div>
-                  <div className="routine-popup-routine-middle-box-2">
-                    <input 
-                      className="routine-popup-routine-middle-box-title" 
-                      type="text" 
-                      placeholder="Routine"
-                      value={routine.title}
-                      onChange={(e) => handleRoutineChange(index, 'title', e.target.value)}
-                      spellCheck="false"
-                    />
-                  </div>
-                  <div className="routine-popup-routine-middle-box-3">
-                    <input 
-                      className="routine-popup-routine-middle-box-content" 
-                      type="text" 
-                      placeholder="내용을 입력하시오."
-                      value={routine.content}
-                      onChange={(e) => handleRoutineChange(index, 'content', e.target.value)}
-                    />
-                  </div>
-                  <div 
-                    className="routine-popup-routine-middle-box-delete"
-                    onClick={() => handleDeleteRoutine(index)} // 삭제 버튼 클릭 시 해당 항목 삭제
-                  >
-                    삭제
-                  </div>
-                </div>
-              ))}
-              {routines.length < 3 && ( // 루틴이 3개 미만일 때만 추가 버튼 표시
-                <div className="routine-popup-routine-middle-plusbtn" onClick={handleAddRoutine}>
-                  루틴 추가하기
-                </div>
-              )}
-            </div>
-            <div className="routine-popup-routine-savebtn" onClick={handleSave}>저장</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+// API 호출 함수들
+export const getDiaries = async () => {
+  try {
+    const response = await axios.get('/diaries');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch diaries:', error);
+    throw error;
+  }
 };
 
+export const postDiary = async (diary) => {
+  try {
+    const response = await axios.post('/diaries', diary);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to post diary:', error);
+    throw error;
+  }
+};
 
-// 투두 팝업 컴포넌트
-const NewPopup = ({ onClose, onArrowClick, onSubmit }) => {
-  const [todos, setTodos] = useState([
-    {
-      toggle: false,
-      title: '',
-      content: ''
-    }
-  ]);
+export const putRoutine = async (id, updatedRoutine) => {
+  try {
+    const response = await axios.put(`/routines/${id}`, updatedRoutine);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update routine:', error);
+    throw error;
+  }
+};
 
-  // 투두 항목 추가 함수
-  const handleAddTodo = () => {
-    if (todos.length < 5) {
-      setTodos([
-        ...todos,
-        { toggle: false, title: '', content: '' }
-      ]);
-    }
-  };
+export const deleteRoutine = async (id) => {
+  try {
+    await axios.delete(`/routines/${id}`);
+  } catch (error) {
+    console.error('Failed to delete routine:', error);
+    throw error;
+  }
+};
 
-  // 투두 항목 수정 함수
-  const handleTodoChange = (index, field, value) => {
-    const updatedTodos = todos.map((todo, i) =>
-      i === index ? { ...todo, [field]: value } : todo
-    );
-    setTodos(updatedTodos);
-  };
+export const putTodo = async (id, updatedTodo) => {
+  try {
+    const response = await axios.put(`/todos/${id}`, updatedTodo);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to update todo:', error);
+    throw error;
+  }
+};
 
-  // 토글 상태 변경 함수
-  const handleToggleChange = (index) => {
-    const updatedTodos = todos.map((todo, i) =>
-      i === index ? { ...todo, toggle: !todo.toggle } : todo
-    );
-    setTodos(updatedTodos);
-  };
-
-  // 투두 항목 삭제 함수
-  const handleDeleteTodo = (index) => {
-    const updatedTodos = todos.filter((_, i) => i !== index);
-    setTodos(updatedTodos);
-  };
-
-  // 저장 핸들러
-  const handleSave = () => {
-    console.log("루틴 목록:");
-    todos.forEach((todo, index) => {
-      console.log(`루틴 번호: ${index},
-        루틴 토글: ${todo.toggle},
-        루틴 제목: ${todo.title},
-        루틴 내용: ${todo.content}`);
-    });
-    onSubmit(todos); // 투두 데이터를 부모로 전달
-  };
-
-  return (
-    <div className="popup-overlay">
-      <div className="popup-background">
-        <div className="popup-content">
-          <div className="popup-header">
-            <h2>Check List</h2>
-            <button className="popup-close" onClick={onClose}>X</button>
-          </div>
-          <div className="popup-todo">
-            <div className="popup-todo-top">
-              <div className="popup-todo-top-title">
-                <div className="popup-todo-top-title-circle"></div>
-                <div className="popup-todo-top-title-name">To Do</div>
-              </div>
-              <img 
-                src={right_arrow} 
-                className="popup-todo-top-arrow" 
-                alt="right_arrow"
-                onClick={onArrowClick} 
-              />
-            </div>
-            <hr />
-            <div className="popup-todo-middle">
-              {todos.map((todo, index) => (
-                <div className="popup-todo-middle-box" key={index}>
-                  <div className="popup-todo-middle-box-1">
-                    <input 
-                      type="checkbox" 
-                      id={`toggle-${index}`} 
-                      hidden 
-                      checked={todo.toggle} 
-                      onChange={() => handleToggleChange(index)} 
-                    /> 
-                    <label htmlFor={`toggle-${index}`} className="popup-todo-middle-box-toggleSwitch">
-                      <span className="popup-todo-middle-box-toggleButton"></span>
-                    </label>
-                  </div>
-                  <div className="popup-todo-middle-box-2">
-                    <input 
-                      className="popup-todo-middle-box-title" 
-                      type="text" 
-                      placeholder="To Do"
-                      value={todo.title}
-                      onChange={(e) => handleTodoChange(index, 'title', e.target.value)}
-                      spellCheck="false"
-                    />
-                  </div>
-                  <div className="popup-todo-middle-box-3">
-                    <input 
-                      className="popup-todo-middle-box-content" 
-                      type="text" 
-                      placeholder="내용을 입력하시오."
-                      value={todo.content}
-                      onChange={(e) => handleTodoChange(index, 'content', e.target.value)}
-                    />
-                  </div>
-                  <div 
-                    className="popup-todo-middle-box-delete"
-                    onClick={() => handleDeleteTodo(index)}
-                  >
-                    삭제
-                  </div>
-                </div>
-              ))}
-              {todos.length < 5 && ( 
-                <div className="popup-todo-middle-plusbtn" onClick={handleAddTodo}>
-                  투두 추가하기
-                </div>
-              )}
-            </div>
-            <div className="popup-todo-savebtn" onClick={handleSave}>저장</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+export const deleteTodo = async (id) => {
+  try {
+    await axios.delete(`/todos/${id}`);
+  } catch (error) {
+    console.error('Failed to delete todo:', error);
+    throw error;
+  }
 };
 
 // 체크리스트 페이지 전체화면 컴포넌트
@@ -281,12 +80,27 @@ const CheckList = () => {
   const [title, setTitle] = useState('');
   const [editorData, setEditorData] = useState('');
   const [selectedDiv, setSelectedDiv] = useState(0);
-  const [showPopup, setShowPopup] = useState(false);
-  const [showNewPopup, setShowNewPopup] = useState(false);
+  const [showRoutine, setShowRoutine] = useState(false); // Popup을 Routine으로 변경
+  const [showTodo, setShowTodo] = useState(false); // NewPopup을 Todo로 변경
   const [routines, setRoutines] = useState([]); // 전체 루틴 리스트 상태
   const [todos, setTodos] = useState([]); // 전체 투두 리스트 상태
   const editorRef = useRef();
 
+  // Data fetch
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getDiaries(); // API 호출
+        setRoutines(data.routines || []);
+        setTodos(data.todos || []);
+      } catch (error) {
+        console.error('Failed to fetch diaries:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // 날짜 변경
   const changeDate = (direction) => {
     setCurrentDate((prevDate) => {
       const newDate = new Date(prevDate);
@@ -299,19 +113,23 @@ const CheckList = () => {
     });
   };
 
+  // 날짜 클릭 핸들러
   const handleDateClick = (date) => {
     setSelectedDate(date);
     setCurrentDate(new Date(date));
   };
 
+  // 제목 변경 핸들러
   const handleTitleChange = (event) => {
     setTitle(event.target.innerText);
   };
 
+  // 공개 범위 클릭 핸들러
   const handleDivClick = (index) => {
     setSelectedDiv(index);
   };
 
+  // 에디터 데이터 변경 핸들러
   const onChangeGetHTML = () => {
     if (editorRef.current) {
       const data = editorRef.current.getInstance().getHTML();
@@ -319,19 +137,43 @@ const CheckList = () => {
     }
   };
 
-  const handleSubmit = () => {
+  // 발행 버튼 클릭 핸들러
+  const handleSubmit = async () => {
     console.log("발행 시 날짜: ", selectedDate);
     console.log("발행 시 제목: ", title);
     console.log("발행 시 공개범위: ", selectedDiv);
     console.log("발행 시 에디터 내용: ", editorData);
+
+    // POST 요청에 포함할 데이터 구성
+    const diaryData = {
+      board_id: 2, // 추가된 board_id
+      date: selectedDate.toISOString(), // 현재 선택된 날짜
+      title,
+      content: editorData,
+      visibility: selectedDiv // 공개 범위
+    };
+
+    try {
+      await postDiary(diaryData); // POST 요청 보내기
+      console.log('Diary posted successfully');
+      // 요청이 성공적으로 완료된 후의 처리 (예: 상태 초기화, 사용자 알림 등)
+      setTitle('');
+      setEditorData('');
+      setSelectedDiv(0);
+    } catch (error) {
+      console.error('Failed to post diary:', error);
+      // 오류 처리
+    }
   };
 
+  // 에디터 초기화
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.getInstance().setHTML('');
     }
   }, []);
 
+  // 날짜 형식 가져오기
   const getDay = (date) => date.getDate(); 
 
   const getDaysArray = () => {
@@ -343,8 +185,9 @@ const CheckList = () => {
     });
   };
 
+  // 스크롤 잠금
   useEffect(() => {
-    if (showPopup || showNewPopup) {
+    if (showRoutine || showTodo) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -353,29 +196,94 @@ const CheckList = () => {
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [showPopup, showNewPopup]);
+  }, [showRoutine, showTodo]);
 
+  // 루틴 팝업 열기 핸들러
   const handleRoutineArrowClick = () => {
-    setShowPopup(false);
-    setShowNewPopup(true);
+    setShowRoutine(false);
+    setShowTodo(true);
   };
 
+  // 투두 팝업 열기 핸들러
   const handleTodoArrowClick = () => {
-    setShowPopup(true);
-    setShowNewPopup(false);
+    setShowRoutine(true);
+    setShowTodo(false);
   };
 
+  // 팝업 닫기 핸들러
   const handlePopupClose = () => {
-    setShowPopup(false);
-    setShowNewPopup(false);
+    setShowRoutine(false);
+    setShowTodo(false);
   };
 
-  const handleRoutineSubmit = (newRoutines) => {
-    setRoutines(newRoutines);
+  // 루틴 제출 핸들러
+  const handleRoutineSubmit = async (newRoutines) => {
+    try {
+      setRoutines(newRoutines);
+    } catch (error) {
+      console.error('Failed to update routines:', error);
+    }
   };
 
-  const handleTodoSubmit = (newTodos) => {
-    setTodos(newTodos);
+  // 투두 제출 핸들러
+  const handleTodoSubmit = async (newTodos) => {
+    try {
+      setTodos(newTodos);
+    } catch (error) {
+      console.error('Failed to update todos:', error);
+    }
+  };
+
+  // 루틴 수정 핸들러
+  const handleRoutineUpdate = async (id, updatedRoutine) => {
+    try {
+      const result = await putRoutine(id, updatedRoutine);
+      setRoutines((prevRoutines) =>
+        prevRoutines.map((routine) =>
+          routine.id === id ? result : routine
+        )
+      );
+    } catch (error) {
+      console.error('Failed to update routine:', error);
+    }
+  };
+
+  // 루틴 삭제 핸들러
+  const handleRoutineDelete = async (id) => {
+    try {
+      await deleteRoutine(id);
+      setRoutines((prevRoutines) =>
+        prevRoutines.filter((routine) => routine.id !== id)
+      );
+    } catch (error) {
+      console.error('Failed to delete routine:', error);
+    }
+  };
+
+  // 투두 수정 핸들러
+  const handleTodoUpdate = async (id, updatedTodo) => {
+    try {
+      const result = await putTodo(id, updatedTodo);
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) =>
+          todo.id === id ? result : todo
+        )
+      );
+    } catch (error) {
+      console.error('Failed to update todo:', error);
+    }
+  };
+
+  // 투두 삭제 핸들러
+  const handleTodoDelete = async (id) => {
+    try {
+      await deleteTodo(id);
+      setTodos((prevTodos) =>
+        prevTodos.filter((todo) => todo.id !== id)
+      );
+    } catch (error) {
+      console.error('Failed to delete todo:', error);
+    }
   };
 
   return (
@@ -388,7 +296,7 @@ const CheckList = () => {
             <div className="city__checklist__check-title-name">Check List</div>
             <div
               className="city__checklist__check-title-plusbtn"
-              onClick={() => setShowPopup(true)}
+              onClick={() => setShowRoutine(true)} // Popup을 Routine으로 변경
             >
               +
             </div>
@@ -403,7 +311,7 @@ const CheckList = () => {
             <hr/>
             <div className="city__checklist__check-routine-bottom">
               {routines.map((routine, index) => (
-                <div className="city__checklist__check-routine-bottom-box" key={index}>
+                <div className="city__checklist__check-routine-bottom-box" key={routine.id}>
                   <div className="city__checklist__check-routine-bottom-box-toggleSwitch">
                     <input 
                       type="checkbox" 
@@ -418,6 +326,8 @@ const CheckList = () => {
                   </div>
                   <div className="city__checklist__check-routine-bottom-box-title">{routine.title}</div>
                   <div className="city__checklist__check-routine-bottom-box-content">{routine.content}</div>
+                  <button onClick={() => handleRoutineUpdate(routine.id, { ...routine, toggle: !routine.toggle })}>수정</button>
+                  <button onClick={() => handleRoutineDelete(routine.id)}>삭제</button>
                 </div>
               ))}
             </div>
@@ -432,7 +342,7 @@ const CheckList = () => {
             <hr/>
             <div className="city__checklist__check-todo-bottom">
               {todos.map((todo, index) => (
-                <div className="city__checklist__check-todo-bottom-box" key={index}>
+                <div className="city__checklist__check-todo-bottom-box" key={todo.id}>
                   <div className="city__checklist__check-todo-bottom-box-toggleSwitch">
                     <input 
                       type="checkbox" 
@@ -447,6 +357,8 @@ const CheckList = () => {
                   </div>
                   <div className="city__checklist__check-todo-bottom-box-title">{todo.title}</div>
                   <div className="city__checklist__check-todo-bottom-box-content">{todo.content}</div>
+                  <button onClick={() => handleTodoUpdate(todo.id, { ...todo, toggle: !todo.toggle })}>수정</button>
+                  <button onClick={() => handleTodoDelete(todo.id)}>삭제</button>
                 </div>
               ))}
             </div>
@@ -513,8 +425,8 @@ const CheckList = () => {
         </div>
       </div>
 
-      {showPopup && <Popup onClose={handlePopupClose} onArrowClick={handleRoutineArrowClick} onSubmit={handleRoutineSubmit} />}
-      {showNewPopup && <NewPopup onClose={handlePopupClose} onArrowClick={handleTodoArrowClick} onSubmit={handleTodoSubmit} />}
+      {showRoutine && <Routine onClose={handlePopupClose} onArrowClick={handleRoutineArrowClick} onSubmit={handleRoutineSubmit} />}
+      {showTodo && <Todo onClose={handlePopupClose} onArrowClick={handleTodoArrowClick} onSubmit={handleTodoSubmit} />}
     </div>
   );
 };
