@@ -64,45 +64,45 @@ const Popup = ({ onClose, onArrowClick, onSubmit }) => {
   };
 
   return (
-    <div className="popup-overlay">
-      <div className="popup-background">
-        <div className="popup-content">
-          <div className="popup-header">
+    <div className="routine-popup-overlay">
+      <div className="routine-popup-background">
+        <div className="routine-popup-content">
+          <div className="routine-popup-header">
             <h2>Check List</h2>
-            <button className="popup-close" onClick={onClose}>X</button>
+            <button className="routine-popup-close" onClick={onClose}>X</button>
           </div>
-          <div className="popup-routine">
-            <div className="popup-routine-top">
-              <div className="popup-routine-top-title">
-                <div className="popup-routine-top-title-circle"></div>
-                <div className="popup-routine-top-title-name">Routine</div>
+          <div className="routine-popup-routine">
+            <div className="routine-popup-routine-top">
+              <div className="routine-popup-routine-top-title">
+                <div className="routine-popup-routine-top-title-circle"></div>
+                <div className="routine-popup-routine-top-title-name">Routine</div>
               </div>
               <img 
                 src={right_arrow} 
-                className="popup-routine-top-arrow" 
+                className="routine-popup-routine-top-arrow" 
                 alt="right_arrow"
                 onClick={onArrowClick} 
               />
             </div>
             <hr/>
-            <div className="popup-routine-middle">
+            <div className="routine-popup-routine-middle">
               {routines.map((routine, index) => (
-                <div className="popup-routine-middle-box" key={index}>
-                  <div className="popup-routine-middle-box-1">
+                <div className="routine-popup-routine-middle-box" key={index}>
+                  <div className="routine-popup-routine-middle-box-1">
                     <input 
                       type="checkbox" 
-                      id={`toggle-${index}`} 
+                      id={`routine-toggle-${index}`} 
                       hidden 
                       checked={routine.toggle} // 토글 상태를 반영
                       onChange={() => handleToggleChange(index)} // 토글 변경 핸들러
                     /> 
-                    <label htmlFor={`toggle-${index}`} className="popup-routine-middle-box-toggleSwitch">
-                      <span className="popup-routine-middle-box-toggleButton"></span>
+                    <label htmlFor={`routine-toggle-${index}`} className="routine-popup-routine-middle-box-toggleSwitch">
+                      <span className="routine-popup-routine-middle-box-toggleButton"></span>
                     </label>
                   </div>
-                  <div className="popup-routine-middle-box-2">
+                  <div className="routine-popup-routine-middle-box-2">
                     <input 
-                      className="popup-routine-middle-box-title" 
+                      className="routine-popup-routine-middle-box-title" 
                       type="text" 
                       placeholder="Routine"
                       value={routine.title}
@@ -110,9 +110,9 @@ const Popup = ({ onClose, onArrowClick, onSubmit }) => {
                       spellCheck="false"
                     />
                   </div>
-                  <div className="popup-routine-middle-box-3">
+                  <div className="routine-popup-routine-middle-box-3">
                     <input 
-                      className="popup-routine-middle-box-content" 
+                      className="routine-popup-routine-middle-box-content" 
                       type="text" 
                       placeholder="내용을 입력하시오."
                       value={routine.content}
@@ -120,7 +120,7 @@ const Popup = ({ onClose, onArrowClick, onSubmit }) => {
                     />
                   </div>
                   <div 
-                    className="popup-routine-middle-box-delete"
+                    className="routine-popup-routine-middle-box-delete"
                     onClick={() => handleDeleteRoutine(index)} // 삭제 버튼 클릭 시 해당 항목 삭제
                   >
                     삭제
@@ -128,18 +128,19 @@ const Popup = ({ onClose, onArrowClick, onSubmit }) => {
                 </div>
               ))}
               {routines.length < 3 && ( // 루틴이 3개 미만일 때만 추가 버튼 표시
-                <div className="popup-routine-middle-plusbtn" onClick={handleAddRoutine}>
+                <div className="routine-popup-routine-middle-plusbtn" onClick={handleAddRoutine}>
                   루틴 추가하기
                 </div>
               )}
             </div>
-            <div className="popup-routine-savebtn" onClick={handleSave}>저장</div>
+            <div className="routine-popup-routine-savebtn" onClick={handleSave}>저장</div>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 // 투두 팝업 컴포넌트
 const NewPopup = ({ onClose, onArrowClick, onSubmit }) => {
@@ -277,7 +278,7 @@ const NewPopup = ({ onClose, onArrowClick, onSubmit }) => {
 const CheckList = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [title, setTitle] = useState('제목');
+  const [title, setTitle] = useState('');
   const [editorData, setEditorData] = useState('');
   const [selectedDiv, setSelectedDiv] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
@@ -378,8 +379,9 @@ const CheckList = () => {
   };
 
   return (
-    <div className="wrap">  
-      <Menu />    
+    <div className="wrap">
+      <Menu/>
+      
       <div className="city__checklist">
         <div className="city__checklist__check">
           <div className="city__checklist__check-title">
@@ -471,12 +473,15 @@ const CheckList = () => {
             </div>
             <img src={right_arrow} className="city__checklist__diary-date-arrow" alt="right_arrow" onClick={() => changeDate('next')}/>
           </div>
-          <div className="city__checklist__diary-title-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={handleTitleChange}
-          >
-            {title}
+          <div className="city__checklist__diary-title-edit">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="제목"
+              className="city__checklist__diary-title-edit-input"
+              spellCheck={false}
+            />
           </div>
           <div className="city__checklist__diary-another">
             <div className="city__checklist__diary-another-reveal">
