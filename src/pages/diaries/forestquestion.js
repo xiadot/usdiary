@@ -37,7 +37,7 @@ const TodayQuestionPopup = ({ onClose, question, questionId, initialAnswer, init
         formData.append('photo', photo);
       }
 
-      await axios.post(`http://localhost:3001/questions/${questionId}/answers`, formData, {
+      await axios.post(`http://localhost:3001/questions/{question_id}/answers`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -52,29 +52,29 @@ const TodayQuestionPopup = ({ onClose, question, questionId, initialAnswer, init
   };
 
   return (
-    <div className="popup-overlay">
-      <div className="popup-background">
-        <div className="popup-content">
-          <div className="popup-header">
+    <div className="forestquestion_popup-overlay">
+      <div className="forestquestion_popup-background">
+        <div className="forestquestion_popup-content">
+          <div className="forestquestion_popup-header">
             <h2>Today's Question</h2>
-            <button className="popup-close" onClick={onClose}>X</button>
+            <button className="forestquestion_popup-close" onClick={onClose}>X</button>
           </div>
-          <div className="popup-question-box">
-            <div className="popup-question-text">{question}</div>
+          <div className="forestquestion_popup-question-box">
+            <div className="forestquestion_popup-question-text">{question}</div>
             <textarea 
-              className="popup-answer-box" 
+              className="forestquestion_popup-answer-box" 
               value={answer}
               onChange={handleAnswerChange}
             />
             <input 
               type="file" 
-              className="popup-photo-input" 
+              className="forestquestion_popup-photo-input" 
               accept="image/*"
               onChange={handlePhotoChange}
               ref={fileInputRef}
             />
-            {photo && <img src={photo} className="popup-photo-display" alt="selected" />}
-            <button className="popup-save-button" onClick={handleSave}>저장</button>
+            {photo && <img src={photo} className="forestquestion_popup-photo-display" alt="selected" />}
+            <button className="forestquestion_popup-save-button" onClick={handleSave}>저장</button>
           </div>
         </div>
       </div>
@@ -105,7 +105,7 @@ const ForestQuestion = () => {
         setQuestionId(response.data.id);
 
         // 기존 답변과 사진 가져오기
-        const answersResponse = await axios.get(`http://localhost:3001/questions/${response.data.id}/answers`);
+        const answersResponse = await axios.get(`http://localhost:3001/questions/{response.data.id}/answers`);
         const latestAnswer = answersResponse.data[0] || {};
         setInitialAnswer(latestAnswer.answer || '');
         setInitialPhoto(latestAnswer.photo || null);
@@ -170,7 +170,7 @@ const ForestQuestion = () => {
 
   const handleUpdateQuestion = async () => {
     try {
-      await axios.patch(`http://localhost:3001/questions/${questionId}`, {
+      await axios.patch(`http://localhost:3001/questions/{question_id}`, {
         title,
         content: editorData,
       });
@@ -184,7 +184,7 @@ const ForestQuestion = () => {
 
   const handleDeleteQuestion = async () => {
     try {
-      await axios.delete(`http://localhost:3001/questions/${questionId}`);
+      await axios.delete(`http://localhost:3001/questions/{question_id}`);
 
       alert('질문이 성공적으로 삭제되었습니다.');
     } catch (error) {
@@ -201,7 +201,7 @@ const ForestQuestion = () => {
         formData.append('photo', initialPhoto);
       }
 
-      await axios.patch(`http://localhost:3001/questions/${questionId}/answers/${answerId}`, formData, {
+      await axios.patch(`http://localhost:3001/questions/{question_id}/answers/{answer_id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -216,7 +216,7 @@ const ForestQuestion = () => {
 
   const handleDeleteAnswer = async () => {
     try {
-      await axios.delete(`http://localhost:3001/questions/${questionId}/answers/${answerId}`);
+      await axios.delete(`http://localhost:3001/questions/{question_id}/answers/{answer_id}`);
 
       alert('답변이 성공적으로 삭제되었습니다.');
     } catch (error) {
