@@ -16,6 +16,7 @@ import CityTendency from "./pages/tendency/city_tendency";
 import Map from './pages/map/map';
 import Forest from './pages/home/forest';
 import City from './pages/home/city';
+import ForestQuestion from './pages/diaries/forestquestion'
 import CheckList from './pages/checklist/checklist';
 
 const App = () => {
@@ -48,7 +49,8 @@ const App = () => {
 
         <Route path="/forest_tendency" element={<ForestTendency/>} />
 
-        <Route path="/city_tendency" element={<CityTendency/>} />       
+        <Route path="/city_tendency" element={<CityTendency/>} />
+     
 
         <Route path="/home" element={<Home />} />
 
@@ -61,6 +63,10 @@ const App = () => {
         <Route path="/friend" element={<Friend />}></Route>
 
         <Route path="/map" element={<Map />}></Route>
+
+        {/* 오늘의 질문 페이지 경로 */}
+        <Route path="/forestquestion" element={<ForestQuestion />}/>
+
       </Routes>
     </Router>
   );

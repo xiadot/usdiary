@@ -85,7 +85,7 @@ const SignUp = () => {
 
             try {
                 // 서버에 POST 요청 보내기
-                const response = await fetch('http://localhost:3001/registration', { // 서버 URL 확인
+                const response = await fetch('http://localhost:3001/register/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ const SignUp = () => {
 
     const handleCodeVerification = async () => {
         try {
-            const response = await fetch('/api/verify-code', {
+            const response = await fetch('http://localhost:3001/register/verify-code', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -137,7 +137,31 @@ const SignUp = () => {
         }
     };
 
-    const handleOpenPopup = () => setIsVerificationModalOpen(true); // 이메일 인증 모달 열기
+    const handleOpenPopup = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/register/send-verification-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: formData.email }),
+            });
+            const result = await response.json();
+
+            if (response.ok) {
+                setIsVerificationModalOpen(true); // 이메일 인증 모달 열기
+            } else {
+                console.error('이메일 인증코드 전송 실패:', result.message);
+                setError(result.message); // 오류 상태 설정
+                setModalIsOpen(true); // 오류 모달 열기
+            }
+        } catch (error) {
+            console.error('이메일 인증코드 전송 중 오류 발생:', error);
+            setError('이메일 인증코드 전송 중 오류가 발생했습니다.'); // 오류 상태 설정
+            setModalIsOpen(true); // 오류 모달 열기
+        }
+    };
+
     const handleClosePopup = () => {
         setIsVerificationModalOpen(false); // 인증 모달 닫기
         setModalIsOpen(false); // 오류 모달 닫기
@@ -145,12 +169,8 @@ const SignUp = () => {
 
     const handleIdCheck = async () => {
         try {
-            const response = await fetch('http://localhost:3001/registration/check-id', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userId: formData.userId }),
+            const response = await fetch(`http://localhost:3001/register/idcheck?userId=${formData.userId}`, {
+                method: 'GET',
             });
 
             const result = await response.json();
@@ -173,12 +193,8 @@ const SignUp = () => {
 
     const handleNicknameCheck = async () => {
         try {
-            const response = await fetch('http://localhost:3001/registration/check-nickname', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ nickname: formData.nickname }),
+            const response = await fetch(`http://localhost:3001/register/nicknamecheck?nickname=${formData.nickname}`, {
+                method: 'GET',
             });
 
             const result = await response.json();
