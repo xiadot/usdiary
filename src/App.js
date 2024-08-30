@@ -10,9 +10,13 @@ import Signup from './pages/signup/signup';
 import Home from './pages/home/home';
 import Sea from './pages/home/sea';
 import Friend from './pages/home/friend';
-import Question from './tendency/question';
-import ForestTendency from "./tendency/forest_tendency";
-import CityTendency from "./tendency/city_tendency";
+import Question from './pages/tendency/question';
+import ForestTendency from "./pages/tendency/forest_tendency";
+import CityTendency from "./pages/tendency/city_tendency";
+import Map from './pages/map/map';
+import Forest from './pages/home/forest';
+import City from './pages/home/city';
+import ForestQuestion from './pages/diaries/forestquestion'
 
 const App = () => {
 
@@ -46,9 +50,19 @@ const App = () => {
 
         <Route path="/home" element={<Home />} />
 
+        <Route path="/forest" element={<Forest />}></Route>
+
+        <Route path="/city" element={<City />}></Route>
+
         <Route path="/sea" element={<Sea />}></Route>
 
         <Route path="/friend" element={<Friend />}></Route>
+
+        <Route path="/map" element={<Map />}></Route>
+
+        {/* 오늘의 질문 페이지 경로 */}
+        <Route path="/forestquestion" element={<ForestQuestion />}/>
+
       </Routes>
     </Router>
   );
