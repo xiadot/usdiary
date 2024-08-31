@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
 import '../assets/css/diaryPopup.css';
 import userProfileImage from '../assets/images/example1.png';
 
@@ -10,9 +9,7 @@ const DiaryPopup = ({ diary_id, onClose }) => {
     const [error, setError] = useState(null);
     const [newComment, setNewComment] = useState(""); // 새 댓글 상태
     const [editingCommentId, setEditingCommentId] = useState(null);
-    const [cursorPosition, setCursorPosition] = useState({});
     const commentRefs = useRef({});
-
 
     useEffect(() => {
         // 하드코딩된 다이어리 및 댓글 데이터
@@ -32,8 +29,7 @@ const DiaryPopup = ({ diary_id, onClose }) => {
                     cate_num: null,
                 },
 
-                comments: [
-                ]
+                comments: []
             },
             forest2: {
                 diary: {
@@ -126,24 +122,8 @@ const DiaryPopup = ({ diary_id, onClose }) => {
         };
     }, [diary_id]);
 
-    useEffect(() => {
-        // 댓글 수정 시 커서 위치 저장
-        if (editingCommentId !== null) {
-            const commentEl = commentRefs.current[editingCommentId];
-            if (commentEl) {
-                commentEl.focus();
-                const range = document.createRange();
-                const sel = window.getSelection();
-                range.setStart(commentEl.firstChild, cursorPosition.start);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-            }
-        }
-    }, [editingCommentId, cursorPosition]);
-
-    if (loading) return <div className="popup">Loading...</div>;
-    if (error) return <div className="popup">{error}</div>;
+    if (loading) return <div className="diary-popup">Loading...</div>;
+    if (error) return <div className="diary-popup">{error}</div>;
 
     const handleBackgroundClick = (e) => {
         if (e.target === e.currentTarget) {
@@ -169,26 +149,18 @@ const DiaryPopup = ({ diary_id, onClose }) => {
 
     const handleEditClick = (commentId) => {
         setEditingCommentId(commentId);
+    };
+
+
+    const handleEditBlur = (commentId) => {
         const commentEl = commentRefs.current[commentId];
         if (commentEl) {
-            setCursorPosition({
-                start: commentEl.innerText.length,
-            });
+            setComments(comments.map(comment =>
+                comment.comment_id === commentId
+                    ? { ...comment, comment_content: commentEl.innerText }
+                    : comment
+            ));
         }
-    };
-
-    const handleEditChange = (e, commentId) => {
-        setCursorPosition({
-            start: e.target.selectionStart,
-        });
-        setComments(comments.map(comment =>
-            comment.comment_id === commentId
-                ? { ...comment, comment_content: e.target.innerText }
-                : comment
-        ));
-    };
-
-    const handleEditSubmit = () => {
         setEditingCommentId(null);
     };
 
@@ -199,62 +171,63 @@ const DiaryPopup = ({ diary_id, onClose }) => {
     const hasComments = comments.length > 0;
 
     return (
-        <div className="popup" onClick={handleBackgroundClick}>
-            <div className="popup-content">
+        <div className="diary-popup" onClick={handleBackgroundClick}>
+            <div className="diary-popup__content">
                 <h2>{diary.diary_title}</h2>
-                <img src={diary.post_photo} alt="Diary" className="diary-photo" />
+                <img src={diary.post_photo} alt="Diary" className="diary-popup__photo" />
                 <p>{diary.diary_content}</p>
                 <p><strong>Views:</strong> {diary.view_count}</p>
                 <p><strong>Likes:</strong> {diary.like_count}</p>
                 {diary.diary_emotion && <p><strong>Emotion:</strong> {diary.diary_emotion}</p>}
                 {diary.cate_num && <p><strong>Category:</strong> {diary.cate_num}</p>}
 
-                <div className="comment-input-section">
-                    <img src={userProfileImage} alt="User Profile" className="user-profile-image" />
+                <div className="diary-popup__comment-input-section">
+                    <img src={userProfileImage} alt="User Profile" className="diary-popup__user-profile-image" />
                     <input
                         type="text"
                         value={newComment}
                         onChange={handleCommentChange}
                         placeholder="댓글 달기 ..."
-                        className="comment-input"
+                        className="diary-popup__comment-input"
                     />
-                    <button onClick={handleCommentSubmit} className="comment-submit-button">댓글 작성</button>
+                    <button onClick={handleCommentSubmit} className="diary-popup__comment-submit-button">댓글 작성</button>
                 </div>
 
-                <div className={`comments-section ${!hasComments ? 'no-comments' : ''}`}>
+                <div className={`diary-popup__comments-section ${!hasComments ? 'diary-popup__comments-section--no-comments' : ''}`}>
                     {hasComments ? (
                         comments.map((comment) => (
-                            <div key={comment.comment_id} className="comment">
-                                <img src={userProfileImage} alt="Profile" className="comment-profile-image" />
-                                <div className="comment-details">
-                                    <p className="comment-nickname">{comment.nickname}님</p>
+                            <div key={comment.comment_id} className="diary-popup__comment">
+                                <img src={userProfileImage} alt="Profile" className="diary-popup__comment-profile-image" />
+                                <div className="diary-popup__comment-details">
+                                    <p className="diary-popup__comment-nickname">{comment.nickname}님</p>
                                     <p
-                                        className={`comment-content ${editingCommentId === comment.comment_id ? 'editable' : ''}`}
+                                        className={`diary-popup__comment-content ${editingCommentId === comment.comment_id ? 'diary-popup__comment-content--editable' : ''}`}
                                         contentEditable={editingCommentId === comment.comment_id}
-                                        onInput={(e) => handleEditChange(e, comment.comment_id)}
+                                        onBlur={() => handleEditBlur(comment.comment_id)}
+                                        ref={(el) => commentRefs.current[comment.comment_id] = el}
                                         suppressContentEditableWarning={true}
                                     >
                                         {comment.comment_content}
                                     </p>
                                 </div>
-                                <div className="comment-actions">
+                                <div className="diary-popup__comment-actions">
                                     {editingCommentId === comment.comment_id ? (
                                         <button
-                                            className="edit-button"
-                                            onClick={handleEditSubmit}
+                                            className="diary-popup__edit-button"
+                                            onClick={() => setEditingCommentId(null)}
                                         >
                                             저장
                                         </button>
                                     ) : (
                                         <button
-                                            className="edit-button"
+                                            className="diary-popup__edit-button"
                                             onClick={() => handleEditClick(comment.comment_id)}
                                         >
                                             수정
                                         </button>
                                     )}
                                     <button
-                                        className="delete-button"
+                                        className="diary-popup__delete-button"
                                         onClick={() => handleDeleteClick(comment.comment_id)}
                                     >
                                         삭제
@@ -263,7 +236,7 @@ const DiaryPopup = ({ diary_id, onClose }) => {
                             </div>
                         ))
                     ) : (
-                        <p className="no-comments-message">첫 번째 댓글을 남겨보세요!</p>
+                        <p className="diary-popup__no-comments-message">첫 번째 댓글을 남겨보세요!</p>
                     )}
                 </div>
             </div>
