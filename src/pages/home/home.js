@@ -1,8 +1,10 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import Forest from "./forest";
 import City from "./city";
 
 const Home = ({ location }) => {
+    const location = useLocation();
     const userTendency = location.state?.userTendency; // location.state에서 userTendency 가져오기
 
     if (userTendency === '숲') {
