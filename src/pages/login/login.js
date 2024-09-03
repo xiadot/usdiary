@@ -22,6 +22,7 @@ const Login = () => {
             password: password,
         };
         console.log(loginData)
+
         try {
             // 서버에 POST 요청 보내기
             const response = await fetch('http://localhost:3001/users/login', { // 서버 URL 확인
@@ -30,18 +31,20 @@ const Login = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(loginData),
-                
+
             });
             console.log(response)
-            const result = await response.json();
+
 
             if (response.ok) {
-                // user 객체를 가져옵니다.
-                const userTendency = result.user.user_tendency; // user_tendency를 추출합니다.
-                console.log(userTendency)
-                
-                navigate('/home', { state: { userTendency: userTendency} });
-                // 로그인 성공 처리 (예: 사용자 정보 저장, 리디렉션 등)
+                const result = await response.json();
+                console.log(result);
+
+                // 결과에서 user_tendency 추출
+                const userTendency = result.user?.user_tendency; // optional chaining을 사용하여 안전하게 접근
+
+                // userTendency를 state로 전달하여 홈 화면으로 이동
+                navigate('/home', { state: { userTendency: userTendency } });
                 console.log('로그인 성공:', result);
                 setError(''); // 오류 상태 초기화
             } else {
