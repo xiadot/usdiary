@@ -39,10 +39,14 @@ const Login = () => {
             if (response.ok) {
                 const result = await response.json();
                 console.log(result);
-
+                
                 // 결과에서 user_tendency 추출
-                const userTendency = result.user?.user_tendency; // optional chaining을 사용하여 안전하게 접근
-
+                // 전체 user 객체를 포함한 응답 데이터에서 필요한 값만 추출
+                const userTendency = result.data.user?.user_tendency;
+                const token = result.data.token;// optional chaining을 사용하여 안전하게 접근
+                
+                console.log('User Tendency:', userTendency);
+                console.log('Token:', token);
                 // userTendency를 state로 전달하여 홈 화면으로 이동
                 navigate('/home', { state: { userTendency: userTendency } });
                 console.log('로그인 성공:', result);
