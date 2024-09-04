@@ -43,7 +43,7 @@ function CityTendency() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ selection: 'city' }),
+        body: JSON.stringify({ selection: '도시' }),
       });
 
       if (!response.ok) {
