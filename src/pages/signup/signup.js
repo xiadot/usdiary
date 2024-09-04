@@ -79,7 +79,13 @@ const SignUp = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         if (validateForm()) {
+            if (!isCodeValid) {
+                setErrors(prevErrors => ({ ...prevErrors, user_email: '이메일 인증을 하지 않았습니다.' }));
+                return;
+            }
+    
             const signupData = {
                 user_name: formData.user_name,
                 user_nick: formData.user_nick,
@@ -89,6 +95,7 @@ const SignUp = () => {
                 phone: formData.phone,
                 user_birthday: formData.user_birthday,
                 user_gender: formData.user_gender,
+                verificationCode: verificationCode.join('') // 인증번호 추가
             };
     
             try {
@@ -103,7 +110,7 @@ const SignUp = () => {
                 const result = await response.json();
     
                 if (response.ok) {
-                    navigate('/question'); // 회원가입 성공 시 "/question" 경로로 이동
+                    navigate('/question');
                 } else {
                     console.error('회원가입 실패:', result.message);
                     setError(result.message);
@@ -115,8 +122,8 @@ const SignUp = () => {
                 setModalIsOpen(true);
             }
         }
-    };    
-
+    };
+    
     const handleCodeVerification = async () => {
         try {
             const response = await fetch('http://localhost:3001/register/verify-code', {
