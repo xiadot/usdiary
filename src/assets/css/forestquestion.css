@@ -13,7 +13,7 @@
     min-height: 974px;
 }
 
-/* City Component */
+/* forest Component */
 .wrap .forest__forestquestion {
     display: flex;
 }
@@ -148,13 +148,13 @@
     margin-bottom: 20px;    
 }
 
-/* City Image */
+/* forest Image */
 .wrap .forest__forestquestion__diary-top-image {
     height: 60px;
     margin-right: 17px;
 }
 
-/* Today's City Title */
+/* Today's forest Title */
 .wrap .forest__forestquestion__diary-top-title {
     font-size: 32px;
     font-family: "Noto Sans", sans-serif;
@@ -411,6 +411,23 @@
 }
 
 /* Save Button within the white box */
+.forestquestion_popup-delete-button{
+    width: 55px;
+    height: 30px;
+    background-color: #9FC393;
+    border: none;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #ffffff;
+    cursor: pointer;
+    position: absolute; 
+    bottom: 15px; 
+    right: 80px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
 .forestquestion_popup-save-button {
     width: 55px;
     height: 30px;
@@ -424,11 +441,12 @@
     color: #ffffff;
     cursor: pointer;
     position: absolute; 
-    bottom: 10px; 
+    bottom: 15px; 
     right: 20px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
+.forestquestion_popup-delete-button:hover,
 .forestquestion_popup-save-button:hover {
     background-color: #7E9660;
 }

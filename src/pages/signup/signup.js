@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // useEffect 추가
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../../assets/css/signup.css'; // 기존 CSS 파일 임포트
@@ -8,15 +8,15 @@ Modal.setAppElement('#main'); // 모달 접근성을 위한 설정
 
 const SignUp = () => {
     const [formData, setFormData] = useState({
-        username: '',
-        nickname: '',
-        userId: '',
-        password: '',
-        passwordConfirm: '',
-        email: '',
-        tel: '',
-        birthdate: '',
-        gender: '',
+        user_name: '',
+        user_nick: '',
+        sign_id: '',
+        user_pwd: '',
+        confirmPassword: '',
+        user_email: '',
+        phone: '',
+        user_birthday: '',
+        user_gender: '',
     });
     const [verificationCode, setVerificationCode] = useState(['', '', '', '', '', '']);
     const [errors, setErrors] = useState({});
@@ -26,6 +26,18 @@ const SignUp = () => {
     const [error, setError] = useState(''); // 오류 상태 추가
     const [isVerificationModalOpen, setIsVerificationModalOpen] = useState(false); // 인증 모달 상태 추가
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // 비밀번호와 비밀번호 확인이 일치하는지 실시간으로 확인
+        if (formData.user_pwd !== formData.confirmPassword) {
+            setErrors(prevErrors => ({ ...prevErrors, confirmPassword: '비밀번호가 일치하지 않습니다.' }));
+        } else {
+            setErrors(prevErrors => {
+                const { confirmPassword, ...rest } = prevErrors;
+                return rest;
+            });
+        }
+    }, [formData.user_pwd, formData.confirmPassword]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -44,24 +56,20 @@ const SignUp = () => {
     const validateForm = () => {
         const newErrors = {};
 
-        if (!formData.username) newErrors.username = '이름을 입력해주세요.';
-        if (!formData.nickname) newErrors.nickname = '닉네임을 입력해주세요.';
-        if (!formData.userId) newErrors.userId = '아이디를 입력해주세요.';
-        if (!formData.password) newErrors.password = '비밀번호를 입력해주세요.';
-        if (!formData.passwordConfirm) newErrors.passwordConfirm = '비밀번호 확인을 입력해주세요.';
-        if (!formData.email) newErrors.email = '이메일을 입력해주세요.';
-        if (!formData.birthdate) newErrors.birthdate = '생일을 입력해주세요.';
+        if (!formData.user_name) newErrors.user_name = '이름을 입력해주세요.';
+        if (!formData.user_nick) newErrors.user_nick = '닉네임을 입력해주세요.';
+        if (!formData.sign_id) newErrors.sign_id = '아이디를 입력해주세요.';
+        if (!formData.user_pwd) newErrors.user_pwd = '비밀번호를 입력해주세요.';
+        if (!formData.confirmPassword) newErrors.confirmPassword = '비밀번호 확인을 입력해주세요.';
+        if (!formData.user_email) newErrors.user_email = '이메일을 입력해주세요.';
+        if (!formData.user_birthday) newErrors.user_birthday = '생일을 입력해주세요.';
 
-        if (formData.password && !/^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,15}$/.test(formData.password)) {
-            newErrors.password = '특수문자를 포함한 6~15자로 입력해주시기 바랍니다.';
+        if (formData.user_pwd && !/^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,15}$/.test(formData.user_pwd)) {
+            newErrors.user_pwd = '특수문자를 포함한 6~15자로 입력해주시기 바랍니다.';
         }
 
-        if (formData.password !== formData.passwordConfirm) {
-            newErrors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
-        }
-
-        if (formData.email && !isCodeValid) {
-            newErrors.email = '이메일 인증을 하지 않았습니다.';
+        if (formData.user_email && !isCodeValid) {
+            newErrors.user_email = '이메일 인증을 하지 않았습니다.';
         }
 
         setErrors(newErrors);
@@ -73,14 +81,14 @@ const SignUp = () => {
         e.preventDefault();
         if (validateForm()) {
             const signupData = {
-                username: formData.username,
-                nickname: formData.nickname,
-                userId: formData.userId,
-                password: formData.password,
-                email: formData.email,
-                tel: formData.tel,
-                birthdate: formData.birthdate,
-                gender: formData.gender,
+                user_name: formData.user_name,
+                user_nick: formData.user_nick,
+                sign_id: formData.sign_id,
+                user_pwd: formData.user_pwd,
+                user_email: formData.user_email,
+                phone: formData.phone,
+                user_birthday: formData.user_birthday,
+                user_gender: formData.user_gender,
             };
 
             try {
@@ -121,10 +129,10 @@ const SignUp = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            body: JSON.stringify({
-                verificationCode: verificationCode.join(''), // 인증 코드
-                email: formData.email // 이메일 추가
-            }),
+                body: JSON.stringify({
+                    verificationCode: verificationCode.join(''), // 인증 코드
+                    user_email: formData.user_email // 이메일 추가
+                }),
             });
             const result = await response.json();
 
@@ -147,7 +155,7 @@ const SignUp = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: formData.email }),
+                body: JSON.stringify({ user_email: formData.user_email }),
             });
             const result = await response.json();
 
@@ -172,7 +180,7 @@ const SignUp = () => {
 
     const handleIdCheck = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/register/idcheck?uid=${formData.userId}`, {
+            const response = await fetch(`http://localhost:3001/register/idcheck?uid=${formData.sign_id}`, {
                 method: 'GET',
             });
 
@@ -180,23 +188,23 @@ const SignUp = () => {
 
             if (response.ok) {
                 if (result.exists) {
-                    setErrors(prevErrors => ({ ...prevErrors, userId: '이미 사용하고 있는 아이디 입니다. 다른 아이디로 다시 입력해주세요.' }));
+                    setErrors(prevErrors => ({ ...prevErrors, sign_id: '이미 사용하고 있는 아이디 입니다. 다른 아이디로 다시 입력해주세요.' }));
                 } else {
-                    setErrors(prevErrors => ({ ...prevErrors, userId: '사용 가능한 아이디입니다.' }));
+                    setErrors(prevErrors => ({ ...prevErrors, sign_id: '사용 가능한 아이디입니다.' }));
                 }
             } else {
                 console.error('아이디 체크 실패:', result.message);
-                setErrors(prevErrors => ({ ...prevErrors, userId: result.message }));
+                setErrors(prevErrors => ({ ...prevErrors, sign_id: result.message }));
             }
         } catch (error) {
             console.error('아이디 체크 중 오류 발생:', error);
-            setErrors(prevErrors => ({ ...prevErrors, userId: '아이디 체크 중 오류가 발생했습니다.' }));
+            setErrors(prevErrors => ({ ...prevErrors, sign_id: '아이디 체크 중 오류가 발생했습니다.' }));
         }
     };
 
     const handleNicknameCheck = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/register/nicknamecheck?unick=${formData.nickname}`, {
+            const response = await fetch(`http://localhost:3001/register/nicknamecheck?unick=${formData.user_nick}`, {
                 method: 'GET',
             });
 
@@ -204,17 +212,17 @@ const SignUp = () => {
 
             if (response.ok) {
                 if (result.exists) {
-                    setErrors(prevErrors => ({ ...prevErrors, nickname: '이미 사용하고 있는 닉네임입니다. 다른 닉네임으로 다시 입력해주세요.' }));
+                    setErrors(prevErrors => ({ ...prevErrors, user_nick: '이미 사용하고 있는 닉네임입니다. 다른 닉네임으로 다시 입력해주세요.' }));
                 } else {
-                    setErrors(prevErrors => ({ ...prevErrors, nickname: '사용 가능한 닉네임입니다.' }));
+                    setErrors(prevErrors => ({ ...prevErrors, user_nick: '사용 가능한 닉네임입니다.' }));
                 }
             } else {
                 console.error('닉네임 체크 실패:', result.message);
-                setErrors(prevErrors => ({ ...prevErrors, nickname: result.message }));
+                setErrors(prevErrors => ({ ...prevErrors, user_nick: result.message }));
             }
         } catch (error) {
             console.error('닉네임 체크 중 오류 발생:', error);
-            setErrors(prevErrors => ({ ...prevErrors, nickname: '닉네임 체크 중 오류가 발생했습니다.' }));
+            setErrors(prevErrors => ({ ...prevErrors, user_nick: '닉네임 체크 중 오류가 발생했습니다.' }));
         }
     };
 
@@ -226,107 +234,107 @@ const SignUp = () => {
                     <h2 className="SignUp-page__form-title">회원가입 하기</h2>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="username" className="SignUp-page__label">이름 *</label>
+                        <label htmlFor="user_name" className="SignUp-page__label">이름 *</label>
                         <div className="SignUp-page__input-wrapper">
                             <input
                                 type="text"
-                                id="username"
-                                name="username"
-                                value={formData.username}
+                                id="user_name"
+                                name="user_name"
+                                value={formData.user_name}
                                 onChange={handleInputChange}
                                 className="SignUp-page__input"
                                 placeholder="이름 입력"
                             />
                         </div>
-                        {errors.username && <small className="SignUp-page__error-message">{errors.username}</small>}
+                        {errors.user_name && <small className="SignUp-page__error-message">{errors.user_name}</small>}
                     </div>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="nickname" className="SignUp-page__label">닉네임 *</label>
+                        <label htmlFor="user_nick" className="SignUp-page__label">닉네임 *</label>
                         <div className="SignUp-page__input-wrapper">
                             <input
                                 type="text"
-                                id="nickname"
-                                name="nickname"
-                                value={formData.nickname}
+                                id="user_nick"
+                                name="user_nick"
+                                value={formData.user_nick}
                                 onChange={handleInputChange}
                                 className="SignUp-page__input"
                                 placeholder="닉네임 입력"
                             />
                             <button type="button" className="SignUp-page__input-check-button" onClick={handleNicknameCheck}>중복 확인</button>
                         </div>
-                        {errors.nickname && <small className="SignUp-page__error-message">{errors.nickname}</small>}
+                        {errors.user_nick && <small className="SignUp-page__error-message">{errors.user_nick}</small>}
                     </div>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="userId" className="SignUp-page__label">아이디 *</label>
+                        <label htmlFor="sign_id" className="SignUp-page__label">아이디 *</label>
                         <div className="SignUp-page__input-wrapper">
                             <input
                                 type="text"
-                                id="userId"
-                                name="userId"
-                                value={formData.userId}
+                                id="sign_id"
+                                name="sign_id"
+                                value={formData.sign_id}
                                 onChange={handleInputChange}
                                 className="SignUp-page__input"
                                 placeholder="아이디 입력"
                             />
                             <button type="button" className="SignUp-page__input-check-button" onClick={handleIdCheck}>중복 확인</button>
                         </div>
-                        {errors.userId && <small className="SignUp-page__error-message">{errors.userId}</small>}
+                        {errors.sign_id && <small className="SignUp-page__error-message">{errors.sign_id}</small>}
                     </div>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="password" className="SignUp-page__label">비밀번호 *</label>
+                        <label htmlFor="user_pwd" className="SignUp-page__label">비밀번호 *</label>
                         <input
                             type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
+                            id="user_pwd"
+                            name="user_pwd"
+                            value={formData.user_pwd}
                             onChange={handleInputChange}
                             className="SignUp-page__input"
                             placeholder="비밀번호 입력 (특수문자 포함, 6~15글자)"
                         />
-                        {errors.password && <small className="SignUp-page__error-message">{errors.password}</small>}
+                        {errors.user_pwd && <small className="SignUp-page__error-message">{errors.user_pwd}</small>}
                     </div>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="passwordConfirm" className="SignUp-page__label">비밀번호 확인 *</label>
+                        <label htmlFor="confirmPassword" className="SignUp-page__label">비밀번호 확인 *</label>
                         <input
                             type="password"
-                            id="passwordConfirm"
-                            name="passwordConfirm"
-                            value={formData.passwordConfirm}
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
                             onChange={handleInputChange}
                             className="SignUp-page__input"
                             placeholder="비밀번호를 다시 입력해주세요."
                         />
-                        {errors.passwordConfirm && <small className="SignUp-page__error-message">{errors.passwordConfirm}</small>}
+                        {errors.confirmPassword && <small className="SignUp-page__error-message">{errors.confirmPassword}</small>}
                     </div>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="email" className="SignUp-page__label">이메일 *</label>
+                        <label htmlFor="user_email" className="SignUp-page__label">이메일 *</label>
                         <div className="SignUp-page__input-wrapper">
                             <input
                                 type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
+                                id="user_email"
+                                name="user_email"
+                                value={formData.user_email}
                                 onChange={handleInputChange}
                                 className="SignUp-page__input"
                                 placeholder="이메일 입력"
                             />
                             <button type="button" className="SignUp-page__input-check-button" onClick={handleOpenPopup}>이메일 인증</button>
                         </div>
-                        {errors.email && <small className="SignUp-page__error-message">{errors.email}</small>}
+                        {errors.user_email && <small className="SignUp-page__error-message">{errors.user_email}</small>}
                     </div>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="tel" className="SignUp-page__label">전화번호</label>
+                        <label htmlFor="phone" className="SignUp-page__label">전화번호</label>
                         <input
                             type="tel"
-                            id="tel"
-                            name="tel"
-                            value={formData.tel}
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
                             onChange={handleInputChange}
                             className="SignUp-page__input"
                             placeholder="010-XXXX-XXXX"
@@ -335,24 +343,24 @@ const SignUp = () => {
 
                     <div className="SignUp-page__date-gender-wrapper">
                         <div className="SignUp-page__input-date">
-                            <label htmlFor="birthdate" className="SignUp-page__label">생일 *</label>
+                            <label htmlFor="user_birthday" className="SignUp-page__label">생일 *</label>
                             <input
                                 type="date"
-                                id="birthdate"
-                                name="birthdate"
-                                value={formData.birthdate}
+                                id="user_birthday"
+                                name="user_birthday"
+                                value={formData.user_birthday}
                                 onChange={handleInputChange}
                                 className="SignUp-page__input-date"
                             />
-                            {errors.birthdate && <small className="SignUp-page__error-message">{errors.birthdate}</small>}
+                            {errors.user_birthday && <small className="SignUp-page__error-message">{errors.user_birthday}</small>}
                         </div>
 
                         <div className="SignUp-page__input-gender">
-                            <label htmlFor="gender" className="SignUp-page__label">성별 *</label>
+                            <label htmlFor="user_gender" className="SignUp-page__label">성별</label>
                             <select
-                                id="gender"
-                                name="gender"
-                                value={formData.gender}
+                                id="user_gender"
+                                name="user_gender"
+                                value={formData.user_gender}
                                 onChange={handleInputChange}
                                 className="SignUp-page__input-gender"
                             >
@@ -360,7 +368,7 @@ const SignUp = () => {
                                 <option value="male">남성</option>
                                 <option value="female">여성</option>
                             </select>
-                            {errors.gender && <small className="SignUp-page__error-message">{errors.gender}</small>}
+                            {errors.user_gender && <small className="SignUp-page__error-message">{errors.user_gender}</small>}
                         </div>
                     </div>
 
@@ -389,7 +397,7 @@ const SignUp = () => {
                         <div className="SignUp-page__popup-content">
                             <span className="SignUp-page__popup-close" onClick={handleClosePopup}>×</span>
                             <h2 className="SignUp-page__popup-title">이메일 인증</h2>
-                            <p>{formData.username} 님의 메일로 인증번호를 전송했습니다.</p>
+                            <p>{formData.user_name} 님의 메일로 인증번호를 전송했습니다.</p>
                             <p>확인된 인증번호를 작성해주세요.</p>
                             <div className="SignUp-page__code-inputs">
                                 {verificationCode.map((code, index) => (
@@ -411,7 +419,6 @@ const SignUp = () => {
                 </form>
             </div>
         </div>
-
     );
 };
 

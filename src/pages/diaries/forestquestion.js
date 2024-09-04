@@ -9,7 +9,7 @@ import city from '../../assets/images/tree.png';
 import left_arrow from '../../assets/images/left_arrow.png';
 import right_arrow from '../../assets/images/right_arrow.png';
 
-const TodayQuestionPopup = ({ onClose, question, questionId, initialAnswer, initialPhoto }) => {
+const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, initialPhoto, onDelete }) => {
   const [answer, setAnswer] = useState(initialAnswer || '');
   const [photo, setPhoto] = useState(initialPhoto || null);
   const fileInputRef = useRef(null);
@@ -37,7 +37,7 @@ const TodayQuestionPopup = ({ onClose, question, questionId, initialAnswer, init
         formData.append('photo', photo);
       }
 
-      await axios.post(`http://localhost:3001/questions/{question_id}/answers`, formData, {
+      await axios.post(`http://localhost:3001/questions/${question_id}/answers`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -48,6 +48,17 @@ const TodayQuestionPopup = ({ onClose, question, questionId, initialAnswer, init
     } catch (error) {
       console.error('Error saving the answer:', error);
       alert('답변 저장에 실패했습니다.');
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3001/questions/${question_id}/answers`);
+      alert('답변이 성공적으로 삭제되었습니다.');
+      onDelete(); // 삭제 후 팝업 닫기
+    } catch (error) {
+      console.error('Error deleting the answer:', error);
+      alert('답변 삭제에 실패했습니다.');
     }
   };
 
@@ -75,6 +86,7 @@ const TodayQuestionPopup = ({ onClose, question, questionId, initialAnswer, init
             />
             {photo && <img src={photo} className="forestquestion_popup-photo-display" alt="selected" />}
             <button className="forestquestion_popup-save-button" onClick={handleSave}>저장</button>
+            <button className="forestquestion_popup-delete-button" onClick={handleDelete}>삭제</button>
           </div>
         </div>
       </div>
@@ -91,10 +103,10 @@ const ForestQuestion = () => {
   const [showTodayQuestionPopup, setShowTodayQuestionPopup] = useState(false);
   const [todayQuestionContent, setTodayQuestionContent] = useState('');
   const [todayQuestion, setTodayQuestion] = useState('Question');
-  const [questionId, setQuestionId] = useState(null);
+  const [question_id, setQuestionId] = useState(null);
   const [initialAnswer, setInitialAnswer] = useState('');
   const [initialPhoto, setInitialPhoto] = useState(null);
-  const [answerId, setAnswerId] = useState(null);
+  const [answer_id, setAnswerId] = useState(null);
   const editorRef = useRef();
 
   useEffect(() => {
@@ -105,7 +117,7 @@ const ForestQuestion = () => {
         setQuestionId(response.data.id);
 
         // 기존 답변과 사진 가져오기
-        const answersResponse = await axios.get(`http://localhost:3001/questions/{response.data.id}/answers`);
+        const answersResponse = await axios.get(`http://localhost:3001/questions/${response.data.id}/answers`);
         const latestAnswer = answersResponse.data[0] || {};
         setInitialAnswer(latestAnswer.answer || '');
         setInitialPhoto(latestAnswer.photo || null);
@@ -170,7 +182,7 @@ const ForestQuestion = () => {
 
   const handleUpdateQuestion = async () => {
     try {
-      await axios.patch(`http://localhost:3001/questions/{question_id}`, {
+      await axios.patch(`http://localhost:3001/questions/${question_id}`, {
         title,
         content: editorData,
       });
@@ -184,7 +196,7 @@ const ForestQuestion = () => {
 
   const handleDeleteQuestion = async () => {
     try {
-      await axios.delete(`http://localhost:3001/questions/{question_id}`);
+      await axios.delete(`http://localhost:3001/questions/${question_id}`);
 
       alert('질문이 성공적으로 삭제되었습니다.');
     } catch (error) {
@@ -201,7 +213,7 @@ const ForestQuestion = () => {
         formData.append('photo', initialPhoto);
       }
 
-      await axios.patch(`http://localhost:3001/questions/{question_id}/answers/{answer_id}`, formData, {
+      await axios.patch(`http://localhost:3001/questions/${question_id}/answers/${answer_id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -216,7 +228,7 @@ const ForestQuestion = () => {
 
   const handleDeleteAnswer = async () => {
     try {
-      await axios.delete(`http://localhost:3001/questions/{question_id}/answers/{answer_id}`);
+      await axios.delete(`http://localhost:3001/questions/${question_id}/answers/${answer_id}`);
 
       alert('답변이 성공적으로 삭제되었습니다.');
     } catch (error) {
@@ -275,6 +287,11 @@ const ForestQuestion = () => {
     handleTodayQuestionPopupClose();
   };
 
+  const handleDeleteAnswerFromPopup = () => {
+    handleDeleteAnswer();
+    handleTodayQuestionPopupClose();
+  };
+
   return (
     <div className="wrap">  
       <Menu />    
@@ -292,7 +309,12 @@ const ForestQuestion = () => {
           <div className="forest__forestquestion__check-today-question">
             <div className="today-question-box">
               <div className="today-question-content" dangerouslySetInnerHTML={{ __html: todayQuestionContent }}></div>
-              <div className="forest__forestquestion__check-today-photo-box"></div>
+              {/* 박스가 있어야 할 위치에 조건부 렌더링 추가 */}
+              {initialPhoto && (
+                <div className="forest__forestquestion__check-today-photo-box">
+                  <img src={initialPhoto} alt="answer" className="forest__forestquestion__check-today-photo" />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -357,10 +379,11 @@ const ForestQuestion = () => {
       {showTodayQuestionPopup && (
         <TodayQuestionPopup 
           question={todayQuestion} 
-          questionId={questionId} 
+          question_id={question_id} 
           initialAnswer={initialAnswer} 
           initialPhoto={initialPhoto} 
           onClose={handleSaveAnswer}
+          onDelete={handleDeleteAnswerFromPopup}
         />
       )}
     </div>

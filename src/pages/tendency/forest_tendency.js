@@ -43,7 +43,7 @@ function ForestTendency() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ selection: 'forest' }), // 서버로 전송할 데이터 ('forest')
+        body: JSON.stringify({ selection: '숲' }), // 서버로 전송할 데이터 ('숲')
       });
 
       if (!response.ok) {
