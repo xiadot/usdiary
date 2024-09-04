@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Forest from "./forest";
 import City from "./city";
 
-const Home = ({ location }) => {
+const Home = () => {
     const location = useLocation();
     const userTendency = location.state?.userTendency; // location.state에서 userTendency 가져오기
 

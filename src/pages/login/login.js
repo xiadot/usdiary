@@ -48,12 +48,14 @@ const Login = () => {
                 console.log('로그인 성공:', result);
                 setError(''); // 오류 상태 초기화
             } else {
+                const errorResult = await response.json();
                 // 로그인 실패 처리 (예: 오류 메시지 표시)
-                console.error('로그인 실패:', result.message);
-                setError(result.message); // 오류 상태 설정
+                console.error('로그인 실패:', errorResult.message);
+                setError(errorResult.message); // 오류 상태 설정
                 setModalIsOpen(true); // 모달 열기
             }
         } catch (error) {
+            
             console.error('로그인 중 오류 발생:', error);
             setError('로그인 중 오류가 발생했습니다.'); // 오류 상태 설정
             setModalIsOpen(true); // 모달 열기
