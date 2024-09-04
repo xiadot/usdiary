@@ -90,9 +90,8 @@ const SignUp = () => {
                 user_birthday: formData.user_birthday,
                 user_gender: formData.user_gender,
             };
-
+    
             try {
-                // 서버에 POST 요청 보내기
                 const response = await fetch('http://localhost:3001/register', {
                     method: 'POST',
                     headers: {
@@ -100,27 +99,23 @@ const SignUp = () => {
                     },
                     body: JSON.stringify(signupData),
                 });
-
+    
                 const result = await response.json();
-
+    
                 if (response.ok) {
-                    navigate('/home');
-                    // 회원가입 성공 처리
-                    console.log('회원가입 성공:', result);
-                    setError(''); // 오류 상태 초기화
+                    navigate('/question'); // 회원가입 성공 시 "/question" 경로로 이동
                 } else {
-                    // 회원가입 실패 처리
                     console.error('회원가입 실패:', result.message);
-                    setError(result.message); // 오류 상태 설정
-                    setModalIsOpen(true); // 모달 열기
+                    setError(result.message);
+                    setModalIsOpen(true);
                 }
             } catch (error) {
                 console.error('회원가입 중 오류 발생:', error);
-                setError('회원가입 중 오류가 발생했습니다.'); // 오류 상태 설정
-                setModalIsOpen(true); // 모달 열기
+                setError('회원가입 중 오류가 발생했습니다.');
+                setModalIsOpen(true);
             }
         }
-    };
+    };    
 
     const handleCodeVerification = async () => {
         try {
