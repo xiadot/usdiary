@@ -55,25 +55,29 @@ const SignUp = () => {
 
     const validateForm = () => {
         const newErrors = {};
-
+    
         if (!formData.user_name) newErrors.user_name = '이름을 입력해주세요.';
         if (!formData.user_nick) newErrors.user_nick = '닉네임을 입력해주세요.';
-        if (!formData.sign_id) newErrors.sign_id = '아이디를 입력해주세요.';
+        if (!formData.sign_id) {
+            newErrors.sign_id = '아이디를 입력해주세요.';
+        } else if (formData.sign_id.length < 6) {
+            newErrors.sign_id = '아이디는 6자 이상이어야 합니다.';
+        }
         if (!formData.user_pwd) newErrors.user_pwd = '비밀번호를 입력해주세요.';
         if (!formData.confirmPassword) newErrors.confirmPassword = '비밀번호 확인을 입력해주세요.';
         if (!formData.user_email) newErrors.user_email = '이메일을 입력해주세요.';
         if (!formData.user_birthday) newErrors.user_birthday = '생일을 입력해주세요.';
-
+    
         if (formData.user_pwd && !/^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,15}$/.test(formData.user_pwd)) {
             newErrors.user_pwd = '특수문자를 포함한 6~15자로 입력해주시기 바랍니다.';
         }
-
+    
         if (formData.user_email && !isCodeValid) {
             newErrors.user_email = '이메일 인증을 하지 않았습니다.';
         }
-
+    
         setErrors(newErrors);
-
+    
         return Object.keys(newErrors).length === 0;
     };
 
