@@ -18,6 +18,7 @@ import Forest from './pages/home/forest';
 import City from './pages/home/city';
 import ForestQuestion from './pages/diaries/forestquestion'
 import CheckList from './pages/checklist/checklist';
+import SpecialDay from './pages/diaries/special_day';
 
 const App = () => {
 
@@ -40,6 +41,9 @@ const App = () => {
 
         {/* 체크리스트 페이지 경로 */}
         <Route path="/city_diary/checklist" element={<CheckList />}></Route>
+
+        {/* 바다 특별한 일기 페이지 경로 */}
+        <Route path="/sea_diary/special_day" element={<SpecialDay />}></Route>
 
         {/* 회원가입 페이지 경로 */}
         <Route path="/signup" element={<Signup/>} />   
