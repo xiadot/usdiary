@@ -6,8 +6,6 @@ import Menu from "../../components/menu";
 
 import '../../assets/css/checklist.css';
 import city from '../../assets/images/city.png';
-import left_arrow from '../../assets/images/left_arrow.png';
-import right_arrow from '../../assets/images/right_arrow.png';
 
 import Routine from './routine';
 import Todo from './todo';
@@ -100,28 +98,40 @@ const CheckList = () => {
     fetchData();
   }, []);
 
-  // 날짜 변경
-  const changeDate = (direction) => {
-    setCurrentDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      if (direction === 'prev') {
-        newDate.setDate(newDate.getDate() - 7);
-      } else if (direction === 'next') {
-        newDate.setDate(newDate.getDate() + 7);
-      }
-      return newDate;
-    });
-  };
-
-  // 날짜 클릭 핸들러
+  // 선택된 날짜로 currentDate 업데이트
   const handleDateClick = (date) => {
-    setSelectedDate(date);
-    setCurrentDate(new Date(date));
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1); // 전날을 계산
+
+    // 날짜 비교를 위해 선택된 날짜, 전날, 오늘을 문자열로 변환
+    const selectedDate = new Date(date).toDateString(); // 클릭한 날짜
+    const todayDate = today.toDateString(); // 오늘 날짜
+    const yesterdayDate = yesterday.toDateString(); // 전날 날짜
+
+    // 선택된 날짜가 전날이거나 오늘이면 업데이트
+    if (selectedDate === todayDate || selectedDate === yesterdayDate) {
+      setSelectedDate(date);
+      setCurrentDate(new Date(date)); // 클릭한 날짜를 가운데로 위치
+    }
   };
 
-  // 제목 변경 핸들러
-  const handleTitleChange = (event) => {
-    setTitle(event.target.innerText);
+  // 오늘 날짜와 전날 날짜만 hover 지정을 위해 id를 부여하는 핸들러
+  const getIdForDate = (date) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1); // 전날 계산
+  
+    const todayDateStr = today.toDateString();
+    const yesterdayDateStr = yesterday.toDateString();
+    const dateStr = new Date(date).toDateString();
+  
+    if (dateStr === todayDateStr) {
+      return 'today';
+    } else if (dateStr === yesterdayDateStr) {
+      return 'yesterday';
+    }
+    return ''; // 오늘과 전날이 아니면 빈 문자열 반환
   };
 
   // 공개 범위 클릭 핸들러
@@ -371,11 +381,11 @@ const CheckList = () => {
             <div className="city__checklist__diary-top-title">Today's City</div>
           </div>
           <div className="city__checklist__diary-date">
-            <img src={left_arrow} className="city__checklist__diary-date-arrow" alt="left_arrow" onClick={() => changeDate('prev')}/>
             <div className="city__checklist__diary-date-container">
               {getDaysArray().map((day, i) => (
                 <div
                   key={i}
+                  id={getIdForDate(day)}
                   className={`city__checklist__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'city__checklist__diary-date-round--today' : ''}`}
                   onClick={() => handleDateClick(day)}
                 >
@@ -383,7 +393,6 @@ const CheckList = () => {
                 </div>
               ))}
             </div>
-            <img src={right_arrow} className="city__checklist__diary-date-arrow" alt="right_arrow" onClick={() => changeDate('next')}/>
           </div>
           <div className="city__checklist__diary-title-edit">
             <input

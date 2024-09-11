@@ -1,21 +1,23 @@
+import { useNavigate } from 'react-router-dom';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
-import '../../assets/css/login.css';
-import Logo_US from '../../assets/images/Logo_US.png';
-import Logo_EARTH from '../../assets/images/Logo_EARTH.png';
-import alarm_white from '../../assets/images/alarm_white.png';
-import alarm_black from '../../assets/images/alarm_black.png';
-
+import Menu from "../../components/menu";
 
 import '../../assets/css/diaries_forest.css';
 import tree from '../../assets/images/tree.png';
-import left_arrow from '../../assets/images/left_arrow.png';
-import right_arrow from '../../assets/images/right_arrow.png';
 import todays_question from '../../assets/images/Todays_Question_forest.png';
 
 const ForestDiary = () => {
+
+  // 서버 이동 코드
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/forestquestion');
+  };
+  
 
   const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
   const [selectedDate, setSelectedDate] = useState(new Date()); // 선택된 날짜
@@ -24,23 +26,40 @@ const ForestDiary = () => {
   const [selectedDiv, setSelectedDiv] = useState(0); // 공개범위
   const editorRef = useRef(); // 에디터 ref
 
-  // 날짜 변경 함수
-  const changeDate = (direction) => {
-    setCurrentDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      if (direction === 'prev') {
-        newDate.setDate(newDate.getDate() - 7);
-      } else if (direction === 'next') {
-        newDate.setDate(newDate.getDate() + 7);
-      }
-      return newDate;
-    });
-  };
-
   // 선택된 날짜로 currentDate 업데이트
   const handleDateClick = (date) => {
-    setSelectedDate(date);
-    setCurrentDate(new Date(date)); // 클릭한 날짜를 가운데로 위치
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1); // 전날을 계산
+
+    // 날짜 비교를 위해 선택된 날짜, 전날, 오늘을 문자열로 변환
+    const selectedDate = new Date(date).toDateString(); // 클릭한 날짜
+    const todayDate = today.toDateString(); // 오늘 날짜
+    const yesterdayDate = yesterday.toDateString(); // 전날 날짜
+
+    // 선택된 날짜가 전날이거나 오늘이면 업데이트
+    if (selectedDate === todayDate || selectedDate === yesterdayDate) {
+      setSelectedDate(date);
+      setCurrentDate(new Date(date)); // 클릭한 날짜를 가운데로 위치
+    }
+  };
+
+  // 오늘 날짜와 전날 날짜만 hover 지정을 위해 id를 부여하는 핸들러
+  const getIdForDate = (date) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1); // 전날 계산
+  
+    const todayDateStr = today.toDateString();
+    const yesterdayDateStr = yesterday.toDateString();
+    const dateStr = new Date(date).toDateString();
+  
+    if (dateStr === todayDateStr) {
+      return 'today';
+    } else if (dateStr === yesterdayDateStr) {
+      return 'yesterday';
+    }
+    return ''; // 오늘과 전날이 아니면 빈 문자열 반환
   };
 
   // 제목 수정 핸들러
@@ -91,30 +110,12 @@ const ForestDiary = () => {
   
   return (
     <div className="wrap">
-      {/* 메뉴 */}
-      <div className="menu">
-        {/* 로고 */}
-        <div className="logo">
-          <img src={Logo_US} className="logo_us" alt="Logo US" />
-          <img src={Logo_EARTH} className="logo_earth" alt="Logo Earth" />
-        </div>
-        {/* 버튼 */}
-        <div className="button">
-          <div className="btn" id="home">HOME</div>
-          <div className="btn" id="diary">DIARY</div>
-          <div className="btn" id="map">MAP</div>
-          <div className="btn" id="profile">PROFILE</div>
-          <div className="btn" id="alarm">
-            <img src={alarm_white} className="alarm_white" alt="Alarm White"/>
-            <img src={alarm_black} className="alarm_black" alt="Alarm Black"/>
-          </div>
-        </div>
-      </div>
+      <Menu/>
       
       {/* 다이어리 */}
       <div className="forest">
         {/* 오늘의 질문 */}
-        <div className="forest__question">
+        <div className="forest__question" onClick={handleClick}>
           <img src={todays_question} className="forest__question-image" alt="todays_question"/>
         </div>
         {/* 일기작성 */}
@@ -122,11 +123,11 @@ const ForestDiary = () => {
           <img src={tree} className="forest__diary-tree" alt="tree" />
           <div className="forest__diary-title">Today's Forest</div>
           <div className="forest__diary-date">
-            <img src={left_arrow} className="forest__diary-date-arrow" alt="left_arrow" onClick={() => changeDate('prev')}/>
             <div className="forest__diary-date-container">
               {getDaysArray().map((day, i) => (
                 <div
                   key={i}
+                  id={getIdForDate(day)}
                   className={`forest__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'forest__diary-date-round--today' : ''}`}
                   onClick={() => handleDateClick(day)}
                 >
@@ -134,14 +135,16 @@ const ForestDiary = () => {
                 </div>
               ))}
             </div>
-            <img src={right_arrow} className="forest__diary-date-arrow" alt="right_arrow" onClick={() => changeDate('next')}/>
           </div>
-          <div className="forest__diary-title-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={handleTitleChange}
-          >
-            {title}
+          <div className="forest__diary-title-edit">
+            <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="제목"
+                className="forest__diary-title-edit-input"
+                spellCheck={false}
+            />
           </div>
           <div className="forest__diary-actions">
             <div className="forest__diary-actions-reveal">
