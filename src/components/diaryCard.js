@@ -61,7 +61,7 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
 
 
     return (
-        <div className={`diary-card ${getBorderClass()}`} onClick={onClick}>
+        <div className={`diary-card ${getBorderClass()}`} onClick={() => onClick(diaryId, boardName)}>
             <div className="diary-header">
                 <span className="diary-nickname">{nickname} 님</span>
                 <span className="diary-like" onClick={toggleLike}>
