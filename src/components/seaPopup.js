@@ -1,77 +1,139 @@
 import React, { useEffect, useState, useRef } from 'react';
-import '../assets/css/cityPopup.css';
-import miniCityImage from '../assets/images/minicity.png'
+import '../assets/css/seaPopup.css';
+import miniseaImage from '../assets/images/minicity.png';
 import sirenIcon from '../assets/images/siren_city.png';
-import axios from 'axios';
 import ReportPopup from './reportPopup';
+import axios from 'axios';
 
-const CityPopup = ({ diary_id, onClose }) => {
-    const [diary, setDiary] = useState(null);
-    const [comments, setComments] = useState([]);
-    const [todos, setTodos] = useState([]);
-    const [routines, setRoutines] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [newComment, setNewComment] = useState(""); // 새 댓글 상태
-    const [editingcomment_id, setEditingcomment_id] = useState(null);
-    const commentRefs = useRef({});
-    const [liked, setLiked] = useState(false);
-    const [currentUserProfile, setCurrentUserProfile] = useState({
-        profile_img: '',
-        user_nick: ''
+const SeaPopup = ({ diary_id, onClose }) => {
+    const [diary, setDiary] = useState({
+        diary_id: 1,
+        diary_title: 'A Day at the Sea',
+        diary_content: 'It was a peaceful day by the sea, with a light breeze and clear skies.',
+        user: {
+            profile: { profile_img: miniseaImage },
+            user_nick: 'OceanLover'
+        }
     });
 
+    const [comments, setComments] = useState([
+        {
+            comment_id: 1,
+            comment_text: 'Sounds like a perfect day!',
+            user: {
+                user_nick: 'SeaBreeze',
+                profile: { profile_img: miniseaImage }
+            }
+        },
+        {
+            comment_id: 2,
+            comment_text: 'Wish I was there!',
+            user: {
+                user_nick: 'WaveWatcher',
+                profile: { profile_img: miniseaImage }
+            }
+        }
+    ]);
+
+    const [todos, setTodos] = useState([
+        {
+            todo_id: 1,
+            title: 'Collect shells',
+            description: 'Find some unique seashells on the beach.',
+            is_completed: false
+        },
+        {
+            todo_id: 2,
+            title: 'Build sandcastles',
+            description: 'Create a beautiful sandcastle with towers.',
+            is_completed: true
+        }
+    ]);
+
+    const [routines, setRoutines] = useState([
+        {
+            routine_id: 1,
+            title: 'Morning Swim',
+            description: 'Take a swim in the calm morning sea.',
+            is_completed: true
+        },
+        {
+            routine_id: 2,
+            title: 'Evening Walk',
+            description: 'Walk along the shore during sunset.',
+            is_completed: false
+        }
+    ]);
+
+    const [loading, setLoading] = useState(false); // 로딩 상태 초기화
+    const [liked, setLiked] = useState(false); // 좋아요 상태
+    const [newComment, setNewComment] = useState(''); // 새 댓글 입력 상태
+    const [error, setError] = useState(null);
+    const [editingcomment_id, setEditingcomment_id] = useState(null);
+    const commentRefs = useRef({});
+    const [currentUserProfile, setCurrentUserProfile] = useState({
+        profile_img: miniseaImage,
+        user_nick: 'CurrentUser'
+    });
+
+    // 더미 데이터 호출 함수
     useEffect(() => {
-        // 하드코딩된 다이어리 및 댓글 데이터
-        const fetchDiaryData = async () => {
-            try {
-                const diaryResponse = await axios.get(`/diaries/${diary_id}`);
-                setDiary(diaryResponse.data);
-            } catch (err) {
-                setError('Failed to fetch diary data');
-                console.error(err);
-            }
-        };
-
-        // 할 일 데이터 가져오기
-        const fetchTodoData = async () => {
-            try {
-                const todoResponse = await axios.get(`/todos/${diary_id}`);
-                setTodos(todoResponse.data);
-            } catch (err) {
-                setError('Failed to fetch todos');
-                console.error(err);
-            }
-        };
-
-        // 루틴 데이터 가져오기
-        const fetchRoutineData = async () => {
-            try {
-                const routineResponse = await axios.get(`/routines/${diary_id}`);
-                setRoutines(routineResponse.data);
-            } catch (err) {
-                setError('Failed to fetch routines');
-                console.error(err);
-            }
-        };
-
-        const fetchComments = async () => {
-            try {
-                const commentsResponse = await axios.get(`/comments/${diary_id}`);
-                setComments(commentsResponse.data);
-            } catch (err) {
-                setError('Failed to fetch comments');
-                console.error(err);
-            }
-        };
-
-        const fetchAllData = async () => {
+        const fetchDummyData = () => {
             setLoading(true);
-            await Promise.all([fetchDiaryData(), fetchTodoData(), fetchRoutineData(), fetchComments()]);
+
+            // 더미 다이어리 데이터
+            const dummyDiary = {
+                diary_id: diary_id,
+                diary_title: `A Day at the Sea - Diary ${diary_id}`,
+                diary_content: 'Enjoying the beautiful sea and nature around.',
+                user: {
+                    profile: { profile_img: miniseaImage },
+                    user_nick: 'OceanLover'
+                }
+            };
+            setDiary(dummyDiary);
+
+            // 더미 댓글 데이터
+            const dummyComments = [
+                {
+                    comment_id: 1,
+                    comment_text: 'What a beautiful day!',
+                    user: {
+                        user_nick: 'SeaBreeze',
+                        profile: { profile_img: miniseaImage }
+                    }
+                },
+                {
+                    comment_id: 2,
+                    comment_text: 'Can’t wait to visit the sea!',
+                    user: {
+                        user_nick: 'WaveWatcher',
+                        profile: { profile_img: miniseaImage }
+                    }
+                }
+            ];
+            setComments(dummyComments);
+
+            // 더미 할 일 데이터
+            const dummyTodos = [
+            ];
+            setTodos(dummyTodos);
+
+            // 더미 루틴 데이터
+            const dummyRoutines = [
+            ];
+            setRoutines(dummyRoutines);
+
+            // 더미 사용자 프로필
+            setCurrentUserProfile({
+                profile_img: miniseaImage,
+                user_nick: 'CurrentUser'
+            });
+
             setLoading(false);
         };
 
-        fetchAllData();
+        fetchDummyData();
 
         // 팝업이 뜨면 배경 스크롤 방지
         document.body.style.overflow = 'hidden';
@@ -217,12 +279,12 @@ const CityPopup = ({ diary_id, onClose }) => {
     };
 
     const hasComments = comments.length > 0;
-
     const hasTodos = todos.length > 0;
     const hasRoutines = routines.length > 0;
 
     const showChecklistSection = hasTodos || hasRoutines;
 
+    // 좋아요 토글 함수
     const toggleLike = (e) => {
         e.stopPropagation();
         setLiked(!liked);
@@ -240,37 +302,41 @@ const CityPopup = ({ diary_id, onClose }) => {
         </svg>
     );
 
+
+
+    if (loading) return <div className="sea-popup">Loading...</div>;
+
     return (
         <div>
-            <div className="city-popup" onClick={handleBackgroundClick}>
-                <div className="city-popup__content">
-                    <div className='city-popup__header'>
-                        <div className='city-popup__header-left'>
-                            <img src={diary.user.profile.profile_img} alt="Diary Author" className="city-popup__author-profile-image" />
-                            <p className="city-popup__author-nickname">{diary.user.user_nick}님</p>
+            <div className="sea-popup" onClick={handleBackgroundClick}>
+                <div className="sea-popup__content">
+                    <div className='sea-popup__header'>
+                        <div className='sea-popup__header-left'>
+                            <img src={diary.user.profile.profile_img} alt="Diary Author" className="sea-popup__author-profile-image" />
+                            <p className="sea-popup__author-nickname">{diary.user.user_nick}님</p>
                         </div>
-                        <div className="city-popup__header-right">
-                            <button className="city-popup__report-button" onClick={handleReportButtonClick}>
+                        <div className="sea-popup__header-right">
+                            <button className="sea-popup__report-button" onClick={handleReportButtonClick}>
                                 <img src={sirenIcon} alt="Report" />
                             </button>
-                            <span className="city-popup__like-button" onClick={toggleLike}>
+                            <span className="sea-popup__like-button" onClick={toggleLike}>
                                 {liked ? <FilledHeart /> : <EmptyHeart />}
                             </span>
                         </div>
                     </div>
 
-                    <div className={`city-popup__main-content ${!(hasRoutines || hasTodos) ? 'city-popup__main-content--centered' : ''}`}>
+                    <div className={`sea-popup__main-content ${!(hasRoutines || hasTodos) ? 'sea-popup__main-content--centered' : ''}`}>
                         {showChecklistSection && (
-                            <div className='city-popup__checklist-section'>
+                            <div className='sea-popup__checklist-section'>
                                 <h2 className="city-popup__checklist-title">Today's Checklist</h2>
                                 <div className="city-popup__checklist__check-routine">
-                                    <div className="city-popup__checklist__check-routine-top">
+                                    <div className="sea-popup__checklist__check-routine-top">
                                         <div className="city__checklist__check-routine-top-circle"></div>
                                         <div className="city__checklist__check-routine-top-name">Routine</div>
                                         <div className="city__checklist__check-routine-top-num">{routines.length}</div>
                                     </div>
                                     <hr />
-                                    <div className="city-popup__checklist__check-routine-bottom">
+                                    <div className="sea-popup__checklist__check-routine-bottom">
                                         {routines.map((routine, index) => (
                                             <div className="city__checklist__check-routine-bottom-box" key={routine.routine_id}>
                                                 <div className="city__checklist__check-routine-bottom-box-toggleSwitch">
@@ -279,7 +345,7 @@ const CityPopup = ({ diary_id, onClose }) => {
                                                         id={`routine-toggle-${index}`}
                                                         hidden
                                                         checked={routine.is_completed}
-                                                        readOnly // 읽기 전용으로 설정
+                                                        readOnly
                                                     />
                                                     <label htmlFor={`routine-toggle-${index}`}>
                                                         <span></span>
@@ -291,14 +357,14 @@ const CityPopup = ({ diary_id, onClose }) => {
                                         ))}
                                     </div>
                                 </div>
-                                <div className="city-popup__checklist__check-todo">
-                                    <div className="city-popup__checklist__check-todo-top">
+                                <div className="sea-popup__checklist__check-todo">
+                                    <div className="sea-popup__checklist__check-todo-top">
                                         <div className="city__checklist__check-todo-top-circle"></div>
                                         <div className="city__checklist__check-todo-top-name">To Do</div>
                                         <div className="city__checklist__check-todo-top-num">{todos.length}</div>
                                     </div>
                                     <hr />
-                                    <div className="city-popup__checklist__check-todo-bottom">
+                                    <div className="sea-popup__checklist__check-todo-bottom">
                                         {todos.map((todo, index) => (
                                             <div className="city__checklist__check-todo-bottom-box" key={todo.todo_id}>
                                                 <div className="city__checklist__check-todo-bottom-box-toggleSwitch">
@@ -307,7 +373,7 @@ const CityPopup = ({ diary_id, onClose }) => {
                                                         id={`todo-toggle-${index}`}
                                                         hidden
                                                         checked={todo.is_completed}
-                                                        readOnly // 읽기 전용으로 설정
+                                                        readOnly
                                                     />
                                                     <label htmlFor={`todo-toggle-${index}`}>
                                                         <span></span>
@@ -322,42 +388,42 @@ const CityPopup = ({ diary_id, onClose }) => {
                             </div>
                         )}
 
-                        <div className="city-popup__diary-section">
-                            <div className='city-popup__title'>
-                                <img src={miniCityImage} alt="Mini city" className="city-popup__mini-city-image" />
-                                <h1 className='city-popup__city'>Today's City</h1>
+                        <div className="sea-popup__diary-section">
+                            <div className='sea-popup__title'>
+                                <img src={miniseaImage} alt="Mini sea" className="sea-popup__mini-sea-image" />
+                                <h1 className='sea-popup__sea'>Today's sea</h1>
                             </div>
-                            <div className='city-popup__title-container'>
-                                <p className='city-popup__diary-title'>{diary.diary_title}</p>
-                                <div className="city-popup__title-line"></div>
+                            <div className='sea-popup__title-container'>
+                                <p className='sea-popup__diary-title'>{diary.diary_title}</p>
+                                <div className="sea-popup__title-line"></div>
                             </div>
-                            <div className="city-popup__diary-content">
+                            <div className="sea-popup__diary-content">
                                 <p>{diary.diary_content}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="city-popup__comment-input-section">
-                        <img src={currentUserProfile.profile_img} alt="User Profile" className="city-popup__user-profile-image" />
+                    <div className="sea-popup__comment-input-section">
+                        <img src={currentUserProfile.profile_img} alt="User Profile" className="sea-popup__user-profile-image" />
                         <input
                             type="text"
                             value={newComment}
                             onChange={handleCommentChange}
                             placeholder="댓글 달기 ..."
-                            className="city-popup__comment-input"
+                            className="sea-popup__comment-input"
                         />
-                        <button onClick={handleCommentSubmit} className="city-popup__comment-submit-button">댓글 작성</button>
+                        <button onClick={handleCommentSubmit} className="sea-popup__comment-submit-button">댓글 작성</button>
                     </div>
 
-                    <div className={`city-popup__comments-section ${!hasComments ? 'city-popup__comments-section--no-comments' : ''}`}>
+                    <div className={`sea-popup__comments-section ${!hasComments ? 'sea-popup__comments-section--no-comments' : ''}`}>
                         {hasComments ? (
                             comments.map((comment) => (
-                                <div key={comment.comment_id} className="city-popup__comment">
-                                    <img src={comment.user.profile.profile_img} alt="Profile" className="city-popup__comment-profile-image" />
-                                    <div className="city-popup__comment-details">
-                                        <p className="city-popup__comment-nickname">{comment.user.user_nick}님</p>
+                                <div key={comment.comment_id} className="sea-popup__comment">
+                                    <img src={comment.user.profile.profile_img} alt="Profile" className="sea-popup__comment-profile-image" />
+                                    <div className="sea-popup__comment-details">
+                                        <p className="sea-popup__comment-nickname">{comment.user.user_nick}님</p>
                                         <p
-                                            className={`city-popup__comment-content ${editingcomment_id === comment.comment_id ? 'city-popup__comment-content--editable' : ''}`}
+                                            className={`sea-popup__comment-content ${editingcomment_id === comment.comment_id ? 'sea-popup__comment-content--editable' : ''}`}
                                             contentEditable={editingcomment_id === comment.comment_id}
                                             onBlur={() => handleEditBlur(comment.comment_id)}
                                             ref={(el) => commentRefs.current[comment.comment_id] = el}
@@ -367,24 +433,24 @@ const CityPopup = ({ diary_id, onClose }) => {
                                         </p>
                                     </div>
                                     {comment.user.user_nick === currentUserProfile.user_nick && (
-                                        <div className="city-popup__comment-actions">
+                                        <div className="sea-popup__comment-actions">
                                             {editingcomment_id === comment.comment_id ? (
                                                 <button
-                                                    className="city-popup__edit-button"
+                                                    className="sea-popup__edit-button"
                                                     onClick={() => setEditingcomment_id(null)}
                                                 >
                                                     저장
                                                 </button>
                                             ) : (
                                                 <button
-                                                    className="city-popup__edit-button"
+                                                    className="sea-popup__edit-button"
                                                     onClick={() => handleEditClick(comment.comment_id)}
                                                 >
                                                     수정
                                                 </button>
                                             )}
                                             <button
-                                                className="city-popup__delete-button"
+                                                className="sea-popup__delete-button"
                                                 onClick={() => handleDeleteClick(comment.comment_id)}
                                             >
                                                 삭제
@@ -394,7 +460,7 @@ const CityPopup = ({ diary_id, onClose }) => {
                                 </div>
                             ))
                         ) : (
-                            <p className="city-popup__no-comments-message">첫 번째 댓글을 남겨보세요!</p>
+                            <p className="sea-popup__no-comments-message">첫 번째 댓글을 남겨보세요!</p>
                         )}
                     </div>
                 </div>
@@ -402,7 +468,6 @@ const CityPopup = ({ diary_id, onClose }) => {
             {reportPopupVisible && <ReportPopup onClose={handleCloseReportPopup} />}
         </div>
     );
-
 };
 
-export default CityPopup;
+export default SeaPopup;
