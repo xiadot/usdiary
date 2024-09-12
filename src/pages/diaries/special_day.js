@@ -61,12 +61,54 @@ const SpecialDay = () => {
   const [visibleDiv, setVisibleDiv] = useState('totalPlace');
   const [places, setPlaces] = useState([]);
 
-  const handleSave = () => {
-    console.log('visibleDiv:', visibleDiv);
-    console.log('오늘의 기분:', emotion);
-    console.log('한 줄 메모:', memo);
+  const handleSave = async () => {
+    const divNumbers = {
+      sea: '1',
+      mountain: '2',
+      park: '3',
+      river: '4',
+      stream: '5',
+      valley: '6',
+      cafe: '7',
+      library: '8',
+      restaurant: '9',
+      theater: '10',
+      gallery: '11',
+      shoppingmall: '12',
+      themepark: '13',
+      stadium: '14',
+      auditorium: '15'
+    };
+  
+    // visibleDiv 값을 숫자로 변환
+    const type = divNumbers[visibleDiv];
+  
+    // 서버로 전송할 데이터
+    const data = {
+      type: type,          // visibleDiv에 매핑된 숫자
+      emotion: emotion,    // 오늘의 기분
+      memo: memo           // 한 줄 메모
+    };
+  
+    try {
+      const response = await fetch('/api/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)  // 데이터를 JSON으로 변환해 전송
+      });
+  
+      if (response.ok) {
+        console.log('데이터가 성공적으로 저장되었습니다.');
+      } else {
+        console.error('데이터 저장에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('서버 요청 중 오류가 발생했습니다.', error);
+    }
   };
-
+  
   const changeDate = (direction) => {
     setCurrentDate((prevDate) => {
       const newDate = new Date(prevDate);
@@ -194,113 +236,48 @@ const SpecialDay = () => {
   
   // 가정: 데이터를 서버에서 불러오는 경우
   useEffect(() => {
-    if (visibleDiv === 'sea') {
-      const seaData = [
-        { emotion: "설렘", content: "바닷바람이 나를 설레게 해요." },
-        { emotion: "기대감", content: "무언가 좋은 일이 일어날 것만 같은 느낌!" },
-        { emotion: "평화로움", content: "파도 소리가 마음을 편안하게 해요." },
-        { emotion: "행복", content: "햇살과 바다의 조화가 행복을 줘요." },
-        { emotion: "흥분", content: "해변에서의 활동이 흥미진진해요!" },
-      ];
-      setPlaces(seaData);
-    } else if (visibleDiv === 'mountain') {
-      const mountainData = [
-        { emotion: "즐거움", content: "여기는 버블처럼 30글자 제한있어요 참고바랍니다요용요요" },
-        { emotion: "평화로움", content: "바람소리와 함께하는 편안한 시간입니다." },
-        { emotion: "설렘", content: "산 정상에서의 경치가 정말 아름다워요." },
-        { emotion: "기대감", content: "등산 후 보상으로 맛있는 음식을 기대해요." },
-        { emotion: "상쾌함", content: "청량한 공기와 산의 향기가 상쾌해요." }
-      ];
-      setPlaces(mountainData);
-    } else if (visibleDiv === 'park') {
-      const parkData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(parkData);
-    } else if (visibleDiv === 'river') {
-      const riverData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(riverData);
-    } else if (visibleDiv === 'stream') {
-      const streamData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(streamData);
-    } else if (visibleDiv === 'valley') {
-      const valleyData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(valleyData);
-    } else if (visibleDiv === 'cafe') {
-      const cafeData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(cafeData);
-    } else if (visibleDiv === 'library') {
-      const libraryData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(libraryData);
-    } else if (visibleDiv === 'restaurant') {
-      const restaurantData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(restaurantData);
-    } else if (visibleDiv === 'theater') {
-      const theaterData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(theaterData);
-    } else if (visibleDiv === 'gallery') {
-      const galleryData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(galleryData);
-    } else if (visibleDiv === 'shoppingmall') {
-      const shoppingmallData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(shoppingmallData);
-    } else if (visibleDiv === 'themepark') {
-      const themeparkData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(themeparkData);
-    } else if (visibleDiv === 'stadium') {
-      const stadiumData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(stadiumData);
-    } else if (visibleDiv === 'auditorium') {
-      const auditoriumData = [
-        { emotion: "감정", content: "감정입니다" },
-      ];
-      setPlaces(auditoriumData);
-    } else {
-      // 기본 데이터 또는 빈 데이터 설정
-      setPlaces([]);
+    const fetchData = async () => {
+      const divNumbers = {
+        sea: '1',
+        mountain: '2',
+        park: '3',
+        river: '4',
+        stream: '5',
+        valley: '6',
+        cafe: '7',
+        library: '8',
+        restaurant: '9',
+        theater: '10',
+        gallery: '11',
+        shoppingmall: '12',
+        themepark: '13',
+        stadium: '14',
+        auditorium: '15'
+      };
+  
+      // 현재 월을 추출 (1월이 0이므로 +1 필요)
+      const currentMonth = new Date().getMonth() + 1;
+  
+      try {
+        // visibleDiv와 현재 월 정보를 함께 서버로 전송
+        const response = await fetch(`/api/places?type=${divNumbers[visibleDiv]}&month=${currentMonth}`);
+        if (response.ok) {
+          const data = await response.json();
+          setPlaces(data);
+        } else {
+          console.error("데이터를 불러오는 데 실패했습니다.");
+          setPlaces([]);
+        }
+      } catch (error) {
+        console.error("서버 요청 중 오류가 발생했습니다.", error);
+        setPlaces([]);
+      }
+    };
+  
+    if (visibleDiv) {
+      fetchData();
     }
   }, [visibleDiv]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // visibleDiv 값을 쿼리 파라미터로 포함하여 URL을 만듭니다.
-  //       const response = await fetch(`/api/data?place=${visibleDiv}`);
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data = await response.json();
-  //       setPlaces(data);
-  //     } catch (error) {
-  //       console.error('Fetch error:', error);
-  //       setPlaces([]);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [visibleDiv]);
   
   const handleToggle = (divName) => () => {
     setVisibleDiv(visibleDiv === divName ? 'totalPlace' : divName);
