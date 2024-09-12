@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DiaryCard from '../../components/diaryCard';
+import CityPopup from "../../components/cityPopup";
 import '../../assets/css/city.css';
 import Menu from "../../components/menu";
 import axios from "axios";
@@ -13,6 +14,7 @@ const City = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true); // Add a loading state
     const [error, setError] = useState(null); // Add an error state
+    const [selectedDiaryId, setSelectedDiaryId] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -64,6 +66,14 @@ const City = () => {
         (_, index) => pageGroup * pagesPerGroup + index + 1
     );
 
+    const handleDiaryClick = (diary_id) => {
+        setSelectedDiaryId(diary_id); // 클릭한 다이어리 ID를 설정
+    };
+
+    const handleClosePopup = () => {
+        setSelectedDiaryId(null); // 팝업 닫기
+    };
+
     return (
         <div className="wrap">
             <Menu />
@@ -95,6 +105,7 @@ const City = () => {
                             boardName={diary.board_name}
                             nickname={diary.nickname}
                             diaryId={diary.diary_id}
+                            onClick={() => handleDiaryClick(diary.diary_id)}
                         />
                     ))}
                 </div>
@@ -126,6 +137,10 @@ const City = () => {
                 </div>
 
                 <div className="city-page__tree-background"></div>
+
+                {selectedDiaryId && (
+                    <CityPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
+                )}
             </div>
         </div>
     );

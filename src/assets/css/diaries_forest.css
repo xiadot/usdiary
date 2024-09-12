@@ -19,6 +19,11 @@
     border-radius: 0px 20px 20px 0px;
 }
 
+.wrap .forest__question:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 .wrap .forest__question-image {
     height: 130px;
     display: flex;
@@ -48,7 +53,7 @@
 }
 
 .wrap .forest__diary-date {
-    width: 566px;
+    width: 468px;
     height: 40px;
     margin-bottom: 27px;
     display: flex;
@@ -65,6 +70,14 @@
     width: 468px;
     display: flex;
     justify-content: space-between;
+}
+
+.wrap .forest__diary-date-container #today:hover,
+.wrap .forest__diary-date-container #yesterday:hover {
+    background-color: #9FC393;
+    color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .wrap .forest__diary-date-round {
@@ -92,10 +105,9 @@
     color: #C6C9CE;
     font-size: 20px;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 26px;
     line-height: 20px;
     font-family: "Noto Sans KR", sans-serif;
-    font-optical-sizing: auto;
     font-weight: 600;
     border-style: solid;
     border-width: 0 0 1px;
@@ -103,10 +115,32 @@
     outline: none;
 }
 
+/* Title Edit */
+.wrap .forest__diary-title-edit-input {
+    width: 591px;
+    height: 33px;
+    color: #C6C9CE;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 26px;
+    line-height: 20px;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 600;
+    border-style: solid;
+    border-width: 0 0 1px;
+    border-color: #99B477;
+    outline: none;
+    padding-bottom: 10px;
+}
+
+.wrap .forest__diary-title-edit-input::placeholder {
+    color: #C6C9CE;
+}
+
 .wrap .forest__diary-actions {
     width: 930px;
-    height: 43px;
-    margin-bottom: 23px;
+    height: 30px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: flex-end;
 }
@@ -166,6 +200,8 @@
 
 .wrap .forest__diary-submit:hover {
     background-color: #D6E8C0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .wrap .forest__diary-texts {

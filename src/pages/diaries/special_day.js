@@ -48,7 +48,8 @@ import ticket from '../../assets/images/ticket.png';
 
 import PlaceList from './PlaceList';
 
-// 체크리스트 페이지 전체화면 컴포넌트
+import axios from 'axios';
+
 const SpecialDay = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -91,7 +92,7 @@ const SpecialDay = () => {
     };
   
     try {
-      const response = await fetch('/api/save', {
+      const response = await fetch('/diaries/special_day', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -108,24 +109,42 @@ const SpecialDay = () => {
       console.error('서버 요청 중 오류가 발생했습니다.', error);
     }
   };
-  
-  const changeDate = (direction) => {
-    setCurrentDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      if (direction === 'prev') {
-        newDate.setDate(newDate.getDate() - 7);
-      } else if (direction === 'next') {
-        newDate.setDate(newDate.getDate() + 7);
-      }
-      return newDate;
-    });
-  };
 
+  // 선택된 날짜로 currentDate 업데이트
   const handleDateClick = (date) => {
-    setSelectedDate(date);
-    setCurrentDate(new Date(date));
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1); // 전날을 계산
+
+    // 날짜 비교를 위해 선택된 날짜, 전날, 오늘을 문자열로 변환
+    const selectedDate = new Date(date).toDateString(); // 클릭한 날짜
+    const todayDate = today.toDateString(); // 오늘 날짜
+    const yesterdayDate = yesterday.toDateString(); // 전날 날짜
+
+    // 선택된 날짜가 전날이거나 오늘이면 업데이트
+    if (selectedDate === todayDate || selectedDate === yesterdayDate) {
+      setSelectedDate(date);
+      setCurrentDate(new Date(date)); // 클릭한 날짜를 가운데로 위치
+    }
   };
 
+  // 오늘 날짜와 전날 날짜만 hover 지정을 위해 id를 부여하는 핸들러
+  const getIdForDate = (date) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1); // 전날 계산
+  
+    const todayDateStr = today.toDateString();
+    const yesterdayDateStr = yesterday.toDateString();
+    const dateStr = new Date(date).toDateString();
+  
+    if (dateStr === todayDateStr) {
+      return 'today';
+    } else if (dateStr === yesterdayDateStr) {
+      return 'yesterday';
+    }
+    return ''; // 오늘과 전날이 아니면 빈 문자열 반환
+  };
   const handleDivClick = (index) => {
     setSelectedDiv(index);
   };
@@ -255,21 +274,18 @@ const SpecialDay = () => {
         auditorium: '15'
       };
   
-      // 현재 월을 추출 (1월이 0이므로 +1 필요)
       const currentMonth = new Date().getMonth() + 1;
   
       try {
-        // visibleDiv와 현재 월 정보를 함께 서버로 전송
-        const response = await fetch(`/api/places?type=${divNumbers[visibleDiv]}&month=${currentMonth}`);
-        if (response.ok) {
-          const data = await response.json();
-          setPlaces(data);
-        } else {
-          console.error("데이터를 불러오는 데 실패했습니다.");
-          setPlaces([]);
-        }
+        const response = await axios.get(`/diaries/places`, {
+          params: {
+            type: divNumbers[visibleDiv],
+            month: currentMonth
+          }
+        });
+        setPlaces(response.data); // axios는 응답 데이터를 자동으로 JSON 파싱해줍니다.
       } catch (error) {
-        console.error("서버 요청 중 오류가 발생했습니다.", error);
+        console.error("데이터를 불러오는 데 실패했습니다.", error);
         setPlaces([]);
       }
     };
@@ -539,11 +555,11 @@ const SpecialDay = () => {
             <div className="sea__special__diary-top-title">Today's Sea</div>
             </div>
             <div className="sea__special__diary-date">
-            <img src={left_arrow} className="sea__special__diary-date-arrow" alt="left_arrow" onClick={() => changeDate('prev')}/>
             <div className="sea__special__diary-date-container">
                 {getDaysArray().map((day, i) => (
                 <div
                     key={i}
+                    id={getIdForDate(day)}
                     className={`sea__special__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'sea__special__diary-date-round--today' : ''}`}
                     onClick={() => handleDateClick(day)}
                 >
@@ -551,7 +567,6 @@ const SpecialDay = () => {
                 </div>
                 ))}
             </div>
-            <img src={right_arrow} className="sea__special__diary-date-arrow" alt="right_arrow" onClick={() => changeDate('next')}/>
             </div>
             <div className="sea__special__diary-title-edit">
             <input

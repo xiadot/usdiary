@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DiaryCard from '../../components/diaryCard';
-import DiaryPopup from "../../components/diaryPopup";
+import ForestPopup from "../../components/forestPopup";
 import '../../assets/css/forest.css';
 import Menu from "../../components/menu";
 import axios from "axios";
@@ -20,7 +20,7 @@ const Forest = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/api/forest'); // Replace with your API URL
+                const response = await axios.get('/forest'); // Replace with your API URL
                 const data = response.data;
                 setDiaries(data);
                 setTotalPages(Math.ceil(data.length / diariesPerPage));
@@ -66,7 +66,7 @@ const Forest = () => {
         (_, index) => pageGroup * pagesPerGroup + index + 1
     );
 
-    const handleDiaryClick = (diary_id) => {
+    const handleDiaryClick = (diary_id, board_name) => {
         setSelectedDiaryId(diary_id); // 클릭한 다이어리 ID를 설정
     };
 
@@ -139,7 +139,7 @@ const Forest = () => {
                 <div className="forest-page__tree-background"></div>
 
                 {selectedDiaryId && (
-                    <DiaryPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
+                    <ForestPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
                 )}
             </div>
         </div>
