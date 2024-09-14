@@ -1032,19 +1032,5 @@ input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popu
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-
-/* Diary Button in Menu */
-.menu .button #diary {
-    height: 29px;
-    border-radius: 22.5px;
-    background-color: #ffffff;
-    color: #2C2C2C;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    box-shadow: 0px 4px 4px #B8B8B8;
-}
-
   
   

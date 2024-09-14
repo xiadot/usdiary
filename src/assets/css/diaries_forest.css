@@ -213,41 +213,6 @@
     margin-bottom: 50px;
 }
 
-/* .forest__diary-texts {
-    width: 500px;
-    height: 200px;
-    margin: 0 auto;
-    padding: 10px 20px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-} */
-  
-/* .forest__diary-texts::-webkit-scrollbar {
-    width: 10px;  
-}
-
-.wrap .forest__diary-texts::-webkit-scrollbar-thumb {
-    height: 30%; 
-    background: #C1C1C1;
-}
-  
-.wrap .forest__diary-texts::-webkit-scrollbar-track {
-    background: #F1F1F1;
-} */
-
 .wrap .forest__diary-texts p {
     font-size: large;
-}
-
-/* 다이어리 버튼 색 다르게 */
-.wrap .menu .button #diary {
-    height: 29px;
-    border-radius: 22.5px;
-    background-color: #ffffff;
-    color: #2C2C2C;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    box-shadow: 0px 4px 4px #B8B8B8;
 }
