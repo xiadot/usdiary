@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../assets/css/seaPopup.css';
-import miniseaImage from '../assets/images/minicity.png';
-import sirenIcon from '../assets/images/siren_city.png';
+import miniseaImage from '../assets/images/minisea.png';
+import sirenIcon from '../assets/images/siren_sea.png';
 import ReportPopup from './reportPopup';
 import axios from 'axios';
 
@@ -116,13 +116,38 @@ const SeaPopup = ({ diary_id, onClose }) => {
 
             // 더미 할 일 데이터
             const dummyTodos = [
+                {
+                    todo_id: 1,
+                    title: 'Pick up seashells',
+                    description: 'Collect seashells along the beach shore.',
+                    is_completed: false
+                },
+                {
+                    todo_id: 2,
+                    title: 'Enjoy the sunset',
+                    description: 'Watch the sunset with a cool breeze.',
+                    is_completed: true
+                }
             ];
             setTodos(dummyTodos);
-
+            
             // 더미 루틴 데이터
             const dummyRoutines = [
+                {
+                    routine_id: 1,
+                    title: 'Morning Yoga',
+                    description: 'Start the day with yoga by the sea.',
+                    is_completed: false
+                },
+                {
+                    routine_id: 2,
+                    title: 'Evening Swim',
+                    description: 'Swim in the sea during the evening.',
+                    is_completed: true
+                }
             ];
             setRoutines(dummyRoutines);
+            
 
             // 더미 사용자 프로필
             setCurrentUserProfile({
@@ -291,13 +316,13 @@ const SeaPopup = ({ diary_id, onClose }) => {
     };
 
     const EmptyHeart = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EA3AB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7D9FE3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
     );
 
     const FilledHeart = () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#D8D8D8" stroke="#9EA3AB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#7D9FE3" stroke="#7D9FE3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
     );
@@ -327,63 +352,9 @@ const SeaPopup = ({ diary_id, onClose }) => {
 
                     <div className={`sea-popup__main-content ${!(hasRoutines || hasTodos) ? 'sea-popup__main-content--centered' : ''}`}>
                         {showChecklistSection && (
-                            <div className='sea-popup__checklist-section'>
-                                <h2 className="city-popup__checklist-title">Today's Checklist</h2>
-                                <div className="city-popup__checklist__check-routine">
-                                    <div className="sea-popup__checklist__check-routine-top">
-                                        <div className="city__checklist__check-routine-top-circle"></div>
-                                        <div className="city__checklist__check-routine-top-name">Routine</div>
-                                        <div className="city__checklist__check-routine-top-num">{routines.length}</div>
-                                    </div>
-                                    <hr />
-                                    <div className="sea-popup__checklist__check-routine-bottom">
-                                        {routines.map((routine, index) => (
-                                            <div className="city__checklist__check-routine-bottom-box" key={routine.routine_id}>
-                                                <div className="city__checklist__check-routine-bottom-box-toggleSwitch">
-                                                    <input
-                                                        type="checkbox"
-                                                        id={`routine-toggle-${index}`}
-                                                        hidden
-                                                        checked={routine.is_completed}
-                                                        readOnly
-                                                    />
-                                                    <label htmlFor={`routine-toggle-${index}`}>
-                                                        <span></span>
-                                                    </label>
-                                                </div>
-                                                <div className="city__checklist__check-routine-bottom-box-title">{routine.title}</div>
-                                                <div className="city__checklist__check-routine-bottom-box-content">{routine.description}</div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="sea-popup__checklist__check-todo">
-                                    <div className="sea-popup__checklist__check-todo-top">
-                                        <div className="city__checklist__check-todo-top-circle"></div>
-                                        <div className="city__checklist__check-todo-top-name">To Do</div>
-                                        <div className="city__checklist__check-todo-top-num">{todos.length}</div>
-                                    </div>
-                                    <hr />
-                                    <div className="sea-popup__checklist__check-todo-bottom">
-                                        {todos.map((todo, index) => (
-                                            <div className="city__checklist__check-todo-bottom-box" key={todo.todo_id}>
-                                                <div className="city__checklist__check-todo-bottom-box-toggleSwitch">
-                                                    <input
-                                                        type="checkbox"
-                                                        id={`todo-toggle-${index}`}
-                                                        hidden
-                                                        checked={todo.is_completed}
-                                                        readOnly
-                                                    />
-                                                    <label htmlFor={`todo-toggle-${index}`}>
-                                                        <span></span>
-                                                    </label>
-                                                </div>
-                                                <div className="city__checklist__check-todo-bottom-box-title">{todo.title}</div>
-                                                <div className="city__checklist__check-todo-bottom-box-content">{todo.description}</div>
-                                            </div>
-                                        ))}
-                                    </div>
+                            <div className='sea-popup__place-section'>
+                                <h2 className="sea-popup__place-title">Today's Place</h2>
+                                <div className='sea-popup__container'>
                                 </div>
                             </div>
                         )}
