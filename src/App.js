@@ -19,6 +19,7 @@ import City from './pages/home/city';
 import ForestQuestion from './pages/diaries/forestquestion'
 import CheckList from './pages/checklist/checklist';
 import SpecialDay from './pages/diaries/special_day';
+import Follow from './pages/profile/follow';
 
 const App = () => {
 
@@ -70,6 +71,9 @@ const App = () => {
 
         {/* 오늘의 질문 페이지 경로 */}
         <Route path="/forestquestion" element={<ForestQuestion />}/>
+
+        {/* 팔로우 페이지 경로 */}
+        <Route path="/follow" element={<Follow />}/>
 
       </Routes>
     </Router>
