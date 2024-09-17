@@ -53,6 +53,7 @@
 }
 
 .sea-popup__title-container {
+    
     margin-top: 10px;
     text-align: center;
     margin-bottom: 10px;
@@ -291,17 +292,6 @@
     margin: 5px 0px 15px 0px;
 }
 
-.sea-popup__container {
-    background-color: white;
-    height: 45vh;
-    width: 100%;
-    border-radius: 10px; /* 모서리를 둥글게 하고 싶다면 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자를 추가 */
-    margin-top: 10px; /* h2와의 간격 */
-    margin-bottom: 30px;
-}
-
-
 .sea-popup__diary-section {
     width: 70%;
     min-width: 500px;
@@ -353,5 +343,114 @@
 .sea-popup__like-button img {
     width: 24px;
     height: 24px;
+}
+
+.sea-popup__container {
+    display: flex;
+    justify-content: center; /* 자식 요소를 수평으로 중앙 정렬 */
+    align-items: center;
+    background-color: white;
+    height: 45vh;
+    width: 100%;
+    border-radius: 10px; /* 모서리를 둥글게 하고 싶다면 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자를 추가 */
+    margin-top: 10px; /* h2와의 간격 */
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.sea-popup__category-icon {
+    display: flex;
+    width: auto;
+    height: 40%;
+    transition: filter 0.1s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    position: relative; /* 메모와 이모션을 겹치기 위한 설정 */
+    z-index: 1; /* 아이콘이 메모와 이모션보다 아래에 있게 설정 */
+}
+
+.sea-popup__category-icon:hover {
+    filter: blur(3px); /* 아이콘에 블러 효과 적용 */
+    
+}
+
+.sea-popup__icon-1 {
+    width: auto;
+    height: 45%;
+}
+
+.sea-popup__icon-13 {
+    width: auto;
+    height: 60%;
+}
+
+.sea-popup__icon-3, .sea-popup__icon-9 {
+    width: auto;
+    height: 35%;
+}
+
+.sea-popup__icon-2, .sea-popup__icon-4, .sea-popup__icon-5, .sea-popup__icon-6, .sea-popup__icon-12, .sea-popup__icon-14 {
+    width: auto;
+    height: 50%;
+}
+
+.sea-popup__icon-11 {
+    width: auto;
+    height: 55%;
+}
+
+.sea-popup__icon-15 {
+    width: auto;
+    height: 30%;
+}
+
+/* 기본적으로 메모를 숨기기 */
+.sea-popup__icon-text {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s ease, filter 0.1s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: rgb(0, 0, 0);
+    text-align: center;
+    width: 150px;
+    z-index: 2;
+}
+
+
+.sea-popup__category-icon:hover + .sea-popup__icon-text {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* 메모와 이모션 위에 마우스를 올려도 아이콘 블러 유지 */
+.sea-popup__icon-text:hover {
+    visibility: visible; /* 메모와 이모션이 계속 보이게 설정 */
+    opacity: 1;
+}
+
+.sea-popup__icon-emotion {
+    background-color: #ffffff;
+    display: inline-block; /* div 크기를 콘텐츠 크기에 맞춤 */
+    width: auto; /* 가로 길이를 자동으로 맞춤 */
+    height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 7px;
+    font-size: 10px;
+    padding: 0px 10px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.sea-popup__icon-memo {
+    word-break: keep-all;
+    width: 100px;
+    margin: auto;
+    font-size: 9px;
+    filter: drop-shadow(0 4px 8px rgb(255, 255, 255));
 }
 

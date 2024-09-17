@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import SeaPopup from "../../components/seaPopup";
 import DiaryCard from '../../components/diaryCard';
 import '../../assets/css/sea.css'; // Ensure this CSS file is correctly named and located.
 import Menu from "../../components/menu";
@@ -14,26 +13,22 @@ const Sea = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedDiaryId, setSelectedDiaryId] = useState(null);
 
     useEffect(() => {
-        // Replace API call with dummy data for now
-        const fetchDummyData = () => {
-            setLoading(true);
-            const dummyDiaries = Array.from({ length: 50 }, (_, index) => ({
-                diary_id: index + 1,
-                diary_title: `Diary Title ${index + 1}`,
-                date: `2024-09-${(index % 30) + 1}`,  // Sample date format
-                diary_content: `This is the content for diary ${index + 1}. It contains random text to simulate diary entries. Enjoy reading!`,
-                post_photo: 'https://via.placeholder.com/150', // Placeholder image URL
-                board_name: '바다',  // Sample board name for 'Sea'
-                nickname: `User${index + 1}`
-            }));
-            setDiaries(dummyDiaries);
-            setTotalPages(Math.ceil(dummyDiaries.length / diariesPerPage));
-            setLoading(false);
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get('/sea'); // Replace with your API endpoint
+                const data = response.data;
+                setDiaries(data);
+                setTotalPages(Math.ceil(data.length / diariesPerPage));
+            } catch (error) {
+                setError('Failed to load data');
+            } finally {
+                setLoading(false);
+            }
         };
-        fetchDummyData();
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -69,14 +64,6 @@ const Sea = () => {
         (_, index) => pageGroup * pagesPerGroup + index + 1
     );
 
-    const handleDiaryClick = (diary_id) => {
-        setSelectedDiaryId(diary_id); // 클릭한 다이어리 ID를 설정
-    };
-
-    const handleClosePopup = () => {
-        setSelectedDiaryId(null); // 팝업 닫기
-    };
-
     return (
         <div className="wrap">
             <Menu />
@@ -108,7 +95,6 @@ const Sea = () => {
                             boardName={diary.board_name}
                             nickname={diary.nickname}
                             diaryId={diary.diary_id}
-                            onClick={() => handleDiaryClick(diary.diary_id)}
                         />
                     ))}
                 </div>
@@ -140,9 +126,6 @@ const Sea = () => {
                 </div>
 
                 <div className="sea-page__tree-background"></div>
-                {selectedDiaryId && (
-                    <SeaPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
-                )}
             </div>
         </div>
     );

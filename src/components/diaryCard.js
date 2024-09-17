@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import '../assets/css/diaryCard.css';
 import axios from 'axios';
 
-const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFriendPage, diaryId, onClick}) => {
+const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFriendPage, diary_id, onClick}) => {
     const [liked, setLiked] = useState(false);
 
     const formatDate = (date) => {
@@ -17,19 +17,26 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
         // Fetch initial liked status
         const fetchLikeStatus = async () => {
             try {
-                const response = await axios.get(`/diaries/${diaryId}/like`);
+                const response = await axios.get(`/diaries/${diary_id}/like`);
                 setLiked(response.data.liked);
             } catch (error) {
                 console.error('Failed to fetch like status', error);
             }
         };
         fetchLikeStatus();
-    }, [diaryId]);
+    }, [diary_id]);
 
-    const toggleLike = (e) => {
+    const toggleLike = async (e) => {
         e.stopPropagation();
-        setLiked(!liked);
-    };
+        try {
+            const response = await axios.post(`/diaries/${diary_id}/like`, { liked: !liked });
+            if (response.status === 200) {
+                setLiked(!liked);
+            }
+        } catch (error) {
+            console.error('Failed to update like status', error);
+        }
+    };    
 
     const EmptyHeart = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -61,7 +68,7 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
 
 
     return (
-        <div className={`diary-card ${getBorderClass()}`} onClick={() => onClick(diaryId, boardName)}>
+        <div className={`diary-card ${getBorderClass()}`} onClick={() => onClick(diary_id, boardName)}>
             <div className="diary-header">
                 <span className="diary-nickname">{nickname} 님</span>
                 <span className="diary-like" onClick={toggleLike}>
@@ -86,7 +93,7 @@ DiaryCard.propTypes = {
     boardName: PropTypes.string,
     nickname: PropTypes.string.isRequired,
     isFriendPage: PropTypes.bool,
-    diaryId: PropTypes.number.isRequired,
+    diary_id: PropTypes.number.isRequired,
 };
 
 export default DiaryCard;

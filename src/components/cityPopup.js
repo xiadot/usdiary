@@ -223,10 +223,18 @@ const CityPopup = ({ diary_id, onClose }) => {
 
     const showChecklistSection = hasTodos || hasRoutines;
 
-    const toggleLike = (e) => {
+    const toggleLike = async (e) => {
         e.stopPropagation();
-        setLiked(!liked);
+        try {
+            const response = await axios.post(`/diaries/${diary_id}/like`, { liked: !liked });
+            if (response.status === 200) {
+                setLiked(!liked);
+            }
+        } catch (error) {
+            console.error('Failed to update like status', error);
+        }
     };
+    
 
     const EmptyHeart = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EA3AB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

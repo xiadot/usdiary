@@ -383,14 +383,14 @@
     margin: 1rem auto; /* 중앙 정렬 */
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* 기본 그림자 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* 기본 그림자 */
 }
 
 .login-page__divider-with-text {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 1.5rem 0;
+    margin-bottom: 1.5rem;
     margin-top: 2rem;
     width: 100%;
 }

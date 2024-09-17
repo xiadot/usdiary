@@ -5,160 +5,87 @@ import sirenIcon from '../assets/images/siren_sea.png';
 import ReportPopup from './reportPopup';
 import axios from 'axios';
 
+import seashell from '../assets/images/seashell.png';
+import umbrage from '../assets/images/umbrage.png';
+import bicycle from '../assets/images/bicycle.png';
+import duck from '../assets/images/duck.png';
+import flower from '../assets/images/flower.png';
+import watermelon from '../assets/images/watermelon.png';
+
+import coffee from '../assets/images/coffee.png';
+import book from '../assets/images/book.png';
+import plate from '../assets/images/plate.png';
+import film from '../assets/images/film.png';
+import palette from '../assets/images/palette.png';
+import shoppingbag from '../assets/images/shoppingbag.png';
+import balloon from '../assets/images/balloon.png';
+import uniform from '../assets/images/uniform.png';
+import ticket from '../assets/images/ticket.png';
+
+const iconMap = {
+    1: seashell,
+    2: umbrage,
+    3: bicycle,
+    4: duck,
+    5: flower,
+    6: watermelon,
+    7: coffee,
+    8: book,
+    9: plate,
+    10: film,
+    11: palette,
+    12: shoppingbag,
+    13: balloon,
+    14: uniform,
+    15: ticket,
+};
+
 const SeaPopup = ({ diary_id, onClose }) => {
-    const [diary, setDiary] = useState({
-        diary_id: 1,
-        diary_title: 'A Day at the Sea',
-        diary_content: 'It was a peaceful day by the sea, with a light breeze and clear skies.',
-        user: {
-            profile: { profile_img: miniseaImage },
-            user_nick: 'OceanLover'
-        }
-    });
-
-    const [comments, setComments] = useState([
-        {
-            comment_id: 1,
-            comment_text: 'Sounds like a perfect day!',
-            user: {
-                user_nick: 'SeaBreeze',
-                profile: { profile_img: miniseaImage }
-            }
-        },
-        {
-            comment_id: 2,
-            comment_text: 'Wish I was there!',
-            user: {
-                user_nick: 'WaveWatcher',
-                profile: { profile_img: miniseaImage }
-            }
-        }
-    ]);
-
-    const [todos, setTodos] = useState([
-        {
-            todo_id: 1,
-            title: 'Collect shells',
-            description: 'Find some unique seashells on the beach.',
-            is_completed: false
-        },
-        {
-            todo_id: 2,
-            title: 'Build sandcastles',
-            description: 'Create a beautiful sandcastle with towers.',
-            is_completed: true
-        }
-    ]);
-
-    const [routines, setRoutines] = useState([
-        {
-            routine_id: 1,
-            title: 'Morning Swim',
-            description: 'Take a swim in the calm morning sea.',
-            is_completed: true
-        },
-        {
-            routine_id: 2,
-            title: 'Evening Walk',
-            description: 'Walk along the shore during sunset.',
-            is_completed: false
-        }
-    ]);
-
+    const [diary, setDiary] = useState(null);
+    const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false); // 로딩 상태 초기화
     const [liked, setLiked] = useState(false); // 좋아요 상태
     const [newComment, setNewComment] = useState(''); // 새 댓글 입력 상태
     const [error, setError] = useState(null);
     const [editingcomment_id, setEditingcomment_id] = useState(null);
     const commentRefs = useRef({});
+    const [selectedIcon, setSelectedIcon] = useState(null);
     const [currentUserProfile, setCurrentUserProfile] = useState({
         profile_img: miniseaImage,
         user_nick: 'CurrentUser'
     });
 
+    const getIconClass = (cate_num) => {
+        return `sea-popup__icon-${cate_num}`;
+    };
+
+
     // 더미 데이터 호출 함수
     useEffect(() => {
-        const fetchDummyData = () => {
+        const fetchData = async () => {
             setLoading(true);
+            try {
+                // 다이어리 데이터 가져오기
+                const diaryResponse = await axios.get(`/diaries/${diary_id}`);
+                const fetchedDiary = diaryResponse.data;
+                setDiary(fetchedDiary);
+                setSelectedIcon(iconMap[fetchedDiary.cate_num]);
 
-            // 더미 다이어리 데이터
-            const dummyDiary = {
-                diary_id: diary_id,
-                diary_title: `A Day at the Sea - Diary ${diary_id}`,
-                diary_content: 'Enjoying the beautiful sea and nature around.',
-                user: {
-                    profile: { profile_img: miniseaImage },
-                    user_nick: 'OceanLover'
-                }
-            };
-            setDiary(dummyDiary);
+                // 댓글 데이터 가져오기
+                const commentsResponse = await axios.get(`/diaries/${diary_id}/comments`);
+                setComments(commentsResponse.data);
 
-            // 더미 댓글 데이터
-            const dummyComments = [
-                {
-                    comment_id: 1,
-                    comment_text: 'What a beautiful day!',
-                    user: {
-                        user_nick: 'SeaBreeze',
-                        profile: { profile_img: miniseaImage }
-                    }
-                },
-                {
-                    comment_id: 2,
-                    comment_text: 'Can’t wait to visit the sea!',
-                    user: {
-                        user_nick: 'WaveWatcher',
-                        profile: { profile_img: miniseaImage }
-                    }
-                }
-            ];
-            setComments(dummyComments);
-
-            // 더미 할 일 데이터
-            const dummyTodos = [
-                {
-                    todo_id: 1,
-                    title: 'Pick up seashells',
-                    description: 'Collect seashells along the beach shore.',
-                    is_completed: false
-                },
-                {
-                    todo_id: 2,
-                    title: 'Enjoy the sunset',
-                    description: 'Watch the sunset with a cool breeze.',
-                    is_completed: true
-                }
-            ];
-            setTodos(dummyTodos);
-            
-            // 더미 루틴 데이터
-            const dummyRoutines = [
-                {
-                    routine_id: 1,
-                    title: 'Morning Yoga',
-                    description: 'Start the day with yoga by the sea.',
-                    is_completed: false
-                },
-                {
-                    routine_id: 2,
-                    title: 'Evening Swim',
-                    description: 'Swim in the sea during the evening.',
-                    is_completed: true
-                }
-            ];
-            setRoutines(dummyRoutines);
-            
-
-            // 더미 사용자 프로필
-            setCurrentUserProfile({
-                profile_img: miniseaImage,
-                user_nick: 'CurrentUser'
-            });
-
+                // 사용자 프로필 가져오기
+                const userProfileResponse = await axios.get('/user/profile');
+                setCurrentUserProfile(userProfileResponse.data);
+            } catch (err) {
+                setError('Failed to load data');
+                console.error(err);
+            }
             setLoading(false);
         };
 
-        fetchDummyData();
+        fetchData();
 
         // 팝업이 뜨면 배경 스크롤 방지
         document.body.style.overflow = 'hidden';
@@ -168,35 +95,6 @@ const SeaPopup = ({ diary_id, onClose }) => {
             document.body.style.overflow = '';
         };
     }, [diary_id]);
-
-    useEffect(() => {
-        // Fetch initial liked status
-        const fetchLikeStatus = async () => {
-            try {
-                const response = await axios.get(`/diaries/${diary_id}/like`);
-                setLiked(response.data.liked);
-            } catch (error) {
-                console.error('Failed to fetch like status', error);
-            }
-        };
-        fetchLikeStatus();
-    }, [diary_id]);
-
-    useEffect(() => {
-        const fetchUserProfile = async () => {
-            try {
-                const response = await axios.get('/user/profile'); // 사용자 프로필 정보를 가져오는 API 엔드포인트
-                setCurrentUserProfile({
-                    profileImage: response.data.profile_img,
-                    nickname: response.data.user_nick
-                });
-            } catch (err) {
-                console.error('Failed to fetch user profile', err);
-            }
-        };
-
-        fetchUserProfile();
-    }, []);
 
     const [reportPopupVisible, setReportPopupVisible] = useState(false);
 
@@ -208,8 +106,8 @@ const SeaPopup = ({ diary_id, onClose }) => {
         setReportPopupVisible(false);
     };
 
-    if (loading) return <div className="diary-popup">Loading...</div>;
-    if (error) return <div className="diary-popup">{error}</div>;
+    if (loading) return <div className="sea-popup">Loading...</div>;
+    if (error) return <div className="sea-popup">{error}</div>;
 
     const handleBackgroundClick = (e) => {
         if (e.target === e.currentTarget) {
@@ -230,20 +128,9 @@ const SeaPopup = ({ diary_id, onClose }) => {
             };
 
             try {
-                const response = await fetch(`/comments/${diary_id}/comments`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(newCommentData),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to submit comment');
-                }
-
-                const createdComment = await response.json();
-                setComments([...comments, createdComment]);
+                const response = await axios.post(`/comments/${diary_id}/comments`, newCommentData);
+                const createdComment = response.data;
+                setComments((prevComments) => [...prevComments, createdComment]);
                 setNewComment("");
             } catch (err) {
                 setError(err.message);
@@ -265,21 +152,15 @@ const SeaPopup = ({ diary_id, onClose }) => {
             };
 
             try {
-                const response = await fetch(`/comments/${diary_id}/comments/${comment_id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(updatedComment),
-                });
-
-                if (!response.ok) {
+                const response = await axios.put(`/comments/${diary_id}/comments/${comment_id}`, updatedComment);
+    
+                if (response.status === 200) {
+                    setComments(comments.map(comment =>
+                        comment.comment_id === comment_id ? updatedComment : comment
+                    ));
+                } else {
                     throw new Error('Failed to update comment');
                 }
-
-                setComments(comments.map(comment =>
-                    comment.comment_id === comment_id ? updatedComment : comment
-                ));
             } catch (err) {
                 setError(err.message);
             }
@@ -304,16 +185,20 @@ const SeaPopup = ({ diary_id, onClose }) => {
     };
 
     const hasComments = comments.length > 0;
-    const hasTodos = todos.length > 0;
-    const hasRoutines = routines.length > 0;
+    const showPlaceSection = diary?.cate_num !== undefined && diary?.cate_num !== null;
 
-    const showChecklistSection = hasTodos || hasRoutines;
-
-    // 좋아요 토글 함수
-    const toggleLike = (e) => {
+    const toggleLike = async (e) => {
         e.stopPropagation();
-        setLiked(!liked);
+        try {
+            const response = await axios.post(`/diaries/${diary_id}/like`, { liked: !liked });
+            if (response.status === 200) {
+                setLiked(!liked);
+            }
+        } catch (error) {
+            console.error('Failed to update like status', error);
+        }
     };
+
 
     const EmptyHeart = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7D9FE3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -327,18 +212,18 @@ const SeaPopup = ({ diary_id, onClose }) => {
         </svg>
     );
 
-
-
-    if (loading) return <div className="sea-popup">Loading...</div>;
-
     return (
         <div>
             <div className="sea-popup" onClick={handleBackgroundClick}>
                 <div className="sea-popup__content">
                     <div className='sea-popup__header'>
                         <div className='sea-popup__header-left'>
-                            <img src={diary.user.profile.profile_img} alt="Diary Author" className="sea-popup__author-profile-image" />
-                            <p className="sea-popup__author-nickname">{diary.user.user_nick}님</p>
+                            {diary?.user?.profile && (
+                                <>
+                                    <img src={diary.user.profile.profile_img} alt="Diary Author" className="sea-popup__author-profile-image" />
+                                    <p className="sea-popup__author-nickname">{diary.user.user_nick}님</p>
+                                </>
+                            )}
                         </div>
                         <div className="sea-popup__header-right">
                             <button className="sea-popup__report-button" onClick={handleReportButtonClick}>
@@ -350,11 +235,16 @@ const SeaPopup = ({ diary_id, onClose }) => {
                         </div>
                     </div>
 
-                    <div className={`sea-popup__main-content ${!(hasRoutines || hasTodos) ? 'sea-popup__main-content--centered' : ''}`}>
-                        {showChecklistSection && (
+                    <div className={`sea-popup__main-content ${!diary?.cate_num ? 'sea-popup__main-content--centered' : ''}`}>
+                        {showPlaceSection && (
                             <div className='sea-popup__place-section'>
                                 <h2 className="sea-popup__place-title">Today's Place</h2>
                                 <div className='sea-popup__container'>
+                                    <img src={selectedIcon} alt="Category Icon" className={`sea-popup__category-icon ${getIconClass(diary.cate_num)}`} />
+                                    <div className="sea-popup__icon-text">
+                                        <div className="sea-popup__icon-emotion">{diary.diary_emotion}</div>
+                                        <div className="sea-popup__icon-memo">{diary.diary_memo}</div>
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -375,8 +265,7 @@ const SeaPopup = ({ diary_id, onClose }) => {
                     </div>
 
                     <div className="sea-popup__comment-input-section">
-                        <img src={currentUserProfile.profile_img} alt="User Profile" className="sea-popup__user-profile-image" />
-                        <input
+                        <img src={currentUserProfile.profile_img} alt="User Profile" className="sea-popup__user-profile-image" />                     <input
                             type="text"
                             value={newComment}
                             onChange={handleCommentChange}
