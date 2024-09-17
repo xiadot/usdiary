@@ -82,7 +82,7 @@
     font-family: 'Noto Sans', sans-serif; /* 글꼴 설정 */
     font-size: 16px; /* 글씨 크기 */
     color: #373737; /* 다이어리 글씨 색 */
-    max-height: 50vh; /* 최대 높이 설정, 50% 뷰포트 높이로 설정 */
+    height: 50vh; /* 최대 높이 설정, 50% 뷰포트 높이로 설정 */
     overflow-y: auto; /* 세로 스크롤 자동 설정 */
 }
 
@@ -263,6 +263,12 @@
 .city-popup__main-content {
     display: flex;
     margin-top: 20px;
+    justify-content: flex-start; /* 기본적으로 좌측 정렬 */
+    align-items: flex-start;
+}
+
+.city-popup__main-content--centered {
+    justify-content: center; /* 가운데 정렬 */
 }
 
 .city-popup__checklist-section {
@@ -275,15 +281,6 @@
     background-color: #FFFDB9;
     padding: 30px;
     border-radius: 0px 20px 20px 0px;
-}
-
-.city-popup__question-content::-webkit-scrollbar {
-    width: 0; /* Chrome, Safari, and Opera */
-}
-
-.city-popup__question-content {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer and Edge */
 }
 
 .city-popup__checklist-title {
@@ -345,6 +342,7 @@
 .city-popup__diary-section {
     width: 70%;
     min-width: 500px;
+    max-width: 930px;
 }
 
 .city-popup__header {

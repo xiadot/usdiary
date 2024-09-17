@@ -107,7 +107,7 @@ const CityPopup = ({ diary_id, onClose }) => {
                 console.error('Failed to fetch user profile', err);
             }
         };
-    
+
         fetchUserProfile();
     }, []);
 
@@ -129,7 +129,7 @@ const CityPopup = ({ diary_id, onClose }) => {
             onClose();
         }
     };
-    
+
     const handleCommentChange = (e) => {
         setNewComment(e.target.value);
     };
@@ -218,10 +218,23 @@ const CityPopup = ({ diary_id, onClose }) => {
 
     const hasComments = comments.length > 0;
 
-    const toggleLike = (e) => {
+    const hasTodos = todos.length > 0;
+    const hasRoutines = routines.length > 0;
+
+    const showChecklistSection = hasTodos || hasRoutines;
+
+    const toggleLike = async (e) => {
         e.stopPropagation();
-        setLiked(!liked);
+        try {
+            const response = await axios.post(`/diaries/${diary_id}/like`, { liked: !liked });
+            if (response.status === 200) {
+                setLiked(!liked);
+            }
+        } catch (error) {
+            console.error('Failed to update like status', error);
+        }
     };
+    
 
     const EmptyHeart = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9EA3AB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -254,66 +267,68 @@ const CityPopup = ({ diary_id, onClose }) => {
                         </div>
                     </div>
 
-                    <div className='city-popup__main-content'>
-                        <div className='city-popup__checklist-section'>
-                            <h2 className="city-popup__checklist-title">Today's Checklist</h2>
-                            <div className="city-popup__checklist__check-routine">
-                                <div className="city-popup__checklist__check-routine-top">
-                                    <div className="city__checklist__check-routine-top-circle"></div>
-                                    <div className="city__checklist__check-routine-top-name">Routine</div>
-                                    <div className="city__checklist__check-routine-top-num">{routines.length}</div>
-                                </div>
-                                <hr />
-                                <div className="city-popup__checklist__check-routine-bottom">
-                                    {routines.map((routine, index) => (
-                                        <div className="city__checklist__check-routine-bottom-box" key={routine.routine_id}>
-                                            <div className="city__checklist__check-routine-bottom-box-toggleSwitch">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`routine-toggle-${index}`}
-                                                    hidden
-                                                    checked={routine.is_completed}
-                                                    readOnly // 읽기 전용으로 설정
-                                                />
-                                                <label htmlFor={`routine-toggle-${index}`}>
-                                                    <span></span>
-                                                </label>
+                    <div className={`city-popup__main-content ${!(hasRoutines || hasTodos) ? 'city-popup__main-content--centered' : ''}`}>
+                        {showChecklistSection && (
+                            <div className='city-popup__checklist-section'>
+                                <h2 className="city-popup__checklist-title">Today's Checklist</h2>
+                                <div className="city-popup__checklist__check-routine">
+                                    <div className="city-popup__checklist__check-routine-top">
+                                        <div className="city__checklist__check-routine-top-circle"></div>
+                                        <div className="city__checklist__check-routine-top-name">Routine</div>
+                                        <div className="city__checklist__check-routine-top-num">{routines.length}</div>
+                                    </div>
+                                    <hr />
+                                    <div className="city-popup__checklist__check-routine-bottom">
+                                        {routines.map((routine, index) => (
+                                            <div className="city__checklist__check-routine-bottom-box" key={routine.routine_id}>
+                                                <div className="city__checklist__check-routine-bottom-box-toggleSwitch">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`routine-toggle-${index}`}
+                                                        hidden
+                                                        checked={routine.is_completed}
+                                                        readOnly // 읽기 전용으로 설정
+                                                    />
+                                                    <label htmlFor={`routine-toggle-${index}`}>
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                                <div className="city__checklist__check-routine-bottom-box-title">{routine.title}</div>
+                                                <div className="city__checklist__check-routine-bottom-box-content">{routine.description}</div>
                                             </div>
-                                            <div className="city__checklist__check-routine-bottom-box-title">{routine.title}</div>
-                                            <div className="city__checklist__check-routine-bottom-box-content">{routine.description}</div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="city-popup__checklist__check-todo">
+                                    <div className="city-popup__checklist__check-todo-top">
+                                        <div className="city__checklist__check-todo-top-circle"></div>
+                                        <div className="city__checklist__check-todo-top-name">To Do</div>
+                                        <div className="city__checklist__check-todo-top-num">{todos.length}</div>
+                                    </div>
+                                    <hr />
+                                    <div className="city-popup__checklist__check-todo-bottom">
+                                        {todos.map((todo, index) => (
+                                            <div className="city__checklist__check-todo-bottom-box" key={todo.todo_id}>
+                                                <div className="city__checklist__check-todo-bottom-box-toggleSwitch">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`todo-toggle-${index}`}
+                                                        hidden
+                                                        checked={todo.is_completed}
+                                                        readOnly // 읽기 전용으로 설정
+                                                    />
+                                                    <label htmlFor={`todo-toggle-${index}`}>
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                                <div className="city__checklist__check-todo-bottom-box-title">{todo.title}</div>
+                                                <div className="city__checklist__check-todo-bottom-box-content">{todo.description}</div>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="city-popup__checklist__check-todo">
-                                <div className="city-popup__checklist__check-todo-top">
-                                    <div className="city__checklist__check-todo-top-circle"></div>
-                                    <div className="city__checklist__check-todo-top-name">To Do</div>
-                                    <div className="city__checklist__check-todo-top-num">{todos.length}</div>
-                                </div>
-                                <hr />
-                                <div className="city-popup__checklist__check-todo-bottom">
-                                    {todos.map((todo, index) => (
-                                        <div className="city__checklist__check-todo-bottom-box" key={todo.todo_id}>
-                                            <div className="city__checklist__check-todo-bottom-box-toggleSwitch">
-                                                <input
-                                                    type="checkbox"
-                                                    id={`todo-toggle-${index}`}
-                                                    hidden
-                                                    checked={todo.is_completed}
-                                                    readOnly // 읽기 전용으로 설정
-                                                />
-                                                <label htmlFor={`todo-toggle-${index}`}>
-                                                    <span></span>
-                                                </label>
-                                            </div>
-                                            <div className="city__checklist__check-todo-bottom-box-title">{todo.title}</div>
-                                            <div className="city__checklist__check-todo-bottom-box-content">{todo.description}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                        )}
 
                         <div className="city-popup__diary-section">
                             <div className='city-popup__title'>

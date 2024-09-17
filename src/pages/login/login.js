@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import Menu from '../../components/menu';
+import google from '../../assets/images/google.png';
 
 Modal.setAppElement('#main'); // 모달 접근성을 위한 설정
 
@@ -12,6 +13,10 @@ const Login = () => {
     const [error, setError] = useState(''); // 오류 상태 추가
     const [modalIsOpen, setModalIsOpen] = useState(false); // 모달 상태 추가
     const navigate = useNavigate();
+
+    const handleGoogleLogin = () => {
+        window.location.href = 'http://localhost:3001/users/login/google';
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,12 +44,12 @@ const Login = () => {
             if (response.ok) {
                 const result = await response.json();
                 console.log(result);
-                
+
                 // 결과에서 user_tendency 추출
                 // 전체 user 객체를 포함한 응답 데이터에서 필요한 값만 추출
                 const userTendency = result.data.user?.user_tendency;
                 const token = result.data.token;// optional chaining을 사용하여 안전하게 접근
-                
+
                 console.log('User Tendency:', userTendency);
                 console.log('Token:', token);
                 // userTendency를 state로 전달하여 홈 화면으로 이동
@@ -59,7 +64,7 @@ const Login = () => {
                 setModalIsOpen(true); // 모달 열기
             }
         } catch (error) {
-            
+
             console.error('로그인 중 오류 발생:', error);
             setError('로그인 중 오류가 발생했습니다.'); // 오류 상태 설정
             setModalIsOpen(true); // 모달 열기
@@ -149,11 +154,24 @@ const Login = () => {
                                 <a href="/findId" className="login-page__link" onClick={handleFindIdClick}>아이디 찾기 / 비밀번호 찾기</a>
                             </div>
                             <button type="submit" className="login-page__button">Log in</button>
-                            <div className="login-page__divider"></div>
+                            
+
+
                             <div className="login-page__signup">
                                 <span className="login-page__signup-text">아직 회원이 아니신가요?</span>
                                 <a href="/signup" className="login-page__signup-link" onClick={handleSignupClick}>회원가입 하기</a>
                             </div>
+                            <div className="login-page__divider-with-text">
+                                <div className="login-page__divider-line-left"></div>
+                                <span className="divider-text">소셜 로그인</span>
+                                <div className="login-page__divider-line-right"></div>
+                            </div>
+                            <img
+                                src={google}
+                                alt="Google 로그인"
+                                className="login-page__google-image"
+                                onClick={handleGoogleLogin}
+                            />
                         </form>
                     </div>
                 </div>

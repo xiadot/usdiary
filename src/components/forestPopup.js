@@ -228,11 +228,19 @@ const ForestPopup = ({ diary_id, onClose }) => {
     };
 
     const hasComments = comments.length > 0;
+    const hasAnswers = answerData && answerData.length > 0;
 
-    const toggleLike = (e) => {
+    const toggleLike = async (e) => {
         e.stopPropagation();
-        setLiked(!liked);
-    };
+        try {
+            const response = await axios.post(`/diaries/${diary_id}/like`, { liked: !liked });
+            if (response.status === 200) {
+                setLiked(!liked);
+            }
+        } catch (error) {
+            console.error('Failed to update like status', error);
+        }
+    };    
 
     const EmptyHeart = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9FC393" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -265,30 +273,23 @@ const ForestPopup = ({ diary_id, onClose }) => {
                         </div>
                     </div>
 
-                    <div className='forest-popup__main-content'>
-                        {questionData && (
+                    <div className={`forest-popup__main-content ${!hasAnswers ? 'forest-popup__main-content--centered' : ''}`}>
                             <div className="forest-popup__question-section">
                                 <h2 className="forest-popup__question-title">Today's Question</h2>
                                 <div className="forest-popup__question-content">
-                                    <p className="forest-popup__question-text">Q. {questionData.question_text}</p>
-                                    {answerData && answerData.length > 0 ? (
-                                        answerData.map(answer => (
-                                            <div key={answer.answer_id}>
-                                                <p className="forest-popup__answer-text">{answer.answer_text}</p>
-                                                {answer.answer_photo && (
-                                                    <div className="forest-popup__check-today-photo-box">
-                                                        <img src={answer.answer_photo} alt="Today's Question" />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <p>No answers available.</p>
-                                    )}
-
+                                    <p className="forest-popup__question-text">Q. {questionData?.question_text}</p>
+                                    {answerData.map(answer => (
+                                        <div key={answer.answer_id}>
+                                            <p className="forest-popup__answer-text">{answer.answer_text}</p>
+                                            {answer.answer_photo && (
+                                                <div className="forest-popup__check-today-photo-box">
+                                                    <img src={answer.answer_photo} alt="Today's Question" />
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        )}
                         <div className="forest-popup__diary-section">
                             <div className='forest-popup__title'>
                                 <img src={miniTreeImage} alt="" className="forest-popup__mini-tree-image" />
