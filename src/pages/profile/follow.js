@@ -75,23 +75,23 @@ const Follow = () => {
             <div className='profile'>
                 <div className='profile-menu'>
                     <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={profile} /></div>
+                        <div className='profile-menu_content_img'><img src={profile} alt="Profile Icon" /></div>
                         <div className='profile-menu_content_name'>Profile</div>
                     </div>
                     <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={my_rate} /></div>
+                        <div className='profile-menu_content_img'><img src={my_rate} alt="My Rate Icon" /></div>
                         <div className='profile-menu_content_name'>My rate</div>
                     </div>
                     <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={contect_us} /></div>
+                        <div className='profile-menu_content_img'><img src={contect_us}  alt="Contact Us Icon" /></div>
                         <div className='profile-menu_content_name'>Contect Us</div>
                     </div>
                     <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={follow} /></div>
+                        <div className='profile-menu_content_img'><img src={follow} alt="Follow Icon" /></div>
                         <div className='profile-menu_content_name'>Follow</div>
                     </div>
                     <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={log_out} /></div>
+                        <div className='profile-menu_content_img'><img src={log_out} alt="Log Out Icon" /></div>
                         <div className='profile-menu_content_name'>Log out</div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ const Follow = () => {
                             <div className='profile-follow_box_name'>나를 팔로우 하는 사람</div>
                             <div className='profile-follow_box_content'>
                                 <div className='profile-follow_box_content_search'>
-                                    <img src={search} />
+                                    <img src={search} alt="Search Icon" />
                                     <input 
                                         type="text" 
                                         className='profile-follow_box_content_search_name' 
@@ -129,7 +129,7 @@ const Follow = () => {
                             <div className='profile-follow_box_name'>내가 팔로우 하는 사람</div>
                             <div className='profile-follow_box_content'>
                                 <div className='profile-follow_box_content_search'>
-                                    <img src={search} />
+                                    <img src={search} alt="Search Icon" />
                                     <input 
                                         type="text" 
                                         className='profile-follow_box_content_search_name' 

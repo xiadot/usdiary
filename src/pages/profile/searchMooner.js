@@ -32,10 +32,10 @@ const SearchMooner = ({ onClose }) => {
     return (
         <div className="mooner_popup-overlay">
             <div className="mooner_popup-content">
-                <img src={exit} className="mooner_popup_close" onClick={onClose}/>
+                <img src={exit} className="mooner_popup_close" alt="Close popup" onClick={onClose}/>
                 <div className='mooner_popup_name'>아이디로 무너 찾기</div>
                 <div className='mooner_popup_search-id'>
-                    <img src={search} />
+                    <img src={search} alt="Search icon" />
                     <input 
                         type="text" 
                         value={searchText}
