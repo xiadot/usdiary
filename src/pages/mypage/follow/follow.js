@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../assets/css/follow.css';
-import Menu from '../../components/menu';
+import '../../../assets/css/follow.css';
+import Menu from '../../../components/menu';
 import SearchMooner from './searchMooner';
+import ProfileMenu from '../../../components/profileMenu';
 
-import profile from '../../assets/images/profile.png';
-import my_rate from '../../assets/images/my_rate.png';
-import contect_us from '../../assets/images/contect_us.png';
-import follow from '../../assets/images/follow.png';
-import log_out from '../../assets/images/log_out.png';
-import search from '../../assets/images/search.png';
+import search from '../../../assets/images/search.png';
 
 const Follow = () => {
     // 서버로부터 받은 데이터를 저장할 상태
@@ -73,28 +69,7 @@ const Follow = () => {
             <Menu/>
             
             <div className='profile'>
-                <div className='profile-menu'>
-                    <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={profile} /></div>
-                        <div className='profile-menu_content_name'>Profile</div>
-                    </div>
-                    <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={my_rate} /></div>
-                        <div className='profile-menu_content_name'>My rate</div>
-                    </div>
-                    <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={contect_us} /></div>
-                        <div className='profile-menu_content_name'>Contect Us</div>
-                    </div>
-                    <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={follow} /></div>
-                        <div className='profile-menu_content_name'>Follow</div>
-                    </div>
-                    <div className='profile-menu_content'>
-                        <div className='profile-menu_content_img'><img src={log_out} /></div>
-                        <div className='profile-menu_content_name'>Log out</div>
-                    </div>
-                </div>
+                <ProfileMenu />
                 <div className='profile-contents'>
                 <div className='profile-search' onClick={() => setShowPopup(true)}>무너 찾기</div>
                 {showPopup && <SearchMooner onClose={() => setShowPopup(false)} />}
@@ -103,7 +78,7 @@ const Follow = () => {
                             <div className='profile-follow_box_name'>나를 팔로우 하는 사람</div>
                             <div className='profile-follow_box_content'>
                                 <div className='profile-follow_box_content_search'>
-                                    <img src={search} />
+                                    <img src={search} alt="Search Icon" />
                                     <input 
                                         type="text" 
                                         className='profile-follow_box_content_search_name' 
@@ -129,7 +104,7 @@ const Follow = () => {
                             <div className='profile-follow_box_name'>내가 팔로우 하는 사람</div>
                             <div className='profile-follow_box_content'>
                                 <div className='profile-follow_box_content_search'>
-                                    <img src={search} />
+                                    <img src={search} alt="Search Icon" />
                                     <input 
                                         type="text" 
                                         className='profile-follow_box_content_search_name' 

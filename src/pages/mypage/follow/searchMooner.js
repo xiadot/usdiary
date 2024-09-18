@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../assets/css/follow.css';
+import '../../../assets/css/follow.css';
 
-import exit from '../../assets/images/exit.png';
-import search from '../../assets/images/search.png';
+import exit from '../../../assets/images/exit.png';
+import search from '../../../assets/images/search.png';
 
 const SearchMooner = ({ onClose }) => {
     const [searchText, setSearchText] = useState('');
@@ -32,10 +32,10 @@ const SearchMooner = ({ onClose }) => {
     return (
         <div className="mooner_popup-overlay">
             <div className="mooner_popup-content">
-                <img src={exit} className="mooner_popup_close" onClick={onClose}/>
+                <img src={exit} className="mooner_popup_close" alt="Close popup" onClick={onClose}/>
                 <div className='mooner_popup_name'>아이디로 무너 찾기</div>
                 <div className='mooner_popup_search-id'>
-                    <img src={search} />
+                    <img src={search} alt="Search icon" />
                     <input 
                         type="text" 
                         value={searchText}
