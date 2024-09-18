@@ -37,7 +37,7 @@
 }
 
 .wrap .profile-menu_content:hover {
-    background-color: #9FC393;
+    background-color: #f0f0f0;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -45,8 +45,24 @@
     filter: none;
 }
 
+.wrap .profile-menu_content:hover img {
+    filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%); /* hover 상태일 때 이미지 색상 */
+}
+
 .wrap .profile-menu_content:hover .profile-menu_content_name {
-    color: #ffffff;
+    color: #545F71; /* hover 상태일 때 이름 색상 */
+}
+
+.wrap .profile-menu_content.active {
+    background-color: #9FC393; /* active 상태일 때 배경색 */
+}
+
+.wrap .profile-menu_content.active img {
+    filter: none; /* active 상태일 때 이미지 필터 없음 */
+}
+
+.wrap .profile-menu_content.active .profile-menu_content_name {
+    color: #ffffff; /* active 상태일 때 이름 색상 */
 }
 
 .wrap .profile-menu_content_img {
@@ -59,6 +75,10 @@
 .wrap .profile-menu_content img {
     height: 21px;
     filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%);
+}
+
+.profile-menu_content.active {
+    background-color: #545F71; /* 선택된 메뉴 아이템의 배경 색상 */
 }
 
 .wrap .profile-menu_content_name {

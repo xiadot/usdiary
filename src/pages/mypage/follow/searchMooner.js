@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../assets/css/follow.css';
+import '../../../assets/css/follow.css';
 
-import exit from '../../assets/images/exit.png';
-import search from '../../assets/images/search.png';
+import exit from '../../../assets/images/exit.png';
+import search from '../../../assets/images/search.png';
 
 const SearchMooner = ({ onClose }) => {
     const [searchText, setSearchText] = useState('');
