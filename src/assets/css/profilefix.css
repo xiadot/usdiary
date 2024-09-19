@@ -1,0 +1,251 @@
+.fix_page-container {
+  display: flex;
+  width: 90%;
+  height: 80vh;
+  background: linear-gradient(to bottom, #9FC393 3%, white 25%);
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.fix_menu-box {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  height: 270px;
+  padding: 20px;
+  background-color: #FEFEFE;
+  border-radius: 10px 0 10px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fix_menu-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: #FEFEFE;
+  border: 0px solid #ccc;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #545F71;
+  border-radius: 10px;
+}
+
+.fix_menu-button:hover,
+.fix_menu-button.active {
+  background-color: #9FC393;
+  color: white;
+}
+
+.fix_content-box {
+  margin-top: 600px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fix_profile-section {
+  text-align: left;
+  width: 900px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.fix_profile-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.fix_divider {
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.fix_profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.fix_form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.fix_form-group label {
+  width: 130px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+  border-right: 1px solid #9A9A9A; /* 세로 구분선 추가 */
+  height: 40px; /* 세로 구분선 길이 조금 더 길게 */
+  padding-right: 10px;
+}
+
+.fix_profile-image-container {
+  display: flex;
+  align-items: center;
+}
+
+.fix_profile-image-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.fix_profile-image-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.fix_profile-image-text {
+  font-size: 12px;
+}
+
+.fix_profile-image-note {
+  font-size: 10px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.fix_profile-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.fix_upload-button {
+  width: 50px; /* 가로 길이 줄임 */
+  background-color: #9FC393;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fix_remove-button {
+  width: 50px; /* 가로 길이 줄임 */
+  background-color: #D9534F;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fix_profile-image-info {
+  margin-top: 10px; /* 프로필 사진 설명 텍스트 위치 조정 */
+}
+
+.fix_profile-image-text,
+.fix_profile-image-note {
+  margin-top: 5px;
+}
+
+/* 프로필 이미지 섹션 스타일 수정 */
+.fix_profile-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fix_profile-image-text {
+  margin-right: 10px;
+  border-right: 1px solid #9A9A9A; /* 세로 구분선 */
+  padding-right: 10px;
+}
+
+.fix_profile-image-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.fix_profile-image-wrapper img,
+.fix_profile-image-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.fix_form-input {
+  width: calc(100% - 150px);
+  padding: 10px;
+  margin-left: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.fix_placeholder-input {
+  color: lightgray; /* 연한 회색 글자 */
+}
+
+.fix_email-split,
+.fix_phone-split,
+.fix_date-picker {
+  display: flex;
+  gap: 10px;
+}
+
+.fix_email-split input,
+.fix_phone-split input {
+  width: 100px; /* 이메일 및 전화번호 입력란 가로 길이 조정 */
+}
+
+.fix_verify-button {
+  margin-left: 10px;
+  background-color: #9FC393;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fix_date-picker select {
+  width: 100px; /* 생년월일 선택 창 가로 길이 조정 */
+}
+
+#gender,
+#tendency,
+#points {
+  width: 150px; /* 성별, 성향, 포인트 선택창 가로 길이 줄임 */
+}
+
+.fix_form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* 수정 및 회원탈퇴 버튼 간격 */
+  margin-top: 20px;
+}
+
+.fix_submit-button,
+.fix_delete-account-button {
+  background-color: #9FC393;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.fix_delete-account-button {
+  background-color: #D9534F;
+}
+
+.fix_delete-account-button:hover,
+.fix_submit-button:hover {
+  background-color: #357E4B; /* 버튼 호버 시 조금 더 진한 색 */
+}

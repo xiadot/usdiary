@@ -25,17 +25,31 @@
     width: 90px;
 }
 
-.menu .logo .logo_earth {
+.menu .logo .logo_earth, 
+.menu .logo .logo_us {
     position: absolute;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0s 0.5s;
 }
 
+.menu .logo .logo_us {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 로고에 마우스를 올렸을 때 */
 .menu .logo:hover .logo_earth {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out, visibility 0s 0s;
 }
 
 .menu .logo:hover .logo_us {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0s 0.5s;
 }
 
 .menu .button {
@@ -64,6 +78,13 @@
 .menu .button .btn:hover {
     background-color:#FBFBFB;
     color: #000000;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* 버튼 활성화 스타일 */
+.menu .button .btn.active {
+    background-color: #ffffff;
+    color: #2C2C2C;
 }
 
 .menu .button #home {

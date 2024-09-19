@@ -18,6 +18,9 @@ import Forest from './pages/home/forest';
 import City from './pages/home/city';
 import ForestQuestion from './pages/diaries/forestquestion'
 import CheckList from './pages/checklist/checklist';
+import SpecialDay from './pages/diaries/special_day';
+import ProfilePage from './pages/mypages/profile';
+import ProfileFix from './pages/mypages/profilefix';
 
 const App = () => {
 
@@ -40,6 +43,9 @@ const App = () => {
 
         {/* 체크리스트 페이지 경로 */}
         <Route path="/city_diary/checklist" element={<CheckList />}></Route>
+
+        {/* 바다 특별한 일기 페이지 경로 */}
+        <Route path="/sea_diary/special_day" element={<SpecialDay />}></Route>
 
         {/* 회원가입 페이지 경로 */}
         <Route path="/signup" element={<Signup/>} />   
@@ -66,6 +72,10 @@ const App = () => {
 
         {/* 오늘의 질문 페이지 경로 */}
         <Route path="/forestquestion" element={<ForestQuestion />}/>
+
+        {/* 마이페이지 프로필 수정 페이지 경로 */}
+        <Route path="/profile" element={<ProfilePage />}/>
+        <Route path="/profilefix" element={<ProfileFix />}/>
 
       </Routes>
     </Router>

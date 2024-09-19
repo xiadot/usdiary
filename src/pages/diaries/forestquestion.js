@@ -6,8 +6,6 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import Menu from "../../components/menu";
 import '../../assets/css/forestquestion.css';
 import city from '../../assets/images/tree.png';
-import left_arrow from '../../assets/images/left_arrow.png';
-import right_arrow from '../../assets/images/right_arrow.png';
 
 const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, initialPhoto, onDelete }) => {
   const [answer, setAnswer] = useState(initialAnswer || '');
@@ -97,7 +95,7 @@ const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, ini
 const ForestQuestion = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [title, setTitle] = useState('제목');
+  const [title, setTitle] = useState('');
   const [editorData, setEditorData] = useState('');
   const [selectedDiv, setSelectedDiv] = useState(0);
   const [showTodayQuestionPopup, setShowTodayQuestionPopup] = useState(false);
@@ -132,25 +130,40 @@ const ForestQuestion = () => {
     fetchTodayQuestion();
   }, []);
 
-  const changeDate = (direction) => {
-    setCurrentDate((prevDate) => {
-      const newDate = new Date(prevDate);
-      if (direction === 'prev') {
-        newDate.setDate(newDate.getDate() - 7);
-      } else if (direction === 'next') {
-        newDate.setDate(newDate.getDate() + 7);
-      }
-      return newDate;
-    });
-  };
-
+  // 선택된 날짜로 currentDate 업데이트
   const handleDateClick = (date) => {
-    setSelectedDate(date);
-    setCurrentDate(new Date(date));
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1); // 전날을 계산
+
+    // 날짜 비교를 위해 선택된 날짜, 전날, 오늘을 문자열로 변환
+    const selectedDate = new Date(date).toDateString(); // 클릭한 날짜
+    const todayDate = today.toDateString(); // 오늘 날짜
+    const yesterdayDate = yesterday.toDateString(); // 전날 날짜
+
+    // 선택된 날짜가 전날이거나 오늘이면 업데이트
+    if (selectedDate === todayDate || selectedDate === yesterdayDate) {
+      setSelectedDate(date);
+      setCurrentDate(new Date(date)); // 클릭한 날짜를 가운데로 위치
+    }
   };
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.innerText);
+  // 오늘 날짜와 전날 날짜만 hover 지정을 위해 id를 부여하는 핸들러
+  const getIdForDate = (date) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1); // 전날 계산
+  
+    const todayDateStr = today.toDateString();
+    const yesterdayDateStr = yesterday.toDateString();
+    const dateStr = new Date(date).toDateString();
+  
+    if (dateStr === todayDateStr) {
+      return 'today';
+    } else if (dateStr === yesterdayDateStr) {
+      return 'yesterday';
+    }
+    return ''; // 오늘과 전날이 아니면 빈 문자열 반환
   };
 
   const handleDivClick = (index) => {
@@ -325,11 +338,11 @@ const ForestQuestion = () => {
             <div className="forest__forestquestion__diary-top-title">Today's Forest</div>
           </div>
           <div className="forest__forestquestion__diary-date">
-            <img src={left_arrow} className="forest__forestquestion__diary-date-arrow" alt="left_arrow" onClick={() => changeDate('prev')}/>
             <div className="forest__forestquestion__diary-date-container">
               {getDaysArray().map((day, i) => (
                 <div
                   key={i}
+                  id={getIdForDate(day)}
                   className={`forest__forestquestion__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'forest__forestquestion__diary-date-round--today' : ''}`}
                   onClick={() => handleDateClick(day)}
                 >
@@ -337,21 +350,23 @@ const ForestQuestion = () => {
                 </div>
               ))}
             </div>
-            <img src={right_arrow} className="forest__forestquestion__diary-date-arrow" alt="right_arrow" onClick={() => changeDate('next')}/>
           </div>
-          <div className="forest__forestquestion__diary-title-edit"
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={handleTitleChange}
-          >
-            {title}
+          <div className="forest__forestquestion__diary-title-edit">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="제목"
+              className="forest__forestquestion__diary-title-edit-input"
+              spellCheck={false}
+            />
           </div>
           <div className="forest__forestquestion__diary-another">
             <div className="forest__forestquestion__diary-another-reveal">
               {['only', 'subscribe', 'all'].map((className, index) => (
                 <div
                   key={index}
-                  className={`forest__forestquestion__diary-another-reveal-btn forest__forestquestion__diary-another-reveal-btn--${className} ${selectedDiv === index ? 'forest__checklist__diary-another-reveal-btn--selected' : ''}`}
+                  className={`forest__forestquestion__diary-another-reveal-btn forest__forestquestion__diary-another-reveal-btn--${className} ${selectedDiv === index ? 'forest__forestquestion__diary-another-reveal-btn--selected' : ''}`}
                   onClick={() => handleDivClick(index)}
                 >
                   {className}
