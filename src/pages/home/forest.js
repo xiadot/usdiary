@@ -21,8 +21,15 @@ const Forest = () => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const boardId = 1
-                const response = await axios.get(`/diaries/${boardId}`)
+                const board_id = 1
+                const response = await axios.get('/diaries', {
+                    params: {
+                      page: 1,          // 페이지 번호 (예시)
+                      limit: 15,        // 페이지당 항목 수 (예시)
+                      board_id: board_id // board_id를 쿼리 파라미터로 전송
+                    }
+                  });
+                  
                 console.log(response)
                 const  total  = response.data.totalDiaries;
                 const diaries= response.data.data.diary;
@@ -112,7 +119,7 @@ const Forest = () => {
                             createdAt={diary.createdAt}       // date → createdAt
                             diary_content={diary.diary_content}  // summary → diary_content
                             post_photo={diary.post_photo}     // imageUrl → post_photo
-                            board_name={diary.board_name}     // boardName → board_name
+                            board_name={diary.Board.board_name}     // boardName → board_name
                             user_nick={diary.User.user_nick}        // nickname → user_nick
                             diary_id={diary.diary_id}
                             onClick={() => handleDiaryClick(diary.diary_id)}
