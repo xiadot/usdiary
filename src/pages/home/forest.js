@@ -9,28 +9,38 @@ const Forest = () => {
     const [diaries, setDiaries] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageGroup, setPageGroup] = useState(0);
-    const diariesPerPage = 12;
+    const diariesPerPage = 15;
     const pagesPerGroup = 5;
     const [totalPages, setTotalPages] = useState(1);
-    const [loading, setLoading] = useState(true); // Add a loading state
+    const [loading, setLoading] = useState(false); // Add a loading state
     const [error, setError] = useState(null); // Add an error state
     const [selectedDiaryId, setSelectedDiaryId] = useState(null);
     
     useEffect(() => {
+        let isCancelled = false;
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/forest'); // Replace with your API URL
-                const data = response.data;
-                setDiaries(data);
-                setTotalPages(Math.ceil(data.length / diariesPerPage));
+                const boardId = 1
+                const response = await axios.get(`/diaries/${boardId}`)
+                console.log(response)
+                const  total  = response.data.totalDiaries;
+                const diaries= response.data.data.diary;
+                console.log(diaries)
+                if (!isCancelled) {
+                    setDiaries(diaries);
+                    setTotalPages(Math.ceil(total / diariesPerPage));
+                }
             } catch (error) {
-                setError('Failed to load data');
+                if (!isCancelled) setError('Failed to load data');
             } finally {
-                setLoading(false);
+                if (!isCancelled) setLoading(false);
             }
         };
         fetchData();
+        return () => {
+            isCancelled = true; 
+        };
     }, []);
 
     useEffect(() => {
@@ -41,7 +51,7 @@ const Forest = () => {
 
     const indexOfLastDiary = currentPage * diariesPerPage;
     const indexOfFirstDiary = indexOfLastDiary - diariesPerPage;
-    const currentDiaries = diaries.slice(indexOfFirstDiary, indexOfLastDiary);
+    const currentDiaries = diaries.slice(indexOfFirstDiary, indexOfLastDiary) ;
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -98,15 +108,16 @@ const Forest = () => {
                     {!loading && !error && currentDiaries.map((diary) => (
                         <DiaryCard
                             key={diary.diary_id}
-                            title={diary.diary_title}
-                            date={diary.date}
-                            summary={diary.diary_content.substring(0, 20) + ' ...'}
-                            imageUrl={diary.post_photo}
-                            boardName={diary.board_name}
-                            nickname={diary.nickname}
-                            diaryId={diary.diary_id}
+                            diary_title={diary.diary_title}  // title → diary_title
+                            createdAt={diary.createdAt}       // date → createdAt
+                            diary_content={diary.diary_content}  // summary → diary_content
+                            post_photo={diary.post_photo}     // imageUrl → post_photo
+                            board_name={diary.board_name}     // boardName → board_name
+                            user_nick={diary.User.user_nick}        // nickname → user_nick
+                            diary_id={diary.diary_id}
                             onClick={() => handleDiaryClick(diary.diary_id)}
-                        />
+                    />
+                    
                     ))}
                 </div>
 

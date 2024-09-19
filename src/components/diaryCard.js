@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 import '../assets/css/diaryCard.css';
 import axios from 'axios';
 
-const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFriendPage, diary_id, onClick}) => {
+const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nick, board_id, isFriendPage, diary_id, onClick}) => {
     const [liked, setLiked] = useState(false);
 
     const formatDate = (date) => {
+        if (!date) return 'Invalid date';  // date가 없으면 기본 메시지 반환
+        const parsedDate = new Date(date);
+        if (isNaN(parsedDate)) return 'Invalid date';  // 유효하지 않은 날짜일 경우 메시지 반환
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-        return new Intl.DateTimeFormat('ko-KR', options).format(new Date(date));
+        return new Intl.DateTimeFormat('ko-KR', options).format(parsedDate);
     };
 
-    const formattedDate = formatDate(date);
+    const formattedDate = formatDate(createdAt);
 
     useEffect(() => {
         // Fetch initial liked status
@@ -54,7 +57,7 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
 
     const getBorderClass = () => {
         if (isFriendPage) return 'friend-border';
-        switch (boardName) {
+        switch (board_id) {
             case '숲':
                 return 'forest-border';
             case '도시':
@@ -68,32 +71,33 @@ const DiaryCard = ({ title, date, summary, imageUrl, nickname, boardName, isFrie
 
 
     return (
-        <div className={`diary-card ${getBorderClass()}`} onClick={() => onClick(diary_id, boardName)}>
+        <div className={`diary-card ${getBorderClass()}`} onClick={() => onClick(diary_id, board_id)}>
             <div className="diary-header">
-                <span className="diary-nickname">{nickname} 님</span>
+                <span className="diary-user_nick">{user_nick} 님</span>
                 <span className="diary-like" onClick={toggleLike}>
                     {liked ? <FilledHeart /> : <EmptyHeart />}
                 </span>
             </div>
-            <img src={imageUrl || '/path/to/default-image.jpg'} alt={title} className="diary-image" />
+            <img src={post_photo || '../assets/images/default.png'} alt={diary_title} className="diary-image" />
             <div className="diary-content">
-                <h2 className="diary-title">{title}</h2>
+                <h2 className="diary-title">{diary_title}</h2>
                 <p className="diary-date">{formattedDate}</p>
-                <p className="diary-summary">{summary.length > 20 ? summary.substring(0, 20) + ' ...' : summary}</p>
+                <p className="diary-summary">{diary_content.length > 20 ? diary_content.substring(0, 20) + ' ...' : diary_content}</p>
             </div>
         </div>
     );
 };
 
 DiaryCard.propTypes = {
-    title: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    summary: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
-    boardName: PropTypes.string,
-    nickname: PropTypes.string.isRequired,
+    diary_title: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    diary_content: PropTypes.string.isRequired,
+    post_photo: PropTypes.string,
+    board_id: PropTypes.string,
+    user_nick: PropTypes.string.isRequired,
     isFriendPage: PropTypes.bool,
     diary_id: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
 };
 
 export default DiaryCard;
