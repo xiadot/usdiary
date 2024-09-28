@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../assets/css/profilefix.css';
 import Menu from '../../components/menu';
+import ProfileMenu from '../../components/profileMenu';
 
 const ProfileFix = () => {
   const [activeButton, setActiveButton] = useState('Profile');
@@ -22,9 +23,10 @@ const ProfileFix = () => {
   };
 
   return (
-    <div className="page">
+    <div className="fix_page">
       <Menu />
       <div className="fix_page-container">
+        <ProfileMenu />
         <div className="fix_content-box">
           {activeButton === 'Profile' && (
             <div className="fix_profile-section">
@@ -38,7 +40,7 @@ const ProfileFix = () => {
                       {profileImage ? (
                         <img src={profileImage} alt="Profile" className="fix_profile-image" />
                       ) : (
-                        <div className="fix_profile-image-placeholder" />
+                        <div className="fix_profile-image-placeholder" style={{ backgroundColor: '#E0E0E0' }} /> 
                       )}
                     </div>
                     <div className="fix_profile-image-info">
@@ -47,22 +49,24 @@ const ProfileFix = () => {
                     </div>
                   </div>
                   <div className="fix_profile-buttons">
+                    <label className="fix_upload-button" htmlFor="file-upload">등록</label>
                     <input
                       type="file"
                       accept="image/*"
                       onChange={handleImageUpload}
-                      className="fix_upload-button"
+                      id="file-upload"
+                      style={{ display: 'none' }} // 파일 선택창 숨기기
                     />
                     <button className="fix_remove-button" onClick={handleRemoveImage}>삭제</button>
                   </div>
                 </div>
                 <div className="fix_form-group">
                   <label htmlFor="name">이름 *</label>
-                  <input type="text" id="name" className="fix_form-input" disabled />
+                  <input type="text" id="name" className="fix_form-input" style={{ backgroundColor: '#EEEEEE', color: '#FFFFFF' }} disabled />
                 </div>
                 <div className="fix_form-group">
                   <label htmlFor="username">아이디 *</label>
-                  <input type="text" id="username" className="fix_form-input" disabled />
+                  <input type="text" id="username" className="fix_form-input" style={{ backgroundColor: '#EEEEEE', color: '#FFFFFF' }} disabled />
                 </div>
                 <div className="fix_form-group">
                   <label htmlFor="password">비밀번호 *</label>
@@ -79,7 +83,7 @@ const ProfileFix = () => {
                     <span>@</span>
                     <input type="text" className="fix_form-input" />
                   </div>
-                  <button className="fix_verify-button">이메일 중복확인</button>
+                  <button className="fix_verify-button" style={{ height: '40px' }}>이메일 중복확인</button>
                 </div>
                 <div className="fix_form-group">
                   <label htmlFor="phone">전화번호</label>
@@ -119,11 +123,14 @@ const ProfileFix = () => {
                 </div>
                 <div className="fix_form-group">
                   <label htmlFor="tendency">성향</label>
-                  <input type="text" id="tendency" className="fix_form-input" disabled />
+                  <input type="text" id="tendency" className="fix_form-input" style={{ backgroundColor: '#EEEEEE', color: '#FFFFFF' }} disabled />
                 </div>
                 <div className="fix_form-group">
                   <label htmlFor="points">포인트</label>
-                  <input type="text" id="points" className="fix_form-input" disabled />
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <input type="text" id="points" className="fix_form-input" style={{ backgroundColor: '#EEEEEE', color: '#FFFFFF' }} disabled />
+                    <span>점</span>
+                  </div>
                 </div>
                 <hr className="fix_divider" />
                 <div className="fix_form-actions">

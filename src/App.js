@@ -21,6 +21,8 @@ import CheckList from './pages/checklist/checklist';
 import SpecialDay from './pages/diaries/special_day';
 import ProfilePage from './pages/mypages/profile';
 import ProfileFix from './pages/mypages/profilefix';
+import Follow from './pages/mypage/follow/follow';
+import MyRate from './pages/mypage/myRate';
 
 const App = () => {
 
@@ -77,6 +79,10 @@ const App = () => {
         <Route path="/profile" element={<ProfilePage />}/>
         <Route path="/profilefix" element={<ProfileFix />}/>
 
+        {/* 팔로우 페이지 경로 */}
+        <Route path="/mypage/follow" element={<Follow />}/>
+
+        <Route path="/mypage/myRate" element={<MyRate />}/>
       </Routes>
     </Router>
   );

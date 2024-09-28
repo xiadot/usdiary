@@ -6,8 +6,6 @@ import Menu from "../../components/menu";
 
 import '../../assets/css/special_day.css';
 import sea from '../../assets/images/sea.png';
-import left_arrow from '../../assets/images/left_arrow.png';
-import right_arrow from '../../assets/images/right_arrow.png';
 
 import place_nature from '../../assets/images/place_nature.png';
 import place_city from '../../assets/images/place_city.png';

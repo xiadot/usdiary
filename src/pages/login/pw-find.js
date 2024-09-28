@@ -21,10 +21,12 @@ const FindPwd = () => {
                 user_email: email,
                 sign_id: signId
             });
+            console.log('Response data:', response.data.data.temporaryPassword);
+
 
             // 서버에서 응답을 받았을 때
             if (response.status === 200) {
-                setTemporaryPassword(response.data.temporaryPassword);
+                setTemporaryPassword(response.data.data.temporaryPassword);
                 setShowResult(true);
             } else {
                 alert(response.data.message || '비밀번호 찾기 실패');

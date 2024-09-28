@@ -1,18 +1,96 @@
+* {
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.pro_page .profile-menu {
+  width: 219px;
+  height: 277px;
+  background-color: rgb(255, 255, 255);
+  margin-top: 1px;
+  border-radius: 15px 0px 15px 15px;
+  box-shadow: 0px 2px 3px 0px #9f9f9f;
+  padding-top: 8px;
+}
+
+.pro_page .profile-menu_content {
+  width: 195px;
+  height: 39px;
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 10px;
+  display: flex;
+  line-height: 39px;
+  padding-left: 12px;
+}
+
+.pro_page .profile-menu_content:hover {
+  background-color: #f0f0f0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pro_page .profile-menu_content:hover img {
+  filter: none;
+}
+
+.pro_page .profile-menu_content:hover img {
+  filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%); /* hover 상태일 때 이미지 색상 */
+}
+
+.pro_page .profile-menu_content:hover .profile-menu_content_name {
+  color: #545F71; /* hover 상태일 때 이름 색상 */
+}
+
+.pro_page .profile-menu_content.active {
+  background-color: #9FC393 !important;
+}
+
+.pro_page .profile-menu_content.active img {
+  filter: none !important;
+}
+
+.pro_page .profile-menu_content.active .profile-menu_content_name {
+  color: #ffffff; /* active 상태일 때 이름 색상 */
+}
+
+.pro_page .profile-menu_content_img {
+  width: 35px;
+  height: 39px;
+  align-items: center;
+  display: flex;
+}
+
+.pro_page .profile-menu_content img {
+  height: 21px;
+  filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%);
+}
+
+.pro_page .profile-menu_content.active {
+  background-color: #545F71; /* 선택된 메뉴 아이템의 배경 색상 */
+}
+
+.pro_page .profile-menu_content_name {
+  color: #545F71;
+}
+
 .pro_page-container {
     display: flex;
-    width: 90%;
-    height: 80vh; 
-    background: linear-gradient(to bottom, #9FC393 3%, white 25%); 
-    margin: 0 auto; 
-    margin-top: 20px;
-    border-radius: 10px; 
-  }  
+    width: 100%px;
+    margin: 38px 40px 0px 40px;
+    border-radius: 15px;
+    background-image: linear-gradient(rgb(206, 224, 200), rgb(255, 255, 255) 160px);
+    }  
   
   .pro_content-box {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 100px;
   }
   
   .pro_profile-section {

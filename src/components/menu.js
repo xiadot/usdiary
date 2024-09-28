@@ -17,11 +17,12 @@ const Menu = () => {
     useEffect(() => {
         if (location.pathname === '/forest' || location.pathname === '/city' || location.pathname === '/sea' || location.pathname === '/friend') {
             setActiveButton('home');
-        } else if (location.pathname === '/forest_diary' || location.pathname === '/city_diary' || location.pathname === '/sea_diary') {
+        } else if (location.pathname === '/forest_diary' || location.pathname === '/city_diary' || location.pathname === '/sea_diary'
+            || location.pathname === '/forestquestion' || location.pathname === '/city_diary/checklist' || location.pathname === '/sea_diary/special_day') {
             setActiveButton('diary');
         } else if (location.pathname === '/map') {
             setActiveButton('map');
-        } else if (location.pathname === '/profile') {
+        } else if (location.pathname === '/forest_diary' || location.pathname === '/follow') {
             setActiveButton('profile');
         }
     }, [location.pathname]);

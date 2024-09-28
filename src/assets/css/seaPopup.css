@@ -1,5 +1,5 @@
 /* 팝업 오버레이 */
-.forest-popup {
+.sea-popup {
     position: fixed;
     top: 0;
     left: 0;
@@ -14,7 +14,7 @@
 }
 
 /* 팝업 컨텐츠 박스 */
-.forest-popup__content {
+.sea-popup__content {
     background-color: white; /* 팝업 박스의 배경색 */
     border-radius: 8px; /* 모서리를 둥글게 */
     padding: 20px;
@@ -26,39 +26,40 @@
     position: relative;
 }
 
-.forest-popup__content::-webkit-scrollbar {
+.sea-popup__content::-webkit-scrollbar {
     width: 0; /* Chrome, Safari, and Opera */
 }
 
-.forest-popup__content {
+.sea-popup__content {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer and Edge */
 }
 
-.forest-popup__title {
+.sea-popup__title {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.forest-popup__mini-tree-image {
+.sea-popup__mini-sea-image {
     width: 60px; /* 원하는 크기로 조정 */
-    height: 60px; /* 원하는 크기로 조정 */
+    height: 50px; /* 원하는 크기로 조정 */
 }
 
-.forest-popup__forest {
+.sea-popup__sea {
     margin-top: 5px;
-    color: #7E9660;
+    color: #3C5FB7;
     font-family: 'Inter', sans-serif;
 }
 
-.forest-popup__title-container {
+.sea-popup__title-container {
+    
     margin-top: 10px;
     text-align: center;
     margin-bottom: 10px;
 }
 
-.forest-popup__diary-title {
+.sea-popup__diary-title {
     display: inline-flex;
     margin: 5px;
     color: #373737;
@@ -67,15 +68,15 @@
     font-size: 20px;
 }
 
-.forest-popup__title-line {
+.sea-popup__title-line {
     width: 100%;
     height: 1px;
-    background-color: #99B477;
+    background-color: #3361BA;
 }
 
 /* 다이어리 내용 테두리 스타일 */
-.forest-popup__diary-content {
-    border: 1px solid #99B477; /* 99B477 색상 테두리 */
+.sea-popup__diary-content {
+    border: 1px solid #3361BA; /* 99B477 색상 테두리 */
     border-radius: 2px; /* 모서리를 살짝 둥글게 */
     padding: 15px; /* 내부 여백 */
     margin-top: 20px; /* 위쪽 간격 */
@@ -86,29 +87,29 @@
     overflow-y: auto; /* 세로 스크롤 자동 설정 */
 }
 
-.forest-popup__diary-content::-webkit-scrollbar-thumb {
+.sea-popup__diary-content::-webkit-scrollbar-thumb {
     background-color: #d6dee1;
     border-radius: 20px;
     border: 2px solid transparent;
     background-clip: content-box;
 }
 
-.forest-popup__diary-content::-webkit-scrollbar {
+.sea-popup__diary-content::-webkit-scrollbar {
     width: 10px;
     height: 10px;
 }
 
-.forest-popup__diary-content::-webkit-scrollbar-track {
+.sea-popup__diary-content::-webkit-scrollbar-track {
     background-color: transparent;
 }
 
-.forest-popup__diary-content::-webkit-scrollbar-thumb:hover {
+.sea-popup__diary-content::-webkit-scrollbar-thumb:hover {
     background-color: #a8bbbf;
 }
 
 
 /* 댓글 입력 섹션 */
-.forest-popup__comment-input-section {
+.sea-popup__comment-input-section {
     display: flex;
     align-items: center;
     margin-top: 20px;
@@ -117,7 +118,7 @@
 }
 
 /* 유저 프로필 이미지 */
-.forest-popup__user-profile-image {
+.sea-popup__user-profile-image {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -127,17 +128,17 @@
 }
 
 /* 댓글 입력 필드 */
-.forest-popup__comment-input {
+.sea-popup__comment-input {
     flex-grow: 1;
     padding: 10px;
     border: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #3361BA;
     border-radius: 0;
     margin-right: 10px;
     outline: none;
 }
 
-.forest-popup__comment-input:focus {
+.sea-popup__comment-input:focus {
     border: none; /* 포커스 시에도 테두리 제거 */
     border-bottom: 1px solid #ccc; /* 포커스 시에도 아래쪽 밑줄 유지 */
     outline: none; /* 포커스 시 아웃라인 제거 */
@@ -145,8 +146,8 @@
 }
 
 /* 댓글 제출 버튼 */
-.forest-popup__comment-submit-button {
-    background-color: #9FC393;
+.sea-popup__comment-submit-button {
+    background-color: #7D9FE3;
     color: white;
     border: none;
     padding: 8px 10px;
@@ -157,24 +158,24 @@
 }
 
 /* 댓글 섹션 */
-.forest-popup__comments-section {
+.sea-popup__comments-section {
     margin-top: 20px;
-    border: solid 1px #9EA3AB;
+    border: solid 1px #3361BA;
     padding: 10px;
     border-radius: 5px;
     min-width: 800px;
 }
 
-.forest-popup__comments-section--no-comments {
+.sea-popup__comments-section--no-comments {
     padding-bottom: 20px; /* 하단 여백 추가 */
 }
 
-.forest-popup__comments-section--no-comments .forest-popup__no-comments-message {
+.sea-popup__comments-section--no-comments .sea-popup__no-comments-message {
     border-top: none; /* 메시지의 상단 경계선 제거 */
 }
 
 /* 댓글 */
-.forest-popup__comment {
+.sea-popup__comment {
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px;
@@ -184,7 +185,7 @@
 }
 
 /* 댓글 프로필 이미지 */
-.forest-popup__comment-profile-image {
+.sea-popup__comment-profile-image {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -193,12 +194,12 @@
 }
 
 /* 댓글 내용 섹션 */
-.forest-popup__comment-details {
+.sea-popup__comment-details {
     flex-grow: 1;
 }
 
 /* 댓글 닉네임 */
-.forest-popup__comment-nickname {
+.sea-popup__comment-nickname {
     font-weight: 600; /* Semi-Bold 효과 */
     padding-left: 3px;
     margin: 0;
@@ -206,14 +207,14 @@
 }
 
 /* 댓글 내용 */
-.forest-popup__comment-content {
+.sea-popup__comment-content {
     padding: 3px;
     margin-right: 30px;
     font-size: 12px;
     border: 1px solid transparent;
 }
 
-.forest-popup__comment-content--editable {
+.sea-popup__comment-content--editable {
     border: 1px solid #1a66cc; /* 수정 중인 댓글에 테두리 추가 */
     border-radius: 5px;
     background-color: #f0f8ff; /* 수정 중인 댓글에 배경색 추가 */
@@ -221,7 +222,7 @@
 }
 
 /* 댓글 없음 메시지 */
-.forest-popup__no-comments-message {
+.sea-popup__no-comments-message {
     text-align: center;
     font-size: 14px;
     color: #999;
@@ -231,7 +232,7 @@
 }
 
 /* 댓글 액션 버튼 섹션 */
-.forest-popup__comment-actions {
+.sea-popup__comment-actions {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -241,8 +242,8 @@
 }
 
 /* 댓글 수정 및 삭제 버튼 */
-.forest-popup__edit-button,
-.forest-popup__delete-button {
+.sea-popup__edit-button,
+.sea-popup__delete-button {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -252,7 +253,7 @@
 }
 
 /* 수정 댓글 입력 필드 */
-.forest-popup__edit-comment-input {
+.sea-popup__edit-comment-input {
     width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -260,103 +261,44 @@
     margin-bottom: 10px;
 }
 
-.forest-popup__main-content {
+.sea-popup__main-content {
     display: flex;
     margin-top: 20px;
     justify-content: flex-start; /* 기본적으로 좌측 정렬 */
     align-items: flex-start;
 }
 
-.forest-popup__main-content--centered {
+.sea-popup__main-content--centered {
     justify-content: center; /* 가운데 정렬 */
 }
 
-
-.forest-popup__question-section {
+.sea-popup__place-section {
     display: flex;
     flex-direction: column;
     min-width: 300px;
     width: 35%;
     margin-left: -20px;
     margin-right: 20px;
-    background-color: #E8F3DA;
+    background-color: #D3E0FF;
     padding: 30px;
     border-radius: 0px 20px 20px 0px;
 }
 
-.forest-popup__question-content::-webkit-scrollbar {
-    width: 0; /* Chrome, Safari, and Opera */
-}
 
-.forest-popup__question-content {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer and Edge */
-}
-
-.forest-popup__question-title {
+.sea-popup__place-title {
     font-size: 2rem;
-    color: #7E9660;
+    color: #164BB0;
     margin-bottom: 20px;
-    margin: 10px 0px 30px 0px;
+    margin: 5px 0px 15px 0px;
 }
 
-.forest-popup__question-content {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    width: 100%;
-    position: relative;
-    max-height: 43vh; 
-    flex-grow: 1;
-}
-
-.forest-popup__question-text {
-    font-weight: bold;
-    color: #343434;
-    padding: 10px;
-    font-family: 'Noto Sans', sans-serif;
-    letter-spacing: 0.5px;
-}
-
-.forest-popup__answer-text {
-    padding: 5px 10px 5px 10px;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 14px;
-}
-
-.forest-popup__check-today-photo-box {
-    width: 60%;
-    aspect-ratio: 1 / 1;
-    background-color: #7E9660;
-    transform: rotate(10deg);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-right: 20px;
-    display: flex;
-    margin-left: auto;
-    align-items: center; 
-    overflow: hidden; 
-    position: relative;
-}
-
-.forest-popup__check-today-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 이미지 비율을 유지하며 박스에 맞춤, 초과 부분은 잘림 */
-    position: absolute; /* 박스 안에 이미지를 꽉 채우도록 절대 위치 설정 */
-    top: 0;
-    left: 0;
-}
-
-.forest-popup__diary-section {
+.sea-popup__diary-section {
     width: 70%;
     min-width: 500px;
     max-width: 930px;
 }
 
-.forest-popup__header {
+.sea-popup__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -368,39 +310,147 @@
     min-width: 800px;
 }
 
-.forest-popup__header-left {
+.sea-popup__header-left {
     display: flex;
     align-items: center;
 }
 
-.forest-popup__author-profile-image {
+.sea-popup__author-profile-image {
     width: 30px;
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
 }
 
-.forest-popup__author-nickname {
+.sea-popup__author-nickname {
     font-weight: bold;
 }
 
-.forest-popup__header-right {
+.sea-popup__header-right {
     display: flex;
     align-items: center;
 }
 
-
-.forest-popup__report-button,
-.forest-popup__like-button {
+.sea-popup__report-button,
+.sea-popup__like-button {
     background: none;
     border: none;
     cursor: pointer;
     margin-left: 10px;
 }
 
-.forest-popup__report-button img,
-.forest-popup__like-button img {
+.sea-popup__report-button img,
+.sea-popup__like-button img {
     width: 24px;
     height: 24px;
+}
+
+.sea-popup__container {
+    display: flex;
+    justify-content: center; /* 자식 요소를 수평으로 중앙 정렬 */
+    align-items: center;
+    background-color: white;
+    height: 45vh;
+    width: 100%;
+    border-radius: 10px; /* 모서리를 둥글게 하고 싶다면 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자를 추가 */
+    margin-top: 10px; /* h2와의 간격 */
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.sea-popup__category-icon {
+    display: flex;
+    width: auto;
+    height: 40%;
+    transition: filter 0.1s ease;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    position: relative; /* 메모와 이모션을 겹치기 위한 설정 */
+    z-index: 1; /* 아이콘이 메모와 이모션보다 아래에 있게 설정 */
+}
+
+.sea-popup__category-icon:hover {
+    filter: blur(3px); /* 아이콘에 블러 효과 적용 */
+    
+}
+
+.sea-popup__icon-1 {
+    width: auto;
+    height: 45%;
+}
+
+.sea-popup__icon-13 {
+    width: auto;
+    height: 60%;
+}
+
+.sea-popup__icon-3, .sea-popup__icon-9 {
+    width: auto;
+    height: 35%;
+}
+
+.sea-popup__icon-2, .sea-popup__icon-4, .sea-popup__icon-5, .sea-popup__icon-6, .sea-popup__icon-12, .sea-popup__icon-14 {
+    width: auto;
+    height: 50%;
+}
+
+.sea-popup__icon-11 {
+    width: auto;
+    height: 55%;
+}
+
+.sea-popup__icon-15 {
+    width: auto;
+    height: 30%;
+}
+
+/* 기본적으로 메모를 숨기기 */
+.sea-popup__icon-text {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s ease, filter 0.1s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+    color: rgb(0, 0, 0);
+    text-align: center;
+    width: 150px;
+    z-index: 2;
+}
+
+
+.sea-popup__category-icon:hover + .sea-popup__icon-text {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* 메모와 이모션 위에 마우스를 올려도 아이콘 블러 유지 */
+.sea-popup__icon-text:hover {
+    visibility: visible; /* 메모와 이모션이 계속 보이게 설정 */
+    opacity: 1;
+}
+
+.sea-popup__icon-emotion {
+    background-color: #ffffff;
+    display: inline-block; /* div 크기를 콘텐츠 크기에 맞춤 */
+    width: auto; /* 가로 길이를 자동으로 맞춤 */
+    height: 20px;
+    line-height: 20px;
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 7px;
+    font-size: 10px;
+    padding: 0px 10px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.sea-popup__icon-memo {
+    word-break: keep-all;
+    width: 100px;
+    margin: auto;
+    font-size: 9px;
+    filter: drop-shadow(0 4px 8px rgb(255, 255, 255));
 }
 
