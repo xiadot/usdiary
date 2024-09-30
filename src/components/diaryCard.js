@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import '../assets/css/diaryCard.css';
 import axios from 'axios';
 
-const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nick, board_id, isFriendPage, diary_id, onClick}) => {
+const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nick, board_name, isFriendPage, diary_id, onClick}) => {
     const [liked, setLiked] = useState(false);
 
     const formatDate = (date) => {
@@ -57,7 +57,7 @@ const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nic
 
     const getBorderClass = () => {
         if (isFriendPage) return 'friend-border';
-        switch (board_id) {
+        switch (board_name) {
             case '숲':
                 return 'forest-border';
             case '도시':
@@ -71,7 +71,7 @@ const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nic
 
 
     return (
-        <div className={`diary-card ${getBorderClass()}`} onClick={() => onClick(diary_id, board_id)}>
+        <div className={`diary-card ${getBorderClass()}`} onClick={() => onClick(diary_id, board_name)}>
             <div className="diary-header">
                 <span className="diary-user_nick">{user_nick} 님</span>
                 <span className="diary-like" onClick={toggleLike}>
@@ -93,7 +93,7 @@ DiaryCard.propTypes = {
     createdAt: PropTypes.string.isRequired,
     diary_content: PropTypes.string.isRequired,
     post_photo: PropTypes.string,
-    board_id: PropTypes.string,
+    board_name: PropTypes.string,
     user_nick: PropTypes.string.isRequired,
     isFriendPage: PropTypes.bool,
     diary_id: PropTypes.number.isRequired,

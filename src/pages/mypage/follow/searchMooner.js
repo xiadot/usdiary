@@ -26,7 +26,7 @@ const SearchMooner = ({ onClose }) => {
 
     // 검색어에 따라 entireUsers를 필터링
     const filteredUsers = entireUsers.filter(user => 
-        user.nickname.includes(searchText) || user.id.includes(searchText)
+        user.id.includes(searchText)
     );
 
     return (

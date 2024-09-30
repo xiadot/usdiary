@@ -36,7 +36,7 @@ const FindId = () => {
 
             // 서버에서 응답을 받았을 때
             if (response.status === 200) {
-                setFoundId(response.data.sign_id);
+                setFoundId(response.data.data.sign_id);
                 setShowResult(true);
             } else {
                 alert(response.data.message || '아이디 찾기 실패');
