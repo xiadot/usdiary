@@ -9,7 +9,7 @@ const Forest = () => {
     const [diaries, setDiaries] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageGroup, setPageGroup] = useState(0);
-    const diariesPerPage = 15;
+    const diariesPerPage = 12;
     const pagesPerGroup = 5;
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false); // Add a loading state
@@ -25,7 +25,7 @@ const Forest = () => {
                 const response = await axios.get('/diaries', {
                     params: {
                       page: 1,          // 페이지 번호 (예시)
-                      limit: 15,        // 페이지당 항목 수 (예시)
+                      limit: 12,        // 페이지당 항목 수 (예시)
                       board_id: board_id // board_id를 쿼리 파라미터로 전송
                     }
                   });
@@ -117,7 +117,7 @@ const Forest = () => {
                             key={diary.diary_id}
                             diary_title={diary.diary_title}  // title → diary_title
                             createdAt={diary.createdAt}       // date → createdAt
-                            diary_content={diary.diary_content}  // summary → diary_content
+                            diary_content={diary.diary_content.substring(0, 20) + ' ...'}  // summary → diary_content
                             post_photo={diary.post_photo}     // imageUrl → post_photo
                             board_name={diary.Board.board_name}     // boardName → board_name
                             user_nick={diary.User.user_nick}        // nickname → user_nick
