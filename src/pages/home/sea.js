@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DiaryCard from '../../components/diaryCard';
+import SeaPopup from "../../components/seaPopup";
 import '../../assets/css/sea.css'; // Ensure this CSS file is correctly named and located.
 import Menu from "../../components/menu";
 import axios from "axios";
@@ -13,22 +14,40 @@ const Sea = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedDiaryId, setSelectedDiaryId] = useState(null);
 
     useEffect(() => {
+        let isCancelled = false;
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/sea'); // Replace with your API endpoint
-                const data = response.data;
-                setDiaries(data);
-                setTotalPages(Math.ceil(data.length / diariesPerPage));
+                const board_id = 3
+                const response = await axios.get('/diaries', {
+                    params: {
+                      page: 1,          // 페이지 번호 (예시)
+                      limit: 12,        // 페이지당 항목 수 (예시)
+                      board_id: board_id // board_id를 쿼리 파라미터로 전송
+                    }
+                  });
+                  
+                console.log(response)
+                const  total  = response.data.totalDiaries;
+                const diaries= response.data.data.diary;
+                console.log(diaries)
+                if (!isCancelled) {
+                    setDiaries(diaries);
+                    setTotalPages(Math.ceil(total / diariesPerPage));
+                }
             } catch (error) {
-                setError('Failed to load data');
+                if (!isCancelled) setError('Failed to load data');
             } finally {
-                setLoading(false);
+                if (!isCancelled) setLoading(false);
             }
         };
         fetchData();
+        return () => {
+            isCancelled = true; 
+        };
     }, []);
 
     useEffect(() => {
@@ -64,6 +83,14 @@ const Sea = () => {
         (_, index) => pageGroup * pagesPerGroup + index + 1
     );
 
+    const handleDiaryClick = (diary_id, board_name) => {
+        setSelectedDiaryId(diary_id); // 클릭한 다이어리 ID를 설정
+    };
+
+    const handleClosePopup = () => {
+        setSelectedDiaryId(null); // 팝업 닫기
+    };
+
     return (
         <div className="wrap">
             <Menu />
@@ -89,12 +116,13 @@ const Sea = () => {
                         <DiaryCard
                             key={diary.diary_id}
                             title={diary.diary_title}
-                            date={diary.date}
+                            date={diary.createdAt}
                             summary={diary.diary_content.substring(0, 20) + ' ...'}
                             imageUrl={diary.post_photo}
-                            boardName={diary.board_name}
-                            nickname={diary.nickname}
+                            boardName={diary.Board.board_name}
+                            nickname={diary.User.user_nick}
                             diaryId={diary.diary_id}
+                            onClick={() => handleDiaryClick(diary.diary_id)}
                         />
                     ))}
                 </div>
@@ -126,6 +154,10 @@ const Sea = () => {
                 </div>
 
                 <div className="sea-page__tree-background"></div>
+
+                {selectedDiaryId && (
+                    <SeaPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
+                )}
             </div>
         </div>
     );
