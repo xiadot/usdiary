@@ -98,13 +98,13 @@ const Forest = () => {
                     {!loading && !error && currentDiaries.map((diary) => (
                         <DiaryCard
                             key={diary.diary_id}
-                            title={diary.diary_title}
-                            date={diary.date}
-                            summary={diary.diary_content.substring(0, 20) + ' ...'}
-                            imageUrl={diary.post_photo}
-                            boardName={diary.board_name}
-                            nickname={diary.nickname}
-                            diaryId={diary.diary_id}
+                            diary_title={diary.diary_title}
+                            createdAt={diary.createdAt}
+                            diary_content={diary.diary_content.substring(0, 20) + ' ...'}
+                            post_photo={diary.post_photo}
+                            board_id={diary.board_id}
+                            user_nick={diary.User.user_nick}
+                            diary_id={diary.diary_id}
                             onClick={() => handleDiaryClick(diary.diary_id)}
                         />
                     ))}

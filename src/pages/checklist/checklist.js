@@ -3,6 +3,8 @@ import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import Menu from "../../components/menu";
+import DateSelector from "../../components/dateSelector";
+import RevealOptions from '../../components/revealOptions';
 
 import '../../assets/css/checklist.css';
 import city from '../../assets/images/city.png';
@@ -116,24 +118,6 @@ const CheckList = () => {
     }
   };
 
-  // 오늘 날짜와 전날 날짜만 hover 지정을 위해 id를 부여하는 핸들러
-  const getIdForDate = (date) => {
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1); // 전날 계산
-  
-    const todayDateStr = today.toDateString();
-    const yesterdayDateStr = yesterday.toDateString();
-    const dateStr = new Date(date).toDateString();
-  
-    if (dateStr === todayDateStr) {
-      return 'today';
-    } else if (dateStr === yesterdayDateStr) {
-      return 'yesterday';
-    }
-    return ''; // 오늘과 전날이 아니면 빈 문자열 반환
-  };
-
   // 공개 범위 클릭 핸들러
   const handleDivClick = (index) => {
     setSelectedDiv(index);
@@ -182,18 +166,6 @@ const CheckList = () => {
       editorRef.current.getInstance().setHTML('');
     }
   }, []);
-
-  // 날짜 형식 가져오기
-  const getDay = (date) => date.getDate(); 
-
-  const getDaysArray = () => {
-    const today = new Date(currentDate);
-    return Array.from({ length: 7 }, (_, i) => {
-      const day = new Date(today);
-      day.setDate(today.getDate() - 3 + i);
-      return day;
-    });
-  };
 
   // 스크롤 잠금
   useEffect(() => {
@@ -298,8 +270,8 @@ const CheckList = () => {
 
   return (
     <div className="wrap">
-      <Menu/>
-      
+      <Menu />
+
       <div className="city__checklist">
         <div className="city__checklist__check">
           <div className="city__checklist__check-title">
@@ -318,16 +290,16 @@ const CheckList = () => {
               <div className="city__checklist__check-routine-top-name">Routine</div>
               <div className="city__checklist__check-routine-top-num">{routines.length}</div>
             </div>
-            <hr/>
+            <hr />
             <div className="city__checklist__check-routine-bottom">
               {routines.map((routine, index) => (
                 <div className="city__checklist__check-routine-bottom-box" key={routine.id}>
                   <div className="city__checklist__check-routine-bottom-box-toggleSwitch">
-                    <input 
-                      type="checkbox" 
-                      id={`routine-toggle-${index}`} 
-                      hidden 
-                      checked={routine.toggle} 
+                    <input
+                      type="checkbox"
+                      id={`routine-toggle-${index}`}
+                      hidden
+                      checked={routine.toggle}
                       readOnly // 읽기 전용으로 설정
                     />
                     <label htmlFor={`routine-toggle-${index}`}>
@@ -349,16 +321,16 @@ const CheckList = () => {
               <div className="city__checklist__check-todo-top-name">To Do</div>
               <div className="city__checklist__check-todo-top-num">{todos.length}</div>
             </div>
-            <hr/>
+            <hr />
             <div className="city__checklist__check-todo-bottom">
               {todos.map((todo, index) => (
                 <div className="city__checklist__check-todo-bottom-box" key={todo.id}>
                   <div className="city__checklist__check-todo-bottom-box-toggleSwitch">
-                    <input 
-                      type="checkbox" 
-                      id={`todo-toggle-${index}`} 
-                      hidden 
-                      checked={todo.toggle} 
+                    <input
+                      type="checkbox"
+                      id={`todo-toggle-${index}`}
+                      hidden
+                      checked={todo.toggle}
                       readOnly // 읽기 전용으로 설정
                     />
                     <label htmlFor={`todo-toggle-${index}`}>
@@ -372,7 +344,7 @@ const CheckList = () => {
                 </div>
               ))}
             </div>
-          </div>      
+          </div>
         </div>
 
         <div className="city__checklist__diary">
@@ -381,18 +353,12 @@ const CheckList = () => {
             <div className="city__checklist__diary-top-title">Today's City</div>
           </div>
           <div className="city__checklist__diary-date">
-            <div className="city__checklist__diary-date-container">
-              {getDaysArray().map((day, i) => (
-                <div
-                  key={i}
-                  id={getIdForDate(day)}
-                  className={`city__checklist__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'city__checklist__diary-date-round--today' : ''}`}
-                  onClick={() => handleDateClick(day)}
-                >
-                  {getDay(day)} 
-                </div>
-              ))}
-            </div>
+            <DateSelector
+              currentDate={currentDate}
+              selectedDate={selectedDate}
+              onDateClick={handleDateClick}
+              theme="city"
+            />
           </div>
           <div className="city__checklist__diary-title-edit">
             <input
@@ -405,17 +371,7 @@ const CheckList = () => {
             />
           </div>
           <div className="city__checklist__diary-another">
-            <div className="city__checklist__diary-another-reveal">
-              {['only', 'subscribe', 'all'].map((className, index) => (
-                <div
-                  key={index}
-                  className={`city__checklist__diary-another-reveal-btn city__checklist__diary-another-reveal-btn--${className} ${selectedDiv === index ? 'city__checklist__diary-another-reveal-btn--selected' : ''}`}
-                  onClick={() => handleDivClick(index)}
-                >
-                  {className}
-                </div>
-              ))}
-            </div>
+            <RevealOptions selectedDiv={selectedDiv} onDivClick={handleDivClick} />
             <div className="city__checklist__diary-another-submit" onClick={handleSubmit}>발행</div>
           </div>
           <div className="city__checklist__diary-texts">
