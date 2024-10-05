@@ -25,16 +25,14 @@ const postTodos = async (todos) => {
 };
 
 const Todo = ({ onClose, onArrowClick, onSubmit }) => {
-  const [todos, setTodos] = useState([
-    { toggle: false, title: '', content: '' }
-  ]);
+  const [todos, setTodos] = useState([]);
 
   // Fetch todos when component mounts
   useEffect(() => {
     const fetchTodos = async () => {
       try {
         const data = await getTodos();
-        setTodos(data || [{ toggle: false, title: '', content: '' }]);
+        setTodos(data.length > 0 ? data : []);
       } catch (error) {
         console.error('Failed to fetch todos:', error);
       }
@@ -68,13 +66,15 @@ const Todo = ({ onClose, onArrowClick, onSubmit }) => {
     setTodos(updatedTodos);
   };
 
+  // 저장버튼 클릭시 루틴 상태 저장
   const handleSave = async () => {
+    onSubmit(todos);
     try {
-      await postTodos(todos);
-      console.log("투두 목록이 성공적으로 저장되었습니다.");
-      onSubmit(todos);
+      const response = await postTodos(todos);
+      console.log('투두가 서버에 저장되었습니다:', response);
+      onSubmit(todos); // 체크리스트에 해당 값 등재
     } catch (error) {
-      console.error('Failed to save todos:', error);
+      console.error('투두를 저장하는 데 실패했습니다:', error);
     }
   };
 
@@ -86,24 +86,24 @@ const Todo = ({ onClose, onArrowClick, onSubmit }) => {
             <h2>Check List</h2>
             <button className="ck-popup-close" onClick={onClose}>X</button>
           </div>
-          <div className="ck-popup-todo">
-            <div className="ck-popup-todo-top">
-              <div className="ck-popup-todo-top-title">
-                <div className="ck-popup-todo-top-title-circle"></div>
-                <div className="ck-popup-todo-top-title-name">To Do</div>
+          <div className="todo">
+            <div className="todo-top">
+              <div className="todo-top-title">
+                <div className="todo-top-title-circle"></div>
+                <div className="todo-top-title-name">To Do</div>
               </div>
               <img 
                 src={right_arrow} 
-                className="ck-popup-todo-top-arrow" 
+                className="todo-top-arrow" 
                 alt="right_arrow"
                 onClick={onArrowClick} 
               />
             </div>
             <hr />
-            <div className="ck-popup-todo-middle">
+            <div className="todo-middle">
               {todos.map((todo, index) => (
-                <div className="ck-popup-todo-middle-box" key={index}>
-                  <div className="ck-popup-todo-middle-box-1">
+                <div className="todo-middle-box" key={index}>
+                  <div className="todo-middle-box-1">
                     <input 
                       type="checkbox" 
                       id={`toggle-${index}`} 
@@ -111,13 +111,13 @@ const Todo = ({ onClose, onArrowClick, onSubmit }) => {
                       checked={todo.toggle} 
                       onChange={() => handleToggleChange(index)} 
                     /> 
-                    <label htmlFor={`toggle-${index}`} className="ck-popup-todo-middle-box-toggleSwitch">
-                      <span className="ck-popup-todo-middle-box-toggleButton"></span>
+                    <label htmlFor={`toggle-${index}`} className="todo-middle-box-toggleSwitch">
+                      <span className="todo-middle-box-toggleButton"></span>
                     </label>
                   </div>
-                  <div className="ck-popup-todo-middle-box-2">
+                  <div className="todo-middle-box-2">
                     <input 
-                      className="ck-popup-todo-middle-box-title" 
+                      className="todo-middle-box-title" 
                       type="text" 
                       placeholder="To Do"
                       value={todo.title}
@@ -125,9 +125,9 @@ const Todo = ({ onClose, onArrowClick, onSubmit }) => {
                       spellCheck="false"
                     />
                   </div>
-                  <div className="ck-popup-todo-middle-box-3">
+                  <div className="todo-middle-box-3">
                     <input 
-                      className="ck-popup-todo-middle-box-content" 
+                      className="todo-middle-box-content" 
                       type="text" 
                       placeholder="내용을 입력하시오."
                       value={todo.content}
@@ -135,7 +135,7 @@ const Todo = ({ onClose, onArrowClick, onSubmit }) => {
                     />
                   </div>
                   <div 
-                    className="ck-popup-todo-middle-box-delete"
+                    className="todo-middle-box-delete"
                     onClick={() => handleDeleteTodo(index)}
                   >
                     삭제
@@ -143,12 +143,12 @@ const Todo = ({ onClose, onArrowClick, onSubmit }) => {
                 </div>
               ))}
               {todos.length < 5 && (
-                <div className="ck-popup-todo-middle-plusbtn" onClick={handleAddTodo}>
+                <div className="todo-middle-plusbtn" onClick={handleAddTodo}>
                   투두 추가하기
                 </div>
               )}
             </div>
-            <div className="ck-popup-todo-savebtn" onClick={handleSave}>저장</div>
+            <div className="todo-savebtn" onClick={handleSave}>저장</div>
           </div>
         </div>
       </div>

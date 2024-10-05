@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import { Editor } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor.css';
 
-import Menu from "../../components/menu";
 import '../../assets/css/forestquestion.css';
-import city from '../../assets/images/tree.png';
 
 const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, initialPhoto, onDelete }) => {
   const [answer, setAnswer] = useState(initialAnswer || '');
@@ -306,8 +302,7 @@ const ForestQuestion = () => {
   };
 
   return (
-    <div className="wrap">  
-      <Menu />    
+    <div>   
       <div className="forest__forestquestion">
         <div className="forest__forestquestion__check">
           <div className="forest__forestquestion__check-title">
@@ -331,66 +326,8 @@ const ForestQuestion = () => {
             </div>
           </div>
         </div>
-
-        <div className="forest__forestquestion__diary">
-          <div className="forest__forestquestion__diary-top">
-            <img src={city} className="forest__forestquestion__diary-top-image" alt="forest" />
-            <div className="forest__forestquestion__diary-top-title">Today's Forest</div>
-          </div>
-          <div className="forest__forestquestion__diary-date">
-            <div className="forest__forestquestion__diary-date-container">
-              {getDaysArray().map((day, i) => (
-                <div
-                  key={i}
-                  id={getIdForDate(day)}
-                  className={`forest__forestquestion__diary-date-round ${day.toDateString() === selectedDate.toDateString() ? 'forest__forestquestion__diary-date-round--today' : ''}`}
-                  onClick={() => handleDateClick(day)}
-                >
-                  {getDay(day)} 
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="forest__forestquestion__diary-title-edit">
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="제목"
-              className="forest__forestquestion__diary-title-edit-input"
-              spellCheck={false}
-            />
-          </div>
-          <div className="forest__forestquestion__diary-another">
-            <div className="forest__forestquestion__diary-another-reveal">
-              {['only', 'subscribe', 'all'].map((className, index) => (
-                <div
-                  key={index}
-                  className={`forest__forestquestion__diary-another-reveal-btn forest__forestquestion__diary-another-reveal-btn--${className} ${selectedDiv === index ? 'forest__forestquestion__diary-another-reveal-btn--selected' : ''}`}
-                  onClick={() => handleDivClick(index)}
-                >
-                  {className}
-                </div>
-              ))}
-            </div>
-            <div className="forest__forestquestion__diary-another-submit" onClick={handleSubmit}>발행</div>
-          </div>
-          <div className="forest__forestquestion__diary-texts">
-            <Editor
-              toolbarItems={[
-                ['heading', 'bold', 'italic', 'strike'],
-                ['image', 'link']
-              ]}
-              height="100%"
-              initialEditType="wysiwyg"
-              ref={editorRef}
-              onChange={onChangeGetHTML}
-              hideModeSwitch={true}
-            />
-          </div>
-        </div>
       </div>
-
+      
       {showTodayQuestionPopup && (
         <TodayQuestionPopup 
           question={todayQuestion} 

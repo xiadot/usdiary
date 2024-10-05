@@ -6,7 +6,6 @@
     box-sizing: border-box;
 }
 
-
 .wrap .forest {
     display: flex;
 }
@@ -31,25 +30,58 @@
     margin-top: 28px;
 }
 
-.wrap .forest__diary {
+.wrap.page1 .forest__diary {
     display: flex;
     margin: auto;
     flex-direction: column;
     align-items: center;
 }
 
-.wrap .forest__diary-tree {
+.wrap.page2 .forest__diary {
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}
+
+.wrap.page1 .forestDiary_top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrap.page2 .forestDiary_top {
+    display: flex;
+    width: 588px;
+    margin-top: 42px;
+    margin-bottom: 20px; 
+}
+
+.wrap.page1 .forest__diary-tree {
     height: 60px;
     margin-bottom: 12px;
 }
 
-.wrap .forest__diary-title {
+.wrap.page2 .forest__diary-tree {
+    height: 60px;
+    margin-bottom: 12px;
+}
+
+.wrap.page1 .forest__diary-title {
     font-size: 32px;
     font-family: "Noto Sans", sans-serif;
-    font-weight: 700;
-    font-style: bold;
+    font-weight: 700; /* Bold font weight */
     color: #7E9660;
     margin-bottom: 20px;
+}
+
+.wrap.page2 .forest__diary-title {
+    font-size: 32px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700; /* Bold font weight */
+    color: #7E9660;
+    padding-top: 12px;
 }
 
 .wrap .forest__diary-date {
@@ -137,8 +169,16 @@
     color: #C6C9CE;
 }
 
-.wrap .forest__diary-actions {
+.wrap.page1 .forest__diary-actions {
     width: 930px;
+    height: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wrap.page2 .forest__diary-actions {
+    width: 100%;
     height: 30px;
     margin-bottom: 30px;
     display: flex;
@@ -204,10 +244,19 @@
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.wrap .forest__diary-texts {
+.wrap.page1 .forest__diary-texts {
     width: 930px;
     height: 492px;
-    border-style : solid;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #99B477;
+    margin-bottom: 50px;
+}
+
+.wrap.page2 .forest__diary-texts {
+    width: 100%;
+    height: 492px;
+    border-style: solid;
     border-width: 1px;
     border-color: #99B477;
     margin-bottom: 50px;

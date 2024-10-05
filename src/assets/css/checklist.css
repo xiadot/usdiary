@@ -7,19 +7,8 @@
     box-sizing: border-box;
 }
 
-/* Wrap */
-.wrap {
-    min-width: 1100px;
-    min-height: 974px;
-}
-
-/* City Component */
-.wrap .city__checklist {
-    display: flex;
-}
-
 /* Check Section */
-.wrap .city__checklist__check {
+.wrap .checklist {
     width: 415px;
     height: 803px;
     background-color: #FFFDB9;
@@ -28,13 +17,13 @@
     border-radius: 0px 50px 50px 0px;
 }
 
-.wrap .city__checklist__check-title {
+.wrap .checklist-title {
     display: flex;
     margin-bottom: 52px;
     align-items: center;
 }
 
-.wrap .city__checklist__check-title-name {
+.wrap .checklist-title-name {
     font-size: 30px;
     font-family: "Noto Sans", sans-serif;
     font-weight: 700; /* Bold font weight */
@@ -42,7 +31,7 @@
     margin-right: 8px;
 }
 
-.wrap .city__checklist__check-title-plusbtn {
+.wrap .checklist-title-plusbtn {
     width: 19px;
     height: 19px;
     background-color: #E6E4AE;
@@ -55,22 +44,22 @@
     margin-top: 3px;
 }
 
-.wrap .city__checklist__check-title-plusbtn:hover {
+.wrap .checklist-title-plusbtn:hover {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.wrap .city__checklist__check-routine {
+.wrap .checklist-routine {
     margin-bottom: 42px;
 }
 
-.wrap .city__checklist__check-routine-top {
+.wrap .checklist-routine-top {
     display: flex;
     align-items: center;
     margin-bottom: 22px;
 }
 
-.wrap .city__checklist__check-routine-top-circle {
+.wrap .checklist-routine-top-circle {
     width: 4px;
     height: 4px;
     border-radius: 2px;
@@ -78,13 +67,13 @@
     margin: 2px 5px 0px 0px;
 }
 
-.wrap .city__checklist__check-routine-top-name {
+.wrap .checklist-routine-top-name {
     font-size: 13px;
     font-weight: 500;
     margin-right: 3px;
 }
 
-.wrap .city__checklist__check-routine-top-num {
+.wrap .checklist-routine-top-num {
     width: 12px;
     height: 12px;
     background-color: #D9D9D9;
@@ -97,32 +86,32 @@
     margin-top: 4px;
 }
 
-.wrap .city__checklist__check-routine hr {
+.wrap .checklist-routine hr {
     background-color: #828282;
     border:0;
     height:2px;
     margin-bottom: 19px;
 }
 
-.wrap .city__checklist__check-routine-bottom {
+.wrap .checklist-routine-bottom {
     /* 2개까지 보이게*/
     height: 174px;
     overflow: auto;
 }
 
-.wrap .city__checklist__check-routine-bottom::-webkit-scrollbar {
+.wrap .checklist-routine-bottom::-webkit-scrollbar {
     width: 5px;
 }
-.wrap .city__checklist__check-routine-bottom::-webkit-scrollbar-thumb {
+.wrap .checklist-routine-bottom::-webkit-scrollbar-thumb {
     background-color: #828282;
     border-radius: 10px;
 }
-.wrap .city__checklist__check-routine-bottom::-webkit-scrollbar-track {
+.wrap .checklist-routine-bottom::-webkit-scrollbar-track {
     background-color: #D9D9D9;
     border-radius: 10px;
 }
 
-.wrap .city__checklist__check-routine-bottom-box {
+.wrap .checklist-routine-bottom-box {
     background-color: #ffffff;
     height: 77px;
     border-radius: 10px;
@@ -130,29 +119,29 @@
     margin-bottom: 19px;
 }
 
-.wrap .city__checklist__check-routine-bottom-box {
+.wrap .checklist-routine-bottom-box {
     align-items: center;
     margin-bottom: 10px;
 }
 
-.wrap .city__checklist__check-routine-bottom-box-toggleSwitch {
+.wrap .checklist-routine-bottom-box-toggleSwitch {
     display: flex;
     align-items: center;
     margin-right: 10px;
 }
 
-.wrap .city__checklist__check-routine-bottom-box-toggleSwitch input {
+.wrap .checklist-routine-bottom-box-toggleSwitch input {
     display: none;
 }
 
-.wrap .city__checklist__check-routine-bottom-box-toggleSwitch label {
+.wrap .checklist-routine-bottom-box-toggleSwitch label {
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 14px;
 }
 
-.wrap .city__checklist__check-routine-bottom-box-toggleSwitch span {
+.wrap .checklist-routine-bottom-box-toggleSwitch span {
     width: 35px;
     height: 15px;
     display: block;
@@ -162,7 +151,7 @@
     cursor: pointer;
 }
 
-.wrap .city__checklist__check-routine-bottom-box-toggleSwitch span:before {
+.wrap .checklist-routine-bottom-box-toggleSwitch span:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -174,15 +163,15 @@
     transform: translateY(-50%);
 }
 
-.wrap .city__checklist__check-routine-bottom-box-toggleSwitch input:checked + label span:before {
+.wrap .checklist-routine-bottom-box-toggleSwitch input:checked + label span:before {
     left: calc(100% - 15px);
 }
 
-.wrap .city__checklist__check-routine-bottom-box-toggleSwitch input:checked + label span {
+.wrap .checklist-routine-bottom-box-toggleSwitch input:checked + label span {
     background-color: #fdee6bd5;
 }
 
-.wrap .city__checklist__check-routine-bottom-box-title {
+.wrap .checklist-routine-bottom-box-title {
     margin-top: 8px;
     font-size: 13.5px;
     font-weight: 600;
@@ -192,7 +181,7 @@
     text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */
 }
 
-.wrap .city__checklist__check-routine-bottom-box-content {
+.wrap .checklist-routine-bottom-box-content {
     margin-top: 4px;
     font-size: 9px;
     font-weight: 400;
@@ -203,17 +192,17 @@
 }
 
 
-.wrap .city__checklist__check-todo {
+.wrap .checklist-todo {
     margin-bottom: 62px;
 }
 
-.wrap .city__checklist__check-todo-top {
+.wrap .checklist-todo-top {
     display: flex;
     align-items: center;
     margin-bottom: 22px;
 }
 
-.wrap .city__checklist__check-todo-top-circle {
+.wrap .checklist-todo-top-circle {
     width: 4px;
     height: 4px;
     border-radius: 2px;
@@ -221,13 +210,13 @@
     margin: 2px 5px 0px 0px;
 }
 
-.wrap .city__checklist__check-todo-top-name {
+.wrap .checklist-todo-top-name {
     font-size: 13px;
     font-weight: 500;
     margin-right: 3px;
 }
 
-.wrap .city__checklist__check-todo-top-num {
+.wrap .checklist-todo-top-num {
     width: 12px;
     height: 12px;
     background-color: #D9D9D9;
@@ -240,32 +229,32 @@
     margin-top: 4px;
 }
 
-.wrap .city__checklist__check-todo hr {
+.wrap .checklist-todo hr {
     background-color: #828282;
     border:0;
     height:2px;
     margin-bottom: 19px;
 }
 
-.wrap .city__checklist__check-todo-bottom {
+.wrap .checklist-todo-bottom {
     /* 3개까지 보이게*/
     height: 261px;
     overflow: auto;
 }
 
-.wrap .city__checklist__check-todo-bottom::-webkit-scrollbar {
+.wrap .checklist-todo-bottom::-webkit-scrollbar {
     width: 5px;
 }
-.wrap .city__checklist__check-todo-bottom::-webkit-scrollbar-thumb {
+.wrap .checklist-todo-bottom::-webkit-scrollbar-thumb {
     background-color: #828282;
     border-radius: 10px;
 }
-.wrap .city__checklist__check-todo-bottom::-webkit-scrollbar-track {
+.wrap .checklist-todo-bottom::-webkit-scrollbar-track {
     background-color: #D9D9D9;
     border-radius: 10px;
 }
 
-.wrap .city__checklist__check-todo-bottom-box {
+.wrap .checklist-todo-bottom-box {
     background-color: #ffffff;
     height: 77px;
     border-radius: 10px;
@@ -273,29 +262,29 @@
     margin-bottom: 19px;
 }
 
-.wrap .city__checklist__check-todo-bottom-box {
+.wrap .checklist-todo-bottom-box {
     align-items: center;
     margin-bottom: 10px;
 }
 
-.wrap .city__checklist__check-todo-bottom-box-toggleSwitch {
+.wrap .checklist-todo-bottom-box-toggleSwitch {
     display: flex;
     align-items: center;
     margin-right: 10px;
 }
 
-.wrap .city__checklist__check-todo-bottom-box-toggleSwitch input {
+.wrap .checklist-todo-bottom-box-toggleSwitch input {
     display: none;
 }
 
-.wrap .city__checklist__check-todo-bottom-box-toggleSwitch label {
+.wrap .checklist-todo-bottom-box-toggleSwitch label {
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 14px;
 }
 
-.wrap .city__checklist__check-todo-bottom-box-toggleSwitch span {
+.wrap .checklist-todo-bottom-box-toggleSwitch span {
     width: 35px;
     height: 15px;
     display: block;
@@ -305,7 +294,7 @@
     cursor: pointer;
 }
 
-.wrap .city__checklist__check-todo-bottom-box-toggleSwitch span:before {
+.wrap .checklist-todo-bottom-box-toggleSwitch span:before {
     content: '';
     position: absolute;
     top: 50%;
@@ -317,15 +306,15 @@
     transform: translateY(-50%);
 }
 
-.wrap .city__checklist__check-todo-bottom-box-toggleSwitch input:checked + label span:before {
+.wrap .checklist-todo-bottom-box-toggleSwitch input:checked + label span:before {
     left: calc(100% - 15px);
 }
 
-.wrap .city__checklist__check-todo-bottom-box-toggleSwitch input:checked + label span {
+.wrap .checklist-todo-bottom-box-toggleSwitch input:checked + label span {
     background-color: #fdee6bd5;
 }
 
-.wrap .city__checklist__check-todo-bottom-box-title {
+.wrap .checklist-todo-bottom-box-title {
     margin-top: 8px;
     font-size: 13.5px;
     font-weight: 600;
@@ -335,7 +324,7 @@
     text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */
 }
 
-.wrap .city__checklist__check-todo-bottom-box-content {
+.wrap .checklist-todo-bottom-box-content {
     margin-top: 4px;
     font-size: 9px;
     font-weight: 400;
@@ -345,196 +334,7 @@
     text-overflow: ellipsis; /* 넘치는 텍스트를 ...로 표시 */
 }
 
-/* Diary Section */
-.wrap .city__checklist__diary {
-    display: flex;
-    margin: auto;
-    flex-direction: column;
-    align-items: center;
-    width: 60%;
-}
-
-.wrap .city__checklist__diary-top {
-    display: flex;
-    width: 588px;
-    margin-top: 42px;
-    margin-bottom: 20px;    
-}
-
-/* City Image */
-.wrap .city__checklist__diary-top-image {
-    height: 60px;
-    margin-right: 17px;
-}
-
-/* Today's City Title */
-.wrap .city__checklist__diary-top-title {
-    font-size: 32px;
-    font-family: "Noto Sans", sans-serif;
-    font-weight: 700; /* Bold font weight */
-    color: #828282;
-    padding-top: 12px;
-}
-
-/* Date Section */
-.wrap .city__checklist__diary-date {
-    width: 468px;
-    height: 40px;
-    margin-bottom: 19px;
-    display: flex;
-    justify-content: space-between;
-}
-
-/* Date Arrow */
-.wrap .city__checklist__diary-date-arrow {
-    width: 20px;
-    height: 20px;
-    margin-top: 10px;
-}
-
-/* Date Container */
-.wrap .city__checklist__diary-date-container {
-    width: 468px;
-    display: flex;
-    justify-content: space-between;
-}
-
-/* Date Round */
-.wrap .city__checklist__diary-date-round {
-    width: 40px;
-    height: 40px;
-    background-color: #FFFDB9;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Noto Sans", sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    color: #9e9e9e;
-}
-
-.wrap .city__checklist__diary-date-container #today:hover,
-.wrap .city__checklist__diary-date-container #yesterday:hover {
-    background-color: #FDEF6B;
-    color: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.wrap .city__checklist__diary-date-round--today {
-    background-color: #FDEF6B;
-    color: #ffffff;
-}
-
-/* Title Edit */
-.wrap .city__checklist__diary-title-edit-input {
-    width: 591px;
-    height: 33px;
-    color: #C6C9CE;
-    font-size: 20px;
-    text-align: center;
-    margin-bottom: 26px;
-    line-height: 20px;
-    font-family: "Noto Sans KR", sans-serif;
-    font-weight: 600;
-    border-style: solid;
-    border-width: 0 0 1px;
-    border-color: #BBBBBB;
-    outline: none;
-}
-
-.wrap .city__checklist__diary-title-edit-input::placeholder {
-    color: #C6C9CE;
-}
-
-/* Another Section */
-.wrap .city__checklist__diary-another {
-    width: 90%;
-    height: 30px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-/* Reveal Component */
-.wrap .city__checklist__diary-another-reveal {
-    width: 159px;
-    height: 30px;
-    background-color: #F5F5F5;
-    border-radius: 10px;
-    margin-right: 13px;
-    display: flex;
-    justify-content: space-between;
-    padding: 6px;
-}
-
-/* Reveal Button */
-.wrap .city__checklist__diary-another-reveal-btn {
-    height: 18px;
-    background-color: #FFFFFF;
-    font-size: 10px;
-    font-weight: 600;
-    color: #7D7D7D;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    padding-top: 2px;
-}
-
-.wrap .city__checklist__diary-another-reveal-btn--only {
-    width: 42px;
-}
-
-.wrap .city__checklist__diary-another-reveal-btn--subscribe {
-    width: 53px;
-}
-
-.wrap .city__checklist__diary-another-reveal-btn--all {
-    width: 43px;
-}
-
-.wrap .city__checklist__diary-another-reveal-btn--selected {
-    background-color: #E8E6E6;
-    color: #7D7D7D;
-}
-
-/* Submit Button */
-.wrap .city__checklist__diary-another-submit {
-    width: 55px;
-    height: 30px;
-    background-color: #FDEF6B;
-    margin-right: 4px;
-    border-radius: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px;
-    color: #ffffff;
-}
-
-.wrap .city__checklist__diary-another-submit:hover {
-    background-color: #FFFDB9;
-    color: #9e9e9e;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-/* Text Editor */
-.wrap .city__checklist__diary-texts {
-    width: 90%;
-    height: 519px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #828282;
-    margin-bottom: 50px;
-}
-
-.wrap .city__checklist__diary-texts p {
-    font-size: large;
-}
-
-/* popup */
+/* routine popup */
 .ck-popup-overlay {
     position: fixed;
     top: 0;
@@ -600,7 +400,7 @@
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.ck-popup-routine {
+.routine {
     background: #ffffff;
     border-radius: 8px;
     width: 365px;
@@ -608,21 +408,21 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
-.ck-popup-routine {
+.routine {
     padding: 45px 34px 0px 34px;
     position: relative;
 }
 
-.ck-popup-routine-top {
+.routine-top {
     display: flex;
     justify-content: space-between;
 }
 
-.ck-popup-routine-top-title {
+.routine-top-title {
     display: flex;
 }
 
-.ck-popup-routine-top-title-circle {
+.routine-top-title-circle {
     width: 5px;
     height: 5px;
     border-radius: 2.5px;
@@ -630,19 +430,19 @@
     margin: 11px 6px 0px 0px;
 }
 
-.ck-popup-routine-top-title-name {
+.routine-top-title-name {
     font-size: 18px;
     font-weight: 500;
     margin-right: 3px;
     color: #7D7D7D;
 }
 
-.ck-popup-routine-top-arrow {
+.routine-arrow {
     height: 15px;
     margin-top: 6px;
 }
 
-.ck-popup-content hr {
+.routine hr {
     width: 100%;
     background-color: #828282;
     border: 0;
@@ -650,26 +450,26 @@
     margin-top: 20px;
 }
 
-.ck-popup-routine-middle {
+.routine-middle {
     width: 100%;
     margin-top: 8px;
     max-height: 290px; /* 원하는 최대 높이로 조정 */
     overflow: auto; /* 내용이 넘칠 경우 수직 스크롤 추가 */
 }
 
-.ck-popup-routine-middle::-webkit-scrollbar {
+.routine-middle::-webkit-scrollbar {
     width: 5px;
 }
-.ck-popup-routine-middle::-webkit-scrollbar-thumb {
+.routine-middle::-webkit-scrollbar-thumb {
     background-color: #828282;
     border-radius: 10px;
 }
-.ck-popup-routine-middle::-webkit-scrollbar-track {
+.routine-middle::-webkit-scrollbar-track {
     background-color: #D9D9D9;
     border-radius: 10px;
 }
 
-.ck-popup-routine-middle-box {
+.routine-middle-box {
     width: 100%;
     height: 77px;
     border-radius: 10px;
@@ -678,11 +478,11 @@
     margin-bottom: 11px;
 }
 
-.ck-popup-routine-middle-box-1 {
+.routine-middle-box-1 {
     height: 16px;
 }
 
-.ck-popup-routine-middle-box-toggleSwitch {
+.routine-middle-box-toggleSwitch {
     width: 35px;
     height: 15px;
     display: block;
@@ -695,7 +495,7 @@
 }
 
 /* 토글 버튼 스타일 */
-.ck-popup-routine-middle-box-toggleButton {
+.routine-middle-box-toggleButton {
     width: 11px;
     height: 11px;
     position: absolute;
@@ -708,27 +508,27 @@
 }
 
 /* 체크된 상태에서 토글 스위치 배경 색상 변경 */
-input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch {
+input[type="checkbox"]:checked + .routine-middle-box-toggleSwitch {
     background: #fdee6bd5;
 }
 
 /* 체크된 상태에서 토글 버튼 위치 변경 */
-input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-popup-routine-middle-box-toggleButton {
+input[type="checkbox"]:checked + .routine-middle-box-toggleSwitch .routine-middle-box-toggleButton {
     left: calc(100% - 15px);
     background: #ffffff;
 }
 
 /* 토글 스위치와 버튼의 전환 애니메이션 */
-.ck-popup-routine-middle-box-toggleSwitch, 
-.ck-popup-routine-middle-box-toggleButton {
+.routinee-middle-box-toggleSwitch, 
+.routine-middle-box-toggleButton {
     transition: all 0.2s ease-in;
 }
 
-.ck-popup-routine-middle-box-2 {
+.routine-middle-box-2 {
     height: 16px;
 }
 
-.ck-popup-routine-middle-box-title {
+.routine-middle-box-title {
     font-size: 13.5px;
     font-weight: 600;
     color: #0D062D;
@@ -736,7 +536,7 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     border-width: 0;
 }
 
-.ck-popup-routine-middle-box-title::placeholder {
+.routine-middle-box-title::placeholder {
     font-size: 13.5px;
     font-weight: 600;
     color: #0D062D;
@@ -744,15 +544,15 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     border-width: 0;
 }
 
-.ck-popup-routine-middle-box-title:focus {
+.routine-middle-box-title:focus {
     outline:none;
 }
 
-.ck-popup-routine-middle-box-3 {
+.routine-middle-box-3 {
     height: 18px;
 }
 
-.ck-popup-routine-middle-box-content {
+.routine-middle-box-content {
     font-size: 9px;
     font-weight: 400;
     color: #787486;
@@ -760,7 +560,7 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     border-width: 0;
 }
 
-.ck-popup-routine-middle-box-content::placeholder {
+.routine-middle-box-content::placeholder {
     font-size: 9px;
     font-weight: 400;
     color: #787486;
@@ -768,22 +568,22 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     border-width: 0;
 }
 
-.ck-popup-routine-middle-box-content:focus {
+.routine-middle-box-content:focus {
     outline:none;
 }
 
-.ck-popup-routine-middle-box-delete {
+.routine-middle-box-delete {
     font-size: 10px;
     font-weight: 400;
     color: #0D062D;
     float: right;
 }
 
-.ck-popup-routine-middle-box-delete:hover {
+.routine-middle-box-delete:hover {
     color: #c41313;
 }
 
-.ck-popup-routine-middle-plusbtn {
+.routine-middle-plusbtn {
     height: 20px;
     font-size: 10px;
     /* font-weight: 600; */
@@ -794,12 +594,12 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     border-radius: 5px;
 }
 
-.ck-popup-routine-middle-plusbtn:hover {
+.routine-middle-plusbtn:hover {
     background-color: #7D7D7D;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.ck-popup-routine-savebtn {
+.routine-savebtn {
     margin-left: 250px;
     bottom: 28px;
 	position: absolute;
@@ -813,14 +613,16 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     border-radius: 20px;
 }
 
-.ck-popup-routine-savebtn:hover {
+.routine-savebtn:hover {
     background-color: #FFFDB9;
     color: #9e9e9e;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.ck-popup-todo {
+/* todo popup */
+
+.todo {
     background: #ffffff;
     border-radius: 8px;
     width: 365px;
@@ -828,21 +630,21 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
-.ck-popup-todo {
+.todo {
     padding: 45px 34px 0px 34px;
     position: relative;
 }
 
-.ck-popup-todo-top {
+.todo-top {
     display: flex;
     justify-content: space-between;
 }
 
-.ck-popup-todo-top-title {
+.todo-top-title {
     display: flex;
 }
 
-.ck-popup-todo-top-title-circle {
+.todo-top-title-circle {
     width: 5px;
     height: 5px;
     border-radius: 2.5px;
@@ -850,38 +652,46 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     margin: 11px 6px 0px 0px;
 }
 
-.ck-popup-todo-top-title-name {
+.todo-top-title-name {
     font-size: 18px;
     font-weight: 500;
     margin-right: 3px;
     color: #7D7D7D;
 }
 
-.ck-popup-todo-top-arrow {
+.todo-top-arrow {
     height: 15px;
     margin-top: 6px;
 }
 
-.ck-popup-todo-middle {
+.todo hr {
+    width: 100%;
+    background-color: #828282;
+    border: 0;
+    height: 2px;
+    margin-top: 20px;
+}
+
+.todo-middle {
     width: 100%;
     margin-top: 8px;
     max-height: 290px; /* 원하는 최대 높이로 조정 */
     overflow: auto; /* 내용이 넘칠 경우 수직 스크롤 추가 */
 }
 
-.ck-popup-todo-middle::-webkit-scrollbar {
+.todo-middle::-webkit-scrollbar {
     width: 5px;
 }
-.ck-popup-todo-middle::-webkit-scrollbar-thumb {
+.todo-middle::-webkit-scrollbar-thumb {
     background-color: #828282;
     border-radius: 10px;
 }
-.ck-popup-todo-middle::-webkit-scrollbar-track {
+.todo-middle::-webkit-scrollbar-track {
     background-color: #D9D9D9;
     border-radius: 10px;
 }
 
-.ck-popup-todo-middle-box {
+.todo-middle-box {
     width: 100%;
     height: 77px;
     border-radius: 10px;
@@ -890,11 +700,11 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
     margin-bottom: 11px;
 }
 
-.ck-popup-todo-middle-box-1 {
+.todo-middle-box-1 {
     height: 16px;
 }
 
-.ck-popup-todo-middle-box-toggleSwitch {
+.todo-middle-box-toggleSwitch {
     width: 35px;
     height: 15px;
     display: block;
@@ -907,7 +717,7 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
 }
 
 /* 토글 버튼 스타일 */
-.ck-popup-todo-middle-box-toggleButton {
+.todo-middle-box-toggleButton {
     width: 11px;
     height: 11px;
     position: absolute;
@@ -920,27 +730,27 @@ input[type="checkbox"]:checked + .ck-popup-routine-middle-box-toggleSwitch .ck-p
 }
 
 /* 체크된 상태에서 토글 스위치 배경 색상 변경 */
-input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch {
+input[type="checkbox"]:checked + .todo-middle-box-toggleSwitch {
     background: #fdee6bd5;
 }
 
 /* 체크된 상태에서 토글 버튼 위치 변경 */
-input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popup-todo-middle-box-toggleButton {
+input[type="checkbox"]:checked + .todo-middle-box-toggleSwitch .todo-middle-box-toggleButton {
     left: calc(100% - 15px);
     background: #ffffff;
 }
 
 /* 토글 스위치와 버튼의 전환 애니메이션 */
-.ck-popup-todo-middle-box-toggleSwitch, 
-.ck-popup-todo-middle-box-toggleButton {
+.todo-middle-box-toggleSwitch, 
+.todo-middle-box-toggleButton {
     transition: all 0.2s ease-in;
 }
 
-.ck-popup-todo-middle-box-2 {
+.todo-middle-box-2 {
     height: 16px;
 }
 
-.ck-popup-todo-middle-box-title {
+.todo-middle-box-title {
     font-size: 13.5px;
     font-weight: 600;
     color: #0D062D;
@@ -948,7 +758,7 @@ input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popu
     border-width: 0;
 }
 
-.ck-popup-todo-middle-box-title::placeholder {
+.todo-middle-box-title::placeholder {
     font-size: 13.5px;
     font-weight: 600;
     color: #0D062D;
@@ -956,15 +766,15 @@ input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popu
     border-width: 0;
 }
 
-.ck-popup-todo-middle-box-title:focus {
+.todo-middle-box-title:focus {
     outline:none;
 }
 
-.ck-popup-todo-middle-box-3 {
+.todo-middle-box-3 {
     height: 18px;
 }
 
-.ck-popup-todo-middle-box-content {
+.todo-middle-box-content {
     font-size: 9px;
     font-weight: 400;
     color: #787486;
@@ -972,7 +782,7 @@ input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popu
     border-width: 0;
 }
 
-.ck-popup-todo-middle-box-content::placeholder {
+.todo-middle-box-content::placeholder {
     font-size: 9px;
     font-weight: 400;
     color: #787486;
@@ -980,22 +790,22 @@ input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popu
     border-width: 0;
 }
 
-.ck-popup-todo-middle-box-content:focus {
+.todo-middle-box-content:focus {
     outline:none;
 }
 
-.ck-popup-todo-middle-box-delete {
+.todo-middle-box-delete {
     font-size: 10px;
     font-weight: 400;
     color: #0D062D;
     float: right;
 }
 
-.ck-popup-todo-middle-box-delete:hover {
+.todo-middle-box-delete:hover {
     color: #c41313;
 }
 
-.ck-popup-todo-middle-plusbtn {
+.todo-middle-plusbtn {
     height: 20px;
     font-size: 10px;
     /* font-weight: 600; */
@@ -1006,31 +816,32 @@ input[type="checkbox"]:checked + .ck-popup-todo-middle-box-toggleSwitch .ck-popu
     border-radius: 5px;
 }
 
-.ck-popup-todo-middle-plusbtn:hover {
+.todo-middle-plusbtn:hover {
     background-color: #7D7D7D;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.ck-popup-todo-savebtn {
+.todo-savebtn {
     margin-left: 250px;
     bottom: 28px;
-	position: absolute;
+    position: absolute;
     font-size: 7px;
     text-align: center;
     line-height: 24px;
     width: 43px;
-	height: 24px;
+    height: 24px;
     color: #ffffff;
-	background-color: #FDEF6B;
+    background-color: #FDEF6B;
     border-radius: 20px;
 }
 
-.ck-popup-todo-savebtn:hover {
+.todo-savebtn:hover {
     background-color: #FFFDB9;
     color: #9e9e9e;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
     transition: background-color 0.2s ease, color 0.2s ease;
 }
+
 
   
   

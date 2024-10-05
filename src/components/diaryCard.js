@@ -93,7 +93,7 @@ DiaryCard.propTypes = {
     createdAt: PropTypes.string.isRequired,
     diary_content: PropTypes.string.isRequired,
     post_photo: PropTypes.string,
-    board_name: PropTypes.string,
+    user_tendency: PropTypes.string,
     user_nick: PropTypes.string.isRequired,
     isFriendPage: PropTypes.bool,
     diary_id: PropTypes.number.isRequired,
