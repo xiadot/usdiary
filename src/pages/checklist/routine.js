@@ -25,30 +25,29 @@ const postRoutines = async (routines) => {
 };
 
 const Routine = ({ onClose, onArrowClick, onSubmit }) => {
-  const [routines, setRoutines] = useState([
-    { title: '', content: '', toggle: false }
-  ]);
+  const [routines, setRoutines] = useState([]);
 
-  // Fetch routines when component mounts
   useEffect(() => {
     const fetchRoutines = async () => {
       try {
         const data = await getRoutines();
-        setRoutines(data || [{ title: '', content: '', toggle: false }]);
+        setRoutines(data);
       } catch (error) {
-        console.error('Failed to fetch routines:', error);
+        console.error('루틴 데이터를 가져오는 데 실패했습니다:', error);
       }
     };
-
+  
     fetchRoutines();
   }, []);
 
+  // 새로운 루틴 항목 추가 (3개까지만)
   const handleAddRoutine = () => {
     if (routines.length < 3) {
       setRoutines([...routines, { title: '', content: '', toggle: false }]);
     }
   };
 
+  // 루틴 제목과 내용 입력시 업데이트
   const handleRoutineChange = (index, field, value) => {
     const updatedRoutines = routines.map((routine, i) =>
       i === index ? { ...routine, [field]: value } : routine
@@ -56,6 +55,7 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
     setRoutines(updatedRoutines);
   };
 
+  // 루틴 토글 상태 변경
   const handleToggleChange = (index) => {
     const updatedRoutines = routines.map((routine, i) =>
       i === index ? { ...routine, toggle: !routine.toggle } : routine
@@ -63,18 +63,21 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
     setRoutines(updatedRoutines);
   };
 
+  // 루틴 삭제
   const handleDeleteRoutine = (index) => {
     const updatedRoutines = routines.filter((_, i) => i !== index);
     setRoutines(updatedRoutines);
   };
 
+  // 저장버튼 클릭시 루틴 상태 저장
   const handleSave = async () => {
+    onSubmit(routines);
     try {
-      await postRoutines(routines);
-      console.log("루틴 목록이 성공적으로 저장되었습니다.");
-      onSubmit(routines);
+      const response = await postRoutines(routines);
+      console.log('루틴이 서버에 저장되었습니다:', response);
+      onSubmit(routines); // 체크리스트에 해당 값 등재
     } catch (error) {
-      console.error('Failed to save routines:', error);
+      console.error('루틴을 저장하는 데 실패했습니다:', error);
     }
   };
 
@@ -86,24 +89,24 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
             <h2>Check List</h2>
             <button className="ck-popup-close" onClick={onClose}>X</button>
           </div>
-          <div className="ck-popup-routine">
-            <div className="ck-popup-routine-top">
-              <div className="ck-popup-routine-top-title">
-                <div className="ck-popup-routine-top-title-circle"></div>
-                <div className="ck-popup-routine-top-title-name">Routine</div>
+          <div className="routine">
+            <div className="routine-top">
+              <div className="routine-top-title">
+                <div className="routine-top-title-circle"></div>
+                <div className="routine-top-title-name">Routine</div>
               </div>
               <img 
                 src={right_arrow} 
-                className="ck-popup-routine-top-arrow" 
+                className="routine-arrow" 
                 alt="right_arrow"
                 onClick={onArrowClick} 
               />
             </div>
             <hr/>
-            <div className="ck-popup-routine-middle">
+            <div className="routine-middle">
               {routines.map((routine, index) => (
-                <div className="ck-popup-routine-middle-box" key={index}>
-                  <div className="ck-popup-routine-middle-box-1">
+                <div className="routine-middle-box" key={index}>
+                  <div className="routine-middle-box-1">
                     <input 
                       type="checkbox" 
                       id={`toggle-${index}`} 
@@ -111,13 +114,13 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
                       checked={routine.toggle} 
                       onChange={() => handleToggleChange(index)} 
                     /> 
-                    <label htmlFor={`toggle-${index}`} className="ck-popup-routine-middle-box-toggleSwitch">
-                      <span className="ck-popup-routine-middle-box-toggleButton"></span>
+                    <label htmlFor={`toggle-${index}`} className="routine-middle-box-toggleSwitch">
+                      <span className="routine-middle-box-toggleButton"></span>
                     </label>
                   </div>
-                  <div className="ck-popup-routine-middle-box-2">
+                  <div className="routine-middle-box-2">
                     <input 
-                      className="ck-popup-routine-middle-box-title" 
+                      className="routine-middle-box-title" 
                       type="text" 
                       placeholder="Routine"
                       value={routine.title}
@@ -125,9 +128,9 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
                       spellCheck="false"
                     />
                   </div>
-                  <div className="ck-popup-routine-middle-box-3">
+                  <div className="routine-middle-box-3">
                     <input 
-                      className="ck-popup-routine-middle-box-content" 
+                      className="routine-middle-box-content" 
                       type="text" 
                       placeholder="내용을 입력하시오."
                       value={routine.content}
@@ -135,7 +138,7 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
                     />
                   </div>
                   <div 
-                    className="ck-popup-routine-middle-box-delete"
+                    className="routine-middle-box-delete"
                     onClick={() => handleDeleteRoutine(index)}
                   >
                     삭제
@@ -143,18 +146,19 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
                 </div>
               ))}
               {routines.length < 3 && (
-                <div className="ck-popup-routine-middle-plusbtn" onClick={handleAddRoutine}>
+                <div className="routine-middle-plusbtn" onClick={handleAddRoutine}>
                   루틴 추가하기
                 </div>
               )}
             </div>
-            <div className="ck-popup-routine-savebtn" onClick={handleSave}>저장</div>
+            <div className="routine-savebtn" onClick={handleSave}>저장</div>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default Routine;
 
