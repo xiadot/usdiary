@@ -16,33 +16,20 @@ const ForestDiary = () => {
 
   return (
     <div className={`wrap ${showQuestion ? 'page2' : 'page1'}`}>
-    <Menu/>
-    {!showQuestion ? (
-      <div>
-        {/* 페이지1 */}
-        <div className="forest">
-          {/* 오늘의 질문 */}
+      <Menu />
+      <div className="forest">
+        {/* 오늘의 질문 */}
+        {!showQuestion ? (
           <div className="forest__question" onClick={switchToQuestion}>
             <img src={todays_question} className="forest__question-image" alt="todays_question"/>
           </div>
-          {/* 일기작성 */}
-          <ForestComponent />
-        </div>
-      </div>
-    ) : (
-      <div>
-        {/* 페이지2 */}
-        <div className="forest">
-          {/* 오늘의 질문 */}
+        ) : (
           <Question />
-          {/* 일기작성 */}
-          <ForestComponent />
-        </div>
+        )}
+        {/* 일기작성 */}
+        <ForestComponent />
+      </div>
     </div>
-    )}
-  
-  </div>
-    
   );
 };
 
