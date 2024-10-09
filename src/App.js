@@ -24,6 +24,9 @@ import ProfileFix from './pages/mypages/profilefix';
 import Follow from './pages/mypage/follow/follow';
 import MyRate from './pages/mypage/myRate';
 import Level from './pages/mypage/level';
+import Notification from './pages/mypages/notification';
+import NotificationDetail from './pages/mypages/notification_detail';
+import Contact from './pages/mypages/contact';
 
 const App = () => {
 
@@ -79,6 +82,13 @@ const App = () => {
         {/* 마이페이지 프로필 수정 페이지 경로 */}
         <Route path="/profile" element={<ProfilePage />}/>
         <Route path="/profilefix" element={<ProfileFix />}/>
+
+        {/* 공지사항 페이지 경로 */}
+        <Route path="/notification" element={<Notification />}/>
+        <Route path="/notification/:id" element={<NotificationDetail />}/>
+
+        {/* 문의사항 페이지 경로 */}
+        <Route path="/contact" element={<Contact />}/>
 
         {/* 팔로우 페이지 경로 */}
         <Route path="/mypage/follow" element={<Follow />}/>

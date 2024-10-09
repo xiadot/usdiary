@@ -1,0 +1,139 @@
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.page_notification-detail .profile {
+    display: flex;
+    width: 100%; /* 100%로 수정 */
+    margin: 38px 40px 0px 40px;
+    border-radius: 15px;
+    background-image: linear-gradient(rgb(206, 224, 200), rgb(255, 255, 255) 160px);
+}
+
+.page_notification-detail .profile-menu {
+    width: 219px;
+    height: 365px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 1px;
+    border-radius: 15px 0px 15px 15px;
+    box-shadow: 0px 2px 3px 0px #9f9f9f;
+    padding-top: 8px;
+}
+
+.page_notification-detail .profile-menu_content {
+    width: 195px;
+    height: 39px;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 10px;
+    display: flex;
+    line-height: 39px;
+    padding-left: 12px;
+}
+
+.page_notification-detail .profile-menu_content:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.page_notification-detail .profile-menu_content:hover img {
+    filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%);
+}
+
+.page_notification-detail .profile-menu_content:hover .profile-menu_content_name {
+    color: #545F71; /* hover 상태일 때 이름 색상 */
+}
+
+.page_notification-detail .profile-menu_content.active {
+    background-color: #9FC393; /* active 상태일 때 배경색 */
+}
+
+.page_notification-detail .profile-menu_content.active img {
+    filter: none; /* active 상태일 때 이미지 필터 없음 */
+}
+
+.page_notification-detail .profile-menu_content.active .profile-menu_content_name {
+    color: #ffffff; /* active 상태일 때 이름 색상 */
+}
+
+.page_notification-detail .profile-menu_content_img {
+    width: 35px;
+    height: 39px;
+    align-items: center;
+    display: flex;
+}
+
+.page_notification-detail .profile-menu_content img {
+    height: 21px;
+    filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%);
+}
+
+.page_notification-detail .profile-menu_content.active {
+    background-color: #545F71; /* 선택된 메뉴 아이템의 배경 색상 */
+}
+
+.page_notification-detail .profile-menu_content_name {
+    color: #545F71;
+}
+
+.notification-detail {
+    margin: 20px;
+    padding: 20px;
+    background-color: transparent; /* 배경색을 투명으로 수정 */
+    border: none; /* 테두리 없애기 */
+}
+
+.notification-detail h2 {
+    font-size: 24px;
+    color: #545F71; /* 제목 색상 수정 */
+}
+
+.notification-detail-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #545F71; /* 글자 색상 수정 */
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.notification-detail p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #545F71; /* 본문 글자 색상 수정 */
+}
+
+.navigation {
+    margin-top: 20px;
+}
+
+.back-button {
+    background-color: #B9B9B9;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.next-prev-links {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.next-link,
+.prev-link {
+    color: #B9B9B9;
+    text-decoration: none;
+}
+
+.next-link:hover,
+.prev-link:hover {
+    text-decoration: underline;
+}

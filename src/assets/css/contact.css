@@ -1,0 +1,151 @@
+/* Reset */
+* {
+    list-style: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrap .contact {
+    display: flex;
+    width: 100%px;
+    margin: 38px 40px 0px 40px;
+    border-radius: 15px;
+    background-image: linear-gradient(rgb(206, 224, 200), rgb(255, 255, 255) 160px);
+}
+
+.wrap .contact-menu {
+    width: 219px;
+    height: 365px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 1px;
+    border-radius: 15px 0px 15px 15px;
+    box-shadow: 0px 2px 3px 0px #9f9f9f;
+    padding-top: 8px;
+}
+
+.wrap .contact-menu_content {
+    width: 195px;
+    height: 39px;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 10px;
+    display: flex;
+    line-height: 39px;
+    padding-left: 12px;
+}
+
+.wrap .contact-menu_content:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.wrap .contact-menu_content:hover img {
+    filter: none;
+}
+
+.wrap .contact-menu_content:hover img {
+    filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%); /* hover 상태일 때 이미지 색상 */
+}
+
+.wrap .contact-menu_content:hover .profile-menu_content_name {
+    color: #545F71; /* hover 상태일 때 이름 색상 */
+}
+
+.wrap .contact-menu_content.active {
+    background-color: #9FC393; /* active 상태일 때 배경색 */
+}
+
+.wrap .contact-menu_content.active img {
+    filter: none; /* active 상태일 때 이미지 필터 없음 */
+}
+
+.wrap .contact-menu_content.active .profile-menu_content_name {
+    color: #ffffff; /* active 상태일 때 이름 색상 */
+}
+
+.wrap .contact-menu_content_img {
+    width: 35px;
+    height: 39px;
+    align-items: center;
+    display: flex;
+}
+
+.wrap .contact-menu_content img {
+    height: 21px;
+    filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%);
+}
+
+.contact-menu_content.active {
+    background-color: #545F71; /* 선택된 메뉴 아이템의 배경 색상 */
+}
+
+.wrap .contact-menu_content_name {
+    color: #545F71;
+}
+
+/* Reset */
+
+
+.contact-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+    margin-left: 100px;
+    margin-top: 80px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 1500px; /* 가로 크기 확장 */
+    margin-left: 100px;
+    margin-top: 80px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-field,
+.textarea-field {
+    border: 1px solid #757575; /* 테두리 색상 */
+    border-radius: 8px; /* 둥근 모서리 */
+    padding: 10px;
+    font-size: 16px;
+    color: #757575; /* 입력된 내용 색상 */
+}
+
+.input-field::placeholder,
+.textarea-field::placeholder {
+    color: #757575; /* 플레이스홀더 색상 */
+}
+
+.textarea-field {
+    min-height: 200px; /* 세로 길이 증가 */
+    resize: vertical; /* 수직으로 조정 가능하게 설정 */
+}
+
+.submit-button {
+    width: 80px; /* 버튼 가로 크기 조정 */
+    background-color: #9FC393; /* 버튼 색상 */
+    color: white; /* 글자 색상 */
+    padding: 10px;
+    border: none;
+    border-radius: 8px; /* 둥근 모서리 */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 호버 효과 */
+}
+
+.submit-button:hover,
+.submit-button:active {
+    background-color: #7BBE7B; /* 더 진한 색상 */
+}

@@ -1,4 +1,3 @@
-// src/components/ProfileMenu.js
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import profile from '../assets/images/profile.png';
@@ -7,6 +6,7 @@ import contect_us from '../assets/images/contect_us.png';
 import follow from '../assets/images/follow.png';
 import level from '../assets/images/level.png';
 import log_out from '../assets/images/log_out.png';
+import notification from '../assets/images/notification.png';
 import '../assets/css/follow.css';
 
 const ProfileMenu = () => {
@@ -14,7 +14,7 @@ const ProfileMenu = () => {
     
     return (
         <div className='profile-menu'>
-            <Link to = "/profile" className={`profile-menu_content ${location.pathname === '/profile' ? 'active' : ''}`}>
+            <Link to="/profile" className={`profile-menu_content ${location.pathname === '/profile' || location.pathname === '/profilefix' ? 'active' : ''}`}>
                 <div className='profile-menu_content_img'><img src={profile} alt="Profile Icon" /></div>
                 <div className='profile-menu_content_name'>Profile</div>
             </Link>
@@ -22,10 +22,10 @@ const ProfileMenu = () => {
                 <div className='profile-menu_content_img'><img src={my_rate} alt="My Rate Icon" /></div>
                 <div className='profile-menu_content_name'>My rate</div>
             </Link>
-            <div className='profile-menu_content'>
-                <div className='profile-menu_content_img'><img src={contect_us}  alt="Contact Us Icon" /></div>
+            <Link to="/contact" className={`profile-menu_content ${location.pathname === '/contact' ? 'active' : ''}`}>
+                <div className='profile-menu_content_img'><img src={contect_us} alt="Contact Us Icon" /></div>
                 <div className='profile-menu_content_name'>Contact Us</div>
-            </div>
+            </Link>
             <Link to="/mypage/follow" className={`profile-menu_content ${location.pathname === '/mypage/follow' ? 'active' : ''}`}>
                 <div className='profile-menu_content_img'><img src={follow} alt="Follow Icon" /></div>
                 <div className='profile-menu_content_name'>Follow</div>
@@ -35,8 +35,12 @@ const ProfileMenu = () => {
                 <div className='profile-menu_content_name'>Level & Benefits</div>
             </Link>
             <Link to="/" className={`profile-menu_content ${location.pathname === '/' ? 'active' : ''}`}>
-            <div className='profile-menu_content_img'><img src={log_out} alt="Log Out Icon" /></div>
-            <div className='profile-menu_content_name'>Log out</div>
+                <div className='profile-menu_content_img'><img src={log_out} alt="Log Out Icon" /></div>
+                <div className='profile-menu_content_name'>Log out</div>
+            </Link>
+            <Link to="/notification" className={`profile-menu_content ${location.pathname === '/notification' || location.pathname === '/notification_detail' ? 'active' : ''}`}>
+                <div className='profile-menu_content_img'><img src={notification} alt="Notification Icon" /></div>
+                <div className='profile-menu_content_name'>Notification</div>
             </Link>
         </div>
     );
