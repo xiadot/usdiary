@@ -22,7 +22,7 @@ const Menu = () => {
             setActiveButton('diary');
         } else if (location.pathname === '/map') {
             setActiveButton('map');
-        } else if (location.pathname === '/forest_diary' || location.pathname === '/follow') {
+        } else if (location.pathname === '/mypage/myRate' || location.pathname === '/mypage/follow' || location.pathname === '/mypage/level') {
             setActiveButton('profile');
         }
     }, [location.pathname]);

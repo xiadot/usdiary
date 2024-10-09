@@ -23,6 +23,7 @@ import ProfilePage from './pages/mypages/profile';
 import ProfileFix from './pages/mypages/profilefix';
 import Follow from './pages/mypage/follow/follow';
 import MyRate from './pages/mypage/myRate';
+import Level from './pages/mypage/level';
 
 const App = () => {
 
@@ -83,6 +84,7 @@ const App = () => {
         <Route path="/mypage/follow" element={<Follow />}/>
 
         <Route path="/mypage/myRate" element={<MyRate />}/>
+        <Route path="/mypage/level" element={<Level />}/>
       </Routes>
     </Router>
   );
