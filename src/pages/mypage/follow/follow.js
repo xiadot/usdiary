@@ -4,11 +4,12 @@ import '../../../assets/css/follow.css';
 import Menu from '../../../components/menu';
 import SearchMooner from './searchMooner';
 import ProfileMenu from '../../../components/profileMenu';
+import MoonerPopup from './moonerPopup';
 
 import search from '../../../assets/images/search.png';
 
 const Follow = () => {
-    // 서버로부터 받은 데이터를 저장할 상태
+    // followers와 followings를 상태로 관리하고 초기값을 설정
     const [followers, setFollowers] = useState([]);
     const [followings, setFollowings] = useState([]);
 
@@ -16,33 +17,34 @@ const Follow = () => {
     const [followersSearchTerm, setFollowersSearchTerm] = useState('');
     const [followingsSearchTerm, setFollowingsSearchTerm] = useState('');
 
-    // 팝업
+    // 팝업 상태 관리
     const [showPopup, setShowPopup] = useState(false);
+    const [showSearchPopup, setShowSearchPopup] = useState(false);
+    const [selectedFollower, setSelectedFollower] = useState(null); // 선택된 팔로워 정보
 
-    // 서버에서 데이터 가져오기 (팔로워, 팔로잉)
-    useEffect(() => {
-        axios.get('/follow') // 서버에서 데이터를 가져오는 API 주소
-            .then(response => {
-                setFollowers(response.data); // 데이터를 상태에 저장
-            })
-            .catch(error => {
-                console.error('Error fetching followers:', error);
-            });
-    }, []);
 
+    // 서버로부터 데이터를 가져오는 함수
+    const fetchFollowData = async () => {
+        try {
+            const followerResponse = await axios.get('/followers'); // 서버의 팔로워 데이터 엔드포인트
+            const followingResponse = await axios.get('/followings'); // 서버의 팔로잉 데이터 엔드포인트
+
+            setFollowers(followerResponse.data); // 서버에서 받은 팔로워 데이터 저장
+            setFollowings(followingResponse.data); // 서버에서 받은 팔로잉 데이터 저장
+        } catch (error) {
+            console.error('Error fetching follow data:', error);
+        }
+    };
+
+    // 컴포넌트가 마운트될 때 서버로부터 데이터 가져오기
     useEffect(() => {
-        axios.get('/follow')
-            .then(response => {
-                setFollowings(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching followings:', error);
-            });
+        fetchFollowData();
     }, []);
+    
 
     // 팝업 상태에 따라 스크롤 제어
     useEffect(() => {
-        if (showPopup) {
+        if (showPopup || showSearchPopup) {
             document.body.style.overflow = 'hidden'; // 팝업이 뜨면 스크롤 막기
         } else {
             document.body.style.overflow = 'auto';   // 팝업이 닫히면 스크롤 다시 허용
@@ -52,17 +54,27 @@ const Follow = () => {
         return () => {
             document.body.style.overflow = 'auto';   // 컴포넌트가 사라질 때 스크롤 원상복구
         };
-    }, [showPopup]);
+    }, [showPopup, showSearchPopup]);
 
-    // 검색어에 맞춰 팔로워 필터링
+    // 검색어에 맞춰 필터링
     const filteredFollowers = followers.filter(follower => 
-        follower.nickname.includes(followersSearchTerm) || follower.id.includes(followersSearchTerm)
+        follower.friend_nick.includes(followersSearchTerm) || follower.friend_id.includes(followersSearchTerm)
     );
 
-    // 검색어에 맞춰 팔로잉 필터링
     const filteredFollowings = followings.filter(following => 
-        following.nickname.includes(followingsSearchTerm) || following.id.includes(followingsSearchTerm)
+        following.friend_nick.includes(followingsSearchTerm) || following.friend_id.includes(followingsSearchTerm)
     );
+
+    // 팔로워 클릭 시 팝업 열기
+    const handleFollowerClick = (follower) => {
+        setSelectedFollower(follower); // 선택된 팔로워 저장
+        setShowPopup(true);
+    };
+
+    // 무너 찾기 버튼 클릭 시 SearchMooner 팝업 열기
+    const handleSearchClick = () => {
+        setShowSearchPopup(true);
+    };
 
     return (
         <div className='wrap'>
@@ -71,8 +83,9 @@ const Follow = () => {
             <div className='profile'>
                 <ProfileMenu />
                 <div className='profile-contents'>
-                <div className='profile-search' onClick={() => setShowPopup(true)}>무너 찾기</div>
-                {showPopup && <SearchMooner onClose={() => setShowPopup(false)} />}
+                <div className='profile-search' onClick={handleSearchClick}>무너 찾기</div>
+                {showSearchPopup && <SearchMooner onClose={() => setShowSearchPopup(false)} />} {/* SearchMooner 팝업 */}
+                {showPopup && selectedFollower && <MoonerPopup follower={selectedFollower} onClose={() => setShowPopup(false)} />}
                     <div className='profile-follow'>
                         <div className='profile-follow_box'>
                             <div className='profile-follow_box_name'>나를 팔로우 하는 사람</div>
@@ -89,11 +102,11 @@ const Follow = () => {
                                 </div>
                                 <div className='profile-follow_box_content_box'>
                                     {filteredFollowers.map((follower, index) => (
-                                        <div key={index} className='profile-follow_box_content_box_friend'>
-                                            <img src={follower.image} className='profile-follow_box_content_box_friend_img' alt={follower.nickname} />
+                                        <div key={index} className='profile-follow_box_content_box_friend' onClick={() => handleFollowerClick(follower)}>
+                                            <img src={follower.friend_profile_img} className='profile-follow_box_content_box_friend_img' alt={follower.friend_nick} />
                                             <div className='profile-follow_box_content_box_friend_text'>
-                                                <div className='profile-follow_box_content_box_friend_text_nickname'>{follower.nickname}</div>
-                                                <div className='profile-follow_box_content_box_friend_text_id'>{follower.id}</div>
+                                                <div className='profile-follow_box_content_box_friend_text_nickname'>{follower.friend_nick}</div>
+                                                <div className='profile-follow_box_content_box_friend_text_id'>{follower.friend_id}</div>
                                             </div>
                                         </div>
                                     ))}
@@ -115,11 +128,11 @@ const Follow = () => {
                                 </div>
                                 <div className='profile-follow_box_content_box'>
                                     {filteredFollowings.map((following, index) => (
-                                        <div key={index} className='profile-follow_box_content_box_friend'>
-                                            <img src={following.image} className='profile-follow_box_content_box_friend_img' alt='profile'/>
+                                        <div key={index} className='profile-follow_box_content_box_friend' onClick={() => handleFollowerClick(following)}>
+                                            <img src={following.friend_profile_img} className='profile-follow_box_content_box_friend_img' alt={following.friend_nick} />
                                             <div className='profile-follow_box_content_box_friend_text'>
-                                                <div className='profile-follow_box_content_box_friend_text_nickname'>{following.nickname}</div>
-                                                <div className='profile-follow_box_content_box_friend_text_id'>{following.id}</div>
+                                                <div className='profile-follow_box_content_box_friend_text_nickname'>{following.friend_nick}</div>
+                                                <div className='profile-follow_box_content_box_friend_text_id'>{following.friend_id}</div>
                                             </div>
                                         </div>
                                     ))}

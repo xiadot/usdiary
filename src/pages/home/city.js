@@ -17,20 +17,37 @@ const City = () => {
     const [selectedDiaryId, setSelectedDiaryId] = useState(null);
 
     useEffect(() => {
+        let isCancelled = false;
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('/city'); // Replace with your API URL
-                const data = response.data;
-                setDiaries(data);
-                setTotalPages(Math.ceil(data.length / diariesPerPage));
+                const board_id = 2
+                const response = await axios.get('/diaries', {
+                    params: {
+                      page: 1,          // 페이지 번호 (예시)
+                      limit: 12,        // 페이지당 항목 수 (예시)
+                      board_id: board_id // board_id를 쿼리 파라미터로 전송
+                    }
+                  });
+                  
+                console.log(response)
+                const  total  = response.data.totalDiaries;
+                const diaries= response.data.data.diary;
+                console.log(diaries)
+                if (!isCancelled) {
+                    setDiaries(diaries);
+                    setTotalPages(Math.ceil(total / diariesPerPage));
+                }
             } catch (error) {
-                setError('Failed to load data');
+                if (!isCancelled) setError('Failed to load data');
             } finally {
-                setLoading(false);
+                if (!isCancelled) setLoading(false);
             }
         };
         fetchData();
+        return () => {
+            isCancelled = true; 
+        };
     }, []);
 
     useEffect(() => {
@@ -99,11 +116,11 @@ const City = () => {
                         <DiaryCard
                             key={diary.diary_id}
                             title={diary.diary_title}
-                            date={diary.date}
+                            date={diary.createdAt}
                             summary={diary.diary_content.substring(0, 20) + ' ...'}
                             imageUrl={diary.post_photo}
-                            boardName={diary.board_name}
-                            nickname={diary.nickname}
+                            boardName={diary.Board.board_name}
+                            nickname={diary.User.user_nick}
                             diaryId={diary.diary_id}
                             onClick={() => handleDiaryClick(diary.diary_id)}
                         />
