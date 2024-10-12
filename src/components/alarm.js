@@ -5,15 +5,19 @@ import '../assets/css/alarm.css';  // 스타일을 위한 CSS 파일을 임포�
 const Alarm = ({ isOpen, onClose }) => {
     const [isOn, setIsOn] = useState(false);
     const [notifications, setNotifications] = useState([]);  // 좋아요, 댓글 데이터 저장
-    const [userId, setUserId] = useState(null);  // 유저 ID 저장
+    const [sign_id, setSignId] = useState(null);  // 사용자 아이디 저장
+    const [user_nick, setUserNick] = useState(null);  // 사용자 닉네임 저장
     const location = useLocation();  // 현재 경로 가져오기
 
     const handleToggle = () => {
         setIsOn(!isOn);
+        if (!isOn) {
+            setNotifications([]);  // 알림 끄기 시 알림 목록 비우기
+        }
     };
 
-    // 1. 유저 ID 가져오기
-    const fetchUserId = async () => {
+    // 사용자 정보 가져오기
+    const fetchUserInfo = async () => {
         const token = localStorage.getItem('token');  // JWT 토큰 가져오기
 
         if (!token) {
@@ -30,70 +34,51 @@ const Alarm = ({ isOpen, onClose }) => {
 
         if (response.ok) {
             const data = await response.json();
-            setUserId(data.userId);  // 유저 ID 설정
+            setSignId(data.sign_id);  // 사용자 아이디 설정
+            setUserNick(data.user_nick);  // 사용자 닉네임 설정
         } else {
-            console.log('유저 정보를 가져오지 못했습니다.');
+            console.log('사용자 정보를 가져오지 못했습니다.');
         }
     };
 
-    // 2. 유저 다이어리 데이터 가져오기
-    const fetchDiaryData = async (userId) => {
-        const response = await fetch(`/diary/${userId}`, {
+    // 알림 데이터 가져오기
+    const fetchNotifications = async () => {
+        const token = localStorage.getItem('token');  // JWT 토큰 가져오기
+
+        if (!token || !sign_id) {
+            console.log('토큰이 없거나 사용자 아이디가 없습니다. 로그인 필요');
+            return;
+        }
+
+        const response = await fetch(`/api/system/notifications?userId=${sign_id}`, {  // 쿼리 파라미터로 userId 추가
             method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',  // 요청 헤더에 Content-Type 설정
+                'Authorization': token,
+            },
         });
 
         if (response.ok) {
             const data = await response.json();
-            return data.diaries;  // 다이어리 목록 반환
+            setNotifications(data.notifications);  // 서버에서 받은 알림 데이터 설정
         } else {
-            console.log('다이어리 데이터를 가져오지 못했습니다.');
-            return [];
+            console.log('알림 데이터를 가져오지 못했습니다. 상태 코드:', response.status);
         }
-    };
-
-    // 3. 다이어리 좋아요와 댓글 가져오기
-    const fetchLikesAndComments = async (diaries) => {
-        const allNotifications = [];
-
-        for (const diary of diaries) {
-            const response = await fetch(`/diary/${diary.id}/notifications`, {
-                method: 'GET',
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                allNotifications.push(...data.notifications);  // 다이어리별 좋아요, 댓글 추가
-            } else {
-                console.log(`다이어리 ${diary.id}의 알림을 가져오지 못했습니다.`);
-            }
-        }
-
-        setNotifications(allNotifications);  // 모든 알림을 상태에 저장
     };
 
     useEffect(() => {
         if (isOpen) {
-            // 유저 ID -> 다이어리 -> 좋아요와 댓글 데이터 가져오기
+            // 사용자 정보 가져오기
             const fetchData = async () => {
-                await fetchUserId();  // 유저 ID 가져오기
+                await fetchUserInfo();  // 사용자 정보 가져오기
+                if (isOn) {  // 알림이 켜져 있을 때만 알림 데이터 가져오기
+                    await fetchNotifications();  // 알림 데이터 가져오기
+                }
             };
 
             fetchData();
         }
-    }, [isOpen]);
-
-    useEffect(() => {
-        // 유저 ID가 있을 때만 다이어리와 알림을 가져옴
-        if (userId) {
-            const getDiaryData = async () => {
-                const diaries = await fetchDiaryData(userId);  // 다이어리 가져오기
-                if (diaries.length > 0) {
-                    await fetchLikesAndComments(diaries);  // 좋아요와 댓글 가져오기
-                }
-            };
-            getDiaryData();
-        }
-    }, [userId]);
+    }, [isOpen, isOn]);  // isOn을 의존성 배열에 추가
 
     // 페이지 경로에 따른 알림 항목 배경색 설정
     const getNotificationBackgroundColor = () => {
@@ -145,14 +130,14 @@ const Alarm = ({ isOpen, onClose }) => {
                                 </div>
                                 <div className="notification-message">
                                     {notification.type === 'like' ? (
-                                        <p>{notification.username}님이 회원님의 게시글을 좋아합니다.</p>
-                                    ) : (
-                                        <p>{notification.username}님이 회원님의 게시글에 댓글을 달았습니다.</p>
-                                    )}
+                                        <p>{user_nick}님이 회원님의 게시글을 좋아합니다.</p>
+                                    ) : notification.type === 'comment' ? (
+                                        <p>{user_nick}님이 회원님의 게시글에 댓글을 달았습니다.</p>
+                                    ) : null}
                                     <span className="notification-date">{notification.date}</span>
                                 </div>
                                 <div className="square-img">
-                                    <img src={notification.diaryImageUrl} alt="Diary" />
+                                    <img src={notification.diary_id} alt="Diary" />
                                 </div>
                             </li>
                         ))

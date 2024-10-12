@@ -38,7 +38,7 @@ const ProfileMenu = () => {
                 <div className='profile-menu_content_img'><img src={log_out} alt="Log Out Icon" /></div>
                 <div className='profile-menu_content_name'>Log out</div>
             </Link>
-            <Link to="/notification" className={`profile-menu_content ${location.pathname === '/notification' || location.pathname === '/notification_detail' ? 'active' : ''}`}>
+            <Link to="/notification" className={`profile-menu_content ${location.pathname === '/notification' || location.pathname === '/notification/${latestNotificationId}' ? 'active' : ''}`}>
                 <div className='profile-menu_content_img'><img src={notification} alt="Notification Icon" /></div>
                 <div className='profile-menu_content_name'>Notification</div>
             </Link>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DiaryCard from '../../components/diaryCard';
 import ForestPopup from "../../components/forestPopup";
+import GuidePopup from '../../components/guide';
 import '../../assets/css/forest.css';
 import Menu from "../../components/menu";
 import axios from "axios";
@@ -92,6 +93,8 @@ const Forest = () => {
     };
 
     return (
+        <div className="page">
+            <GuidePopup/>
         <div className="wrap">
             <Menu />
             <div className="forest-page__container">
@@ -160,6 +163,7 @@ const Forest = () => {
                     <ForestPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
                 )}
             </div>
+        </div>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../assets/css/follow.css';
 import '../../assets/css/notification.css';
 import Menu from '../../components/menu';
@@ -8,24 +8,39 @@ import { Link } from 'react-router-dom';
 const Notification = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const notificationsPerPage = 7;
+    const [notifications, setNotifications] = useState([]);
+    const [error, setError] = useState(null);
 
-    // 공지사항 데이터
-    const notifications = [
-        { id: '1', title: 'Lorem Ipsum is simply dummy text of the printing.', createdAt: '2024.01.01', views: 100 },
-        { id: '2', title: 'Second Notification Title', createdAt: '2024.01.02', views: 150 },
-        // 다른 공지사항 추가
-    ];
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            try {
+                const response = await fetch('/api/notices', {
+                    method: 'GET',
+                });
+
+                if (!response.ok) {
+                    throw new Error('공지사항을 가져오는 데 실패했습니다.');
+                }
+
+                const data = await response.json();
+                setNotifications(data); // 서버에서 가져온 공지사항 데이터를 상태로 저장
+            } catch (err) {
+                setError(err.message); // 에러 발생 시 상태에 저장
+            }
+        };
+
+        fetchNotifications();
+    }, []);
 
     // 현재 페이지에 맞는 공지사항 추출
     const indexOfLastNotification = currentPage * notificationsPerPage;
     const indexOfFirstNotification = indexOfLastNotification - notificationsPerPage;
     const currentNotifications = notifications.slice(indexOfFirstNotification, indexOfLastNotification);
+    const totalPages = Math.ceil(notifications.length / notificationsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
-    const totalPages = Math.ceil(notifications.length / notificationsPerPage);
 
     return (
         <div className='wrap'>
@@ -34,6 +49,7 @@ const Notification = () => {
                 <ProfileMenu />
                 <div className='notification-contents'>
                     <h2>공지사항</h2>
+                    {error && <p className='error-message'>{error}</p>} {/* 에러 메시지 표시 */}
                     <div className='notification-list'>
                         <div className='notification-header'>
                             <span>번호</span>
@@ -41,14 +57,13 @@ const Notification = () => {
                             <span>등록일</span>
                             <span>조회수</span>
                         </div>
-                        <hr className='divider' />
-                        {currentNotifications.map((notification, index) => (
-                            <div key={index} className='notification-item'>
+                        {currentNotifications.map((notification) => (
+                            <div key={notification.id} className='notification-item'>
                                 <span>{notification.id}</span>
                                 <Link to={`/notification/${notification.id}`} className='notification-title'>
                                     {notification.title}
                                 </Link>
-                                <span>{notification.createdAt}</span>
+                                <span>{notification.created_at.split('T')[0]}</span> {/* 날짜 포맷 조정 */}
                                 <span>{notification.views}</span>
                             </div>
                         ))}

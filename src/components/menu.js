@@ -22,7 +22,7 @@ const Menu = () => {
             setActiveButton('diary');
         } else if (location.pathname === '/map') {
             setActiveButton('map');
-        } else if (location.pathname === '/mypage/myRate' || location.pathname === '/mypage/follow' || location.pathname === '/mypage/level') {
+        } else if (location.pathname === '/profile' || location.pathname === '/profilefix' || location.pathname === '/mypage/myRate' || location.pathname === '/contact' || location.pathname === '/mypage/follow' || location.pathname === '/mypage/level' || location.pathname === '/notification') {
             setActiveButton('profile');
         }
     }, [location.pathname]);
@@ -58,6 +58,11 @@ const Menu = () => {
         navigate('/map');
     };
 
+    const handleProfileClick = (e) => {
+        e.preventDefault();
+        navigate('/profile');
+    };
+
     // 알림 팝업 상태를 토글하는 함수
     const handleAlarmClick = () => {
         setAlarmOpen(!isAlarmOpen);  // 현재 상태의 반대값으로 설정
@@ -73,7 +78,7 @@ const Menu = () => {
                 <div className={`btn ${activeButton === 'home' ? 'active' : ''}`} onClick={handleHomeClick} id="home">HOME</div>
                 <div className={`btn ${activeButton === 'diary' ? 'active' : ''}`} onClick={handleDiaryClick} id="diary">DIARY</div>
                 <div className={`btn ${activeButton === 'map' ? 'active' : ''}`} onClick={handleMapClick} id="map">MAP</div>
-                <div className={`btn ${activeButton === 'profile' ? 'active' : ''}`} id="profile">PROFILE</div>
+                <div className={`btn ${activeButton === 'profile' ? 'active' : ''}`} onClick={handleProfileClick} id="profile">PROFILE</div>
                 <div className="btn" onClick={handleAlarmClick} id="alarm">
                     <img src={alarm_white} className="alarm_white" alt="Alarm White" />
                     <img src={alarm_black} className="alarm_black" alt="Alarm Black" />

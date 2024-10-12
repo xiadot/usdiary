@@ -8,7 +8,7 @@
 
 .page_notification-detail .profile {
     display: flex;
-    width: 100%; /* 100%로 수정 */
+    width: 100%;
     margin: 38px 40px 0px 40px;
     border-radius: 15px;
     background-image: linear-gradient(rgb(206, 224, 200), rgb(255, 255, 255) 160px);
@@ -24,116 +24,118 @@
     padding-top: 8px;
 }
 
-.page_notification-detail .profile-menu_content {
-    width: 195px;
-    height: 39px;
-    border-radius: 10px;
-    margin: auto;
-    margin-top: 10px;
-    display: flex;
-    line-height: 39px;
-    padding-left: 12px;
-}
-
-.page_notification-detail .profile-menu_content:hover {
-    background-color: #f0f0f0;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.page_notification-detail .profile-menu_content:hover img {
-    filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%);
-}
-
-.page_notification-detail .profile-menu_content:hover .profile-menu_content_name {
-    color: #545F71; /* hover 상태일 때 이름 색상 */
-}
-
-.page_notification-detail .profile-menu_content.active {
-    background-color: #9FC393; /* active 상태일 때 배경색 */
-}
-
-.page_notification-detail .profile-menu_content.active img {
-    filter: none; /* active 상태일 때 이미지 필터 없음 */
-}
-
-.page_notification-detail .profile-menu_content.active .profile-menu_content_name {
-    color: #ffffff; /* active 상태일 때 이름 색상 */
-}
-
-.page_notification-detail .profile-menu_content_img {
-    width: 35px;
-    height: 39px;
-    align-items: center;
-    display: flex;
-}
-
-.page_notification-detail .profile-menu_content img {
-    height: 21px;
-    filter: invert(36%) sepia(11%) saturate(811%) hue-rotate(178deg) brightness(52%) contrast(91%);
-}
-
-.page_notification-detail .profile-menu_content.active {
-    background-color: #545F71; /* 선택된 메뉴 아이템의 배경 색상 */
-}
-
-.page_notification-detail .profile-menu_content_name {
-    color: #545F71;
-}
-
-.notification-detail {
-    margin: 20px;
+.notification-contents {
     padding: 20px;
-    background-color: transparent; /* 배경색을 투명으로 수정 */
-    border: none; /* 테두리 없애기 */
 }
 
-.notification-detail h2 {
-    font-size: 24px;
-    color: #545F71; /* 제목 색상 수정 */
+.notification-title {
+    margin-left: 0; /* 제목 왼쪽 여백 제거 */
+    color: #979797;
 }
 
-.notification-detail-meta {
+.title-divider {
+    margin-top: 0; /* 제목 위 바 추가 */
+}
+
+.notification-meta {
     display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: #545F71; /* 글자 색상 수정 */
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 10px;
-    margin-right: 10px;
+    justify-content: space-between; /* 양쪽으로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    font-size: 16px;
+    color: #979797;
+    margin: 10px 0; /* 위아래 여백 추가 */
 }
 
-.notification-detail p {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #545F71; /* 본문 글자 색상 수정 */
+.back-link {
+    margin-left: 10px;
+    margin-right: 5px;
+    color: #979797; /* 글자 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.meta-divider {
+    margin-top: 5px; /* 작성일과 조회수 위아래 여백 추가 */
+}
+
+.notification-content {
+    margin: 20px 0; /* 본문 위아래 여백 추가 */
+    color: #979797;
 }
 
 .navigation {
-    margin-top: 20px;
+    margin-top: 20px; /* 목록 여백 조정 */
+    text-align: right; /* 오른쪽 정렬 */
+    margin-top: 20px; /* 상단 여백 */
+    margin-left: auto; /* 왼쪽 여백 자동 설정 */
 }
 
 .back-button {
-    background-color: #B9B9B9;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
+    background-color: #ffffff; /* 흰색 배경 */
+    border: 1px solid #D9D9D9; /* D9D9D9 테두리 */
+    color: #979797; /* 글자 색상 */
+    padding: 10px 15px; /* 패딩 */
+    border-radius: 5px; /* 둥근 모서리 */
+    display: inline-block; /* 인라인 블록으로 변경 */
 }
+
+.notification-contents {
+    padding: 20px;
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    color: #979797;
+}
+
+.navigation {
+    margin-top: 20px; /* 목록 여백 조정 */
+    text-align: right; /* 오른쪽 정렬 */
+}
+
+.back-button {
+    background-color: #ffffff; /* 흰색 배경 */
+    border: 1px solid #D9D9D9; /* D9D9D9 테두리 */
+    color: #979797; /* 글자 색상 */
+    padding: 10px 15px; /* 패딩 */
+    border-radius: 5px; /* 둥근 모서리 */
+    display: inline-block; /* 인라인 블록으로 변경 */
+}
+
 
 .next-prev-links {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* 수직 방향으로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    color: #979797;
+}
+
+.next-link-container,
+.prev-link-container {
+    text-align: left; /* 왼쪽 정렬 */
+    color: #979797;
+    margin-bottom: 10px; /* 간격 추가 */
 }
 
 .next-link,
 .prev-link {
-    color: #B9B9B9;
+    color: #979797;
     text-decoration: none;
 }
 
-.next-link:hover,
-.prev-link:hover {
-    text-decoration: underline;
+.next-title,
+.prev-title {
+    font-size: 14px; /* 제목 크기 설정 */
+    color: #979797; /* 색상 통일 */
+    margin-top: 5px; /* 제목과 링크 간 여백 설정 */
+    margin-left: 5px;
+}
+
+.disabled {
+    color: #ccc; /* 비활성화된 링크 색상 */
+}
+
+.divider {
+    border: 0.3px solid #c6c6c6; /* 구분선 색상 */
+    width: 100%; /* 구분선 너비 */
+    margin-top: 5px; /* 위아래 여백 추가 */
+    margin-bottom: 10px;
 }
