@@ -1,0 +1,40 @@
+
+<!-- saved from url=(0037)http://localhost/swu-php/6nd_test.php -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charest="utf-8"></head>
+	<body>
+		<h2>회원 가입</h2>
+		<form name="form1" method="post" action="http://localhost/swu-php/6nd_test_2.php">
+			<!-- 아이디 -->
+			<div>아이디: <input type="text" name="id" required=""></div><br>
+
+			<!-- 비밀번호 -->
+			<div>비밀번호: <input type="password" name="password" required=""></div><br>
+
+			<!-- 비밀번호 확인 -->
+			<div>비밀번호 확인: <input type="password" name="check" required=""></div><br>
+
+			<!-- 자기소개 (최대 200자) -->
+			<div>자기소개 (최대 200자): </div>
+			<textarea rows="5" cols="40"></textarea><br><br>
+
+			<!-- 성별 -->
+			<div>성별: </div>
+			<input type="radio" value="남성" name="gender"><label for="남성">남성</label>
+			<input type="radio" value="여성" name="gender"> 여성<br><br>
+
+			<!-- 취미 (최소 2개 선택) -->
+			<div>취미 (최소 2개 선택): </div>
+			<input type="checkbox" value="운동" name="hobby"> 운동
+			<input type="checkbox" value="독서" name="hobby"> 독서
+			<input type="checkbox" value="여행" name="hobby"> 여행
+			<input type="checkbox" value="음악" name="hobby"> 음악<br><br>
+
+			<!-- 프로필 사진 -->
+			<div>프로필 사진 (JPG, PNG, GIF, 최대 2MB): <input type="file" name="upload"></div><br>
+
+			<!-- 가입하기 -->
+			<input type="submit" value="가입하기" name="submit">
+
+	
+
+</form></body></html>

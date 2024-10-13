@@ -43,7 +43,7 @@ import PlaceList from './PlaceList';
 
 import axios from 'axios';
 
-const SpecialDay = () => {
+const SpecialDay = ({ onBack }) => {
   const [diary_emotion, setEmotion] = useState('');
   const [diary_memo, setMemo] = useState('');
   const [visibleDiv, setVisibleDiv] = useState('totalPlace');
@@ -199,7 +199,19 @@ const SpecialDay = () => {
     setVisibleDiv(visibleDiv === divName ? 'totalPlace' : divName);
   };
 
+  const handleBackClick = () => {
+    if (diary_emotion || diary_memo) { // diary_emotion 또는 diary_memo 값이 있을 경우
+      const confirmLeave = window.confirm("입력한 내용이 저장되지 않았습니다. 정말 돌아가시겠습니까?");
+      if (!confirmLeave) {
+        return; // 사용자가 '취소'를 선택하면 종료
+      }
+    }
+    onBack(); // 값이 없거나 '확인'을 누르면 onBack 실행
+  };
+
   return (
+    <div>
+      <div className="sea_back-button" onClick={handleBackClick }>&lt;&lt;&nbsp;&nbsp;Hide</div>
       <div className="specialDay">
           <div className="specialDay-title">
               <div className="specialDay-title-name">Today’s Place</div>
@@ -444,6 +456,7 @@ const SpecialDay = () => {
 
           <div className="specialDay-save" onClick={handleSave}>저장</div>
       </div>
+    </div>
   );
 };
 

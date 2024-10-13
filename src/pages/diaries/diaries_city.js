@@ -15,6 +15,10 @@ const CityDiary = () => {
     setShowChecklist(true);
   };
 
+  const switchToDiary = () => {
+    setShowChecklist(false);
+  };
+
   return (
     <div className={`wrap ${showChecklist ? 'page2' : 'page1'}`}>
       <Menu/>
@@ -35,7 +39,7 @@ const CityDiary = () => {
           {/* 페이지2 */}
           <div className="city">
             {/* 체크리스트 */}
-            <CheckList />
+            <CheckList onBack={switchToDiary}/>
             {/* 일기작성 */}
             <CityComponent />
           </div>

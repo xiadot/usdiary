@@ -13,13 +13,27 @@
 }
 
 /* Place Section */
+.sea_back-button {
+    width: 148px;
+    height: 36px;
+    background-color: #D3E0FF;
+    margin-top: 9px;
+    font-size: 16px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700;
+    color: #164BB0;
+    margin-left: 267px;
+    border-radius: 20px 20px 0px 0px;
+    text-align: center;
+    line-height: 43px;
+}
+
 .specialDay {
     min-width: 415px;
     height: 803px;
     background-color: #D3E0FF;
-    margin-top: 45px;
     padding: 50px 34px 0px 34px; 
-    border-radius: 0px 50px 50px 0px;
+    border-radius: 0px 0px 50px 0px;
 }
 
 .specialDay-title {

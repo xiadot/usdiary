@@ -5,7 +5,7 @@ import TodayQuestionPopup from "./todayQuestionPopup";
 
 import '../../assets/css/forestquestion.css';
 
-const ForestQuestion = () => {
+const ForestQuestion = ({ onBack }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [title, setTitle] = useState('');
@@ -170,6 +170,7 @@ const ForestQuestion = () => {
   return (
     <div>   
       <div className="forest__forestquestion">
+        <div className="forest_back-button" onClick={onBack}>&lt;&lt;&nbsp;&nbsp;Hide</div>
         <div className="forest__forestquestion__check">
           <div className="forest__forestquestion__check-title">
             <div className="forest__forestquestion__check-title-name">Today's Question</div>
