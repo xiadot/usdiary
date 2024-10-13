@@ -83,6 +83,9 @@ const ForestComponent = () => {
     };
 
     const handleSubmit = async () => {
+          // 로컬 스토리지에서 토큰 가져오기
+      const token = localStorage.getItem('token');
+    
       const diaryData = {
         createdAt: selectedDate,
         diary_title: title,

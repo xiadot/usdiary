@@ -15,7 +15,7 @@ const Forest = () => {
     const [loading, setLoading] = useState(false); // Add a loading state
     const [error, setError] = useState(null); // Add an error state
     const [selectedDiaryId, setSelectedDiaryId] = useState(null);
-    
+    const baseURL = 'http://localhost:3001'
     useEffect(() => {
         let isCancelled = false;
         const fetchData = async () => {
@@ -118,7 +118,7 @@ const Forest = () => {
                             diary_title={diary.diary_title}  // title → diary_title
                             createdAt={diary.createdAt}       // date → createdAt
                             diary_content={diary.diary_content.substring(0, 20) + ' ...'}  // summary → diary_content
-                            post_photo={diary.post_photo}     // imageUrl → post_photo
+                            post_photo={`${baseURL}${diary.post_photo}`}    // imageUrl → post_photo
                             board_name={diary.Board.board_name}     // boardName → board_name
                             user_nick={diary.User.user_nick}        // nickname → user_nick
                             diary_id={diary.diary_id}
