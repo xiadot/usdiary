@@ -12,31 +12,16 @@ const ProfilePage = () => {
 
   // 사용자 정보 가져오기
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem('token'); // 저장된 JWT 토큰 가져오기
+    const token = localStorage.getItem('token');
 
-      if (!token) {
-        console.log('토큰이 없습니다. 로그인 필요');
-        return;
-      }
+    if (!token) {
+      console.log('토큰이 없습니다. 로그인 필요');
+      return;
+    }
 
-      const response = await fetch('/mypage', {
-        method: 'GET',
-        headers: {
-          'Authorization': token, // JWT 토큰을 헤더에 포함
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setUserData(data); // 유저 정보를 상태로 저장
-      } else {
-        console.log('유저 정보를 가져오지 못했습니다.');
-      }
-    };
-
-    fetchUserData();
-  }, []);
+    const userDataFromToken = JSON.parse(atob(token.split('.')[1]));
+    setUserData(userDataFromToken);
+  }, []); 
 
   // 비밀번호 확인 함수
   const handleConfirm = async () => {
