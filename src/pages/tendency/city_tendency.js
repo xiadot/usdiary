@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Menu from '../../components/menu';
+import GuidePopup from '../../components/guide';
 import '../../assets/css/city_tendency.css';
 import BigcityImage from '../../assets/images/bigcity.png';
 import MintreeImage from '../../assets/images/mintree.png';
@@ -62,6 +63,8 @@ function CityTendency() {
   };
 
   return (
+    <div className="Tendency">
+      <GuidePopup/>
     <div className="city_Tendency">
       <Menu />
       <div className="city_tendency">
@@ -74,7 +77,7 @@ function CityTendency() {
               <h2>도시란?</h2>
               <div className="city_tendency_text-container">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ligula sapien, rutrum sed vestibulum eget, rhoncus ac erat. Aliquam erat volutpat. Sed convallis scelerisque enim at fermentum.
+                도시는 바쁘게 살아가는 사람들을 위한 기록장입니다. 많은 계획과 일정을 소화하며 바쁜 하루를 보내는 무너들에게 의미 있는 공간이 될 것입니다. 할 일과 목표에 맞춰 체계적으로 하루를 관리하며, 생산적이고 보람 있는 하루를 기록할 수 있습니다. 비슷한 무너들과 함께 집중력을 높이고, 도전과 성취의 기쁨을 나눌 수 있는 도시 공간을 usdiary가 제공해드립니다.
                 </p>
               </div>
             </div>
@@ -82,7 +85,7 @@ function CityTendency() {
               <h2>도시에는 이런 기능이 있어요</h2>
               <div className="city_tendency_text-container">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ligula sapien, rutrum sed vestibulum eget, rhoncus ac erat. Aliquam erat volutpat. Sed convallis scelerisque enim at fermentum.
+                하루를 효과적으로 정리할 수 있도록 '투두 리스트'와 '루틴 리스트' 기능이 제공됩니다. 그날 해야 할 일들과 습관을 추가해 계획적으로 하루를 살아가며, 계획을 실행하고 성취하는 경험을 기록하세요. 목표를 이루는 과정을 기록하는 것은 자신을 되돌아보고 성장할 수 있는 발판이 되어줄 것입니다.
                 </p>
               </div>
             </div>
@@ -96,6 +99,7 @@ function CityTendency() {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }

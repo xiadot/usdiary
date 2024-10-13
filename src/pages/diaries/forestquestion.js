@@ -6,7 +6,7 @@ import TodayQuestionPopup from "./todayQuestionPopup";
 
 import '../../assets/css/forestquestion.css';
 
-const ForestQuestion = () => {
+const ForestQuestion = ({ onBack }) => {
   const location = useLocation();
   const { diary } = location.state || {};
 
@@ -20,7 +20,7 @@ const ForestQuestion = () => {
   const [question_id, setQuestionId] = useState(null);
   const [initialAnswer, setInitialAnswer] = useState('');
   const [initialPhoto, setInitialPhoto] = useState(null);
-  const [answer_id, setAnswerId] = useState(null);
+  const [diary_id, setDiaryId] = useState(null);  // 변경된 변수
   const editorRef = useRef();
 
   const dummyQuestions = {
@@ -64,9 +64,9 @@ const ForestQuestion = () => {
         // 기존 답변과 사진 가져오기
         const answersResponse = await axios.get(`http://localhost:3001/questions/${response.data.id}/answers`);
         const latestAnswer = answersResponse.data[0] || {};
-        setInitialAnswer(latestAnswer.answer || '');
-        setInitialPhoto(latestAnswer.photo || null);
-        setAnswerId(latestAnswer.id || null);
+        setInitialAnswer(latestAnswer.answer_text || ''); // 변경된 변수
+        setInitialPhoto(latestAnswer.answer_photo || null); // 변경된 변수
+        setDiaryId(latestAnswer.diary_id || null);  // 변경된 변수
 
       } catch (error) {
         console.error('Error fetching the question:', error);
@@ -129,12 +129,12 @@ const ForestQuestion = () => {
   const handleUpdateAnswer = async () => {
     try {
       const formData = new FormData();
-      formData.append('answer', initialAnswer);
+      formData.append('answer_text', initialAnswer);  // 변경된 변수
       if (initialPhoto) {
-        formData.append('photo', initialPhoto);
+        formData.append('answer_photo', initialPhoto);  // 변경된 변수
       }
 
-      await axios.patch(`http://localhost:3001/questions/${question_id}/answers/${answer_id}`, formData, {
+      await axios.patch(`http://localhost:3001/contents/questions/${question_id}/answers/${diary_id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -149,7 +149,7 @@ const ForestQuestion = () => {
 
   const handleDeleteAnswer = async () => {
     try {
-      await axios.delete(`http://localhost:3001/questions/${question_id}/answers/${answer_id}`);
+      await axios.delete(`http://localhost:3001/contents/questions/${question_id}/answers/${diary_id}`);  // 변경된 API 경로
 
       alert('답변이 성공적으로 삭제되었습니다.');
     } catch (error) {
@@ -210,6 +210,7 @@ const ForestQuestion = () => {
   return (
     <div>
       <div className="forest__forestquestion">
+        <div className="forest_back-button" onClick={onBack}>&lt;&lt;&nbsp;&nbsp;Hide</div>
         <div className="forest__forestquestion__check">
           <div className="forest__forestquestion__check-title">
             <div className="forest__forestquestion__check-title-name">Today's Question</div>
@@ -223,7 +224,6 @@ const ForestQuestion = () => {
           <div className="forest__forestquestion__check-today-question">
             <div className="today-question-box">
               <div className="today-question-content" dangerouslySetInnerHTML={{ __html: todayQuestionContent }}></div>
-              {/* 박스가 있어야 할 위치에 조건부 렌더링 추가 */}
               {initialPhoto && (
                 <div className="forest__forestquestion__check-today-photo-box">
                   <img src={initialPhoto} alt="answer" className="forest__forestquestion__check-today-photo" />
@@ -240,8 +240,8 @@ const ForestQuestion = () => {
           question_id={question_id}
           initialAnswer={initialAnswer}
           initialPhoto={initialPhoto}
-          onClose={handleSaveAnswer}
-          onDelete={handleDeleteAnswerFromPopup}
+          onClose={() => setShowTodayQuestionPopup(false)}
+          onDelete={handleDeleteAnswer}
         />
       )}
     </div>

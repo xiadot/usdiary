@@ -88,16 +88,18 @@
 }
 
 .forest_tendency_text-container {
-    max-width: 500px;
+    max-width: 700px; /* 가로 길이 늘리기 */
     text-align: left;
     margin-left: 0;
     margin-right: 0;
 }
 
 .forest_tendency_info-section p {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 14px; /* 글자 크기 작게 조정 */
+    line-height: 1.5; /* 줄 높이 조정하여 줄바꿈 줄이기 */
     text-align: left;
+    margin: 0; /* 기본 마진 제거하여 가로 길이 늘리기 */
+    color: #828282;
 }
 
 .forest_tendency_submit-button {
@@ -121,10 +123,4 @@
 .forest_tendency_note {
     font-size: 14px;
     margin-top: 15px;
-}
-
-.forest_tende_ncynote {
-    font-size: 12px;
-    margin-top: 15px;
-    color: #666;
 }

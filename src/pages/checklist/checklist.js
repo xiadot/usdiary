@@ -61,7 +61,7 @@ export const deleteTodo = async (id) => {
 
 
 // 체크리스트 페이지 전체화면 컴포넌트
-const CheckList = () => {
+const CheckList = ({ onBack }) => {
   const location = useLocation();
   const { diary } = location.state || {};
 
@@ -73,14 +73,14 @@ const CheckList = () => {
     if (diary) {
       // 여기에 다이어리의 user_id와 diary_id를 이용하여 API 호출하여 데이터를 가져오거나
       // 더미 데이터를 설정할 수 있습니다.
-      
+
       // 더미 루틴 데이터
       const allRoutines = [
         { routine_id: 1, title: "아침 운동", content: "혈당 관리용", is_completed: true, user_id: 1 },
         { routine_id: 2, title: "아침 식사", is_completed: false, user_id: 2 },
         { routine_id: 3, title: "일일 목표 설정", is_completed: false, user_id: 1 },
       ];
-    
+
       const allTodos = [
         { todo_id: 1, title: "레포트 작성", is_completed: true, diary_id: 11 },
         { todo_id: 2, title: "회의 준비", is_completed: false, diary_id: 2 },
@@ -99,7 +99,7 @@ const CheckList = () => {
 
   const [showRoutine, setShowRoutine] = useState(false); // Popup을 Routine으로 변경
   const [showTodo, setShowTodo] = useState(false); // NewPopup을 Todo로 변경
-  
+
   // 스크롤 잠금
   useEffect(() => {
     if (showRoutine || showTodo) {
@@ -134,7 +134,9 @@ const CheckList = () => {
   // 루틴 제출 핸들러
   const handleRoutineSubmit = async (newRoutines) => {
     try {
-      setRoutines(newRoutines);
+      await postDiary(newRoutines);
+      const updatedRoutines = await axios.get('/routines');
+      setRoutines(updatedRoutines.data);
     } catch (error) {
       console.error('Failed to update routines:', error);
     }
@@ -143,7 +145,9 @@ const CheckList = () => {
   // 투두 제출 핸들러
   const handleTodoSubmit = async (newTodos) => {
     try {
-      setTodos(newTodos);
+      await postDiary(newTodos);
+      const updatedTodos = await axios.get('/todos');
+      setTodos(updatedTodos.data);
     } catch (error) {
       console.error('Failed to update todos:', error);
     }
@@ -151,6 +155,7 @@ const CheckList = () => {
 
   return (
     <div>
+      <div className="city_back-button" onClick={onBack}>&lt;&lt;&nbsp;&nbsp;Hide</div>
       <div className="checklist">
         <div className="checklist-title">
           <div className="checklist-title-name">Check List</div>
