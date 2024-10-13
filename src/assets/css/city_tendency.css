@@ -128,3 +128,17 @@
     margin-top: 15px;
     color: #666; /* 텍스트 색상을 추가로 조절할 수 있습니다 */
 }
+
+.city_tendency_text-container {
+    max-width: 700px; /* 가로 길이 늘림 */
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0; 
+}
+
+.city_tendency_info-section p {
+    font-size: 14px; /* 글자 크기 작게 수정 */
+    line-height: 1.5; /* 줄간격 줄임 */
+    text-align: left;
+    color: #828282;
+}

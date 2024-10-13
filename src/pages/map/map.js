@@ -8,14 +8,14 @@ import seaImage from '../../assets/images/sea_map.png';
 import friendImage from '../../assets/images/friend_map.png';
 import forestImage from '../../assets/images/forest_map.png';
 import citymage from '../../assets/images/city_map.png';
-
-
+import guideicon from '../../assets/images/guide.png'; 
+import GuidePopup from '../../components/guide'; 
 
 const Map = () => {
     const navigate = useNavigate();
     const [selectedMenu, setSelectedMenu] = useState(''); // 선택된 메뉴 상태
+    const [isGuideOpen, setIsGuideOpen] = useState(false); // 가이드 팝업 상태
 
-    // 컴포넌트가 처음 렌더링될 때 localStorage에서 값 불러오기
     useEffect(() => {
         const savedMenu = localStorage.getItem('selectedMenu');
         if (savedMenu) {
@@ -23,7 +23,6 @@ const Map = () => {
         }
     }, []);
 
-    // 상태가 변경될 때마다 localStorage에 값 저장
     const handleMenuChange = (menu) => {
         setSelectedMenu(menu);
         localStorage.setItem('selectedMenu', menu);
@@ -32,26 +31,32 @@ const Map = () => {
     const handleForestClick = (e) => {
         e.preventDefault();
         handleMenuChange('forest');
-        navigate('/forest')
-    }
+        navigate('/forest');
+    };
 
     const handleCityClick = (e) => {
         e.preventDefault();
         handleMenuChange('city');
-        navigate('/city')
-    }
+        navigate('/city');
+    };
 
     const handleSeaClick = (e) => {
         e.preventDefault();
         handleMenuChange('sea');
-        navigate('/sea')
-    }
+        navigate('/sea');
+    };
 
     const handleFriendClick = (e) => {
         e.preventDefault();
         handleMenuChange('friend');
-        navigate('/friend')
-    }
+        navigate('/friend');
+    };
+
+    // 가이드 팝업 열기 및 닫기
+    const handleGuideClick = (e) => {
+        e.preventDefault();
+        setIsGuideOpen((prev) => !prev); // 팝업 열림 상태를 토글
+    };
 
     return (
         <div className='map-wrap'>
@@ -62,6 +67,10 @@ const Map = () => {
             <img src={friendImage} alt="Friend" onClick={handleFriendClick} className="top-image friend-image" />
             <img src={forestImage} alt="Forest" onClick={handleForestClick} className="bottom-image forest-image" />
             <img src={citymage} alt="City" onClick={handleCityClick} className="bottom-image city-image" />
+            <img src={guideicon} alt="Guide" onClick={handleGuideClick} className="guide-icon" /> {/* 가이드 아이콘 */}
+
+            {/* 가이드 팝업 컴포넌트 */}
+            {isGuideOpen && <GuidePopup />}
         </div>
     );
 };

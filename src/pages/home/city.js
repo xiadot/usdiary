@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DiaryCard from '../../components/diaryCard';
 import CityPopup from "../../components/cityPopup";
+import GuidePopup from '../../components/guide';
 import '../../assets/css/city.css';
 import Menu from "../../components/menu";
 import axios from "axios";
@@ -92,6 +93,8 @@ const City = () => {
     };
 
     return (
+        <div className="page">
+            <GuidePopup/>
         <div className="wrap">
             <Menu />
             <div className="city-page__container">
@@ -159,6 +162,7 @@ const City = () => {
                     <CityPopup diary_id={selectedDiaryId} onClose={handleClosePopup} />
                 )}
             </div>
+        </div>
         </div>
     );
 }
