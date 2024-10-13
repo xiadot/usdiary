@@ -9,7 +9,22 @@
 
 /* forest Component */
 .wrap .forest__forestquestion {
-    display: flex;
+
+}
+
+.forest_back-button {
+    width: 148px;
+    height: 36px;
+    background-color: #E8F3DA;
+    margin-top: 9px;
+    font-size: 16px;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 700;
+    color: #7E9660;
+    margin-left: 267px;
+    border-radius: 20px 20px 0px 0px;
+    text-align: center;
+    line-height: 43px;
 }
 
 /* Check Section */
@@ -17,9 +32,8 @@
     width: 415px;
     height: 803px;
     background-color: #E8F3DA;
-    margin-top: 45px;
     padding: 50px 50px 0px 42px; 
-    border-radius: 0px 50px 50px 0px;
+    border-radius: 0px 0px 50px 0px;
 }
 
 .wrap .forest__forestquestion__check-title {

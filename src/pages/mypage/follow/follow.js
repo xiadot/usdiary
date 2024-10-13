@@ -3,6 +3,7 @@ import axios from 'axios';
 import '../../../assets/css/follow.css';
 import Menu from '../../../components/menu';
 import SearchMooner from './searchMooner';
+import RequestMooner from './requestMooner';
 import ProfileMenu from '../../../components/profileMenu';
 import MoonerPopup from './moonerPopup';
 
@@ -20,6 +21,7 @@ const Follow = () => {
     // 팝업 상태 관리
     const [showPopup, setShowPopup] = useState(false);
     const [showSearchPopup, setShowSearchPopup] = useState(false);
+    const [showRequestPopup, setShowRequestPopup] = useState(false);
     const [selectedFollower, setSelectedFollower] = useState(null); // 선택된 팔로워 정보
 
 
@@ -44,7 +46,7 @@ const Follow = () => {
 
     // 팝업 상태에 따라 스크롤 제어
     useEffect(() => {
-        if (showPopup || showSearchPopup) {
+        if (showPopup || showSearchPopup || showRequestPopup) {
             document.body.style.overflow = 'hidden'; // 팝업이 뜨면 스크롤 막기
         } else {
             document.body.style.overflow = 'auto';   // 팝업이 닫히면 스크롤 다시 허용
@@ -54,7 +56,7 @@ const Follow = () => {
         return () => {
             document.body.style.overflow = 'auto';   // 컴포넌트가 사라질 때 스크롤 원상복구
         };
-    }, [showPopup, showSearchPopup]);
+    }, [showPopup, showSearchPopup, showRequestPopup]);
 
     // 검색어에 맞춰 필터링
     const filteredFollowers = followers.filter(follower => 
@@ -76,6 +78,11 @@ const Follow = () => {
         setShowSearchPopup(true);
     };
 
+    // 무너 요청 클릭 시 RequestMooner 팝업 열기
+    const handleRequestClick = () => {
+        setShowRequestPopup(true);
+    };
+
     return (
         <div className='wrap'>
             <Menu/>
@@ -83,7 +90,9 @@ const Follow = () => {
             <div className='profile'>
                 <ProfileMenu />
                 <div className='profile-contents'>
+                <div  className='profile-request' onClick={handleRequestClick}>무너 요청</div>
                 <div className='profile-search' onClick={handleSearchClick}>무너 찾기</div>
+                {showRequestPopup && <RequestMooner onClose={() => setShowRequestPopup(false)} />} {/* RequestMooner 팝업 */}
                 {showSearchPopup && <SearchMooner onClose={() => setShowSearchPopup(false)} />} {/* SearchMooner 팝업 */}
                 {showPopup && selectedFollower && <MoonerPopup follower={selectedFollower} onClose={() => setShowPopup(false)} />}
                     <div className='profile-follow'>

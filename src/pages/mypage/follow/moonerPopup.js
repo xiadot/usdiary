@@ -36,20 +36,19 @@ const MoonerPopup = ({ follower, onClose }) => {
           setBtnText('무너 신청 중');
           updateRelationship(true); // 무너맺기에서 무너 신청 중으로 상태 전환 시 true로 설정
         }
-      }
-
-      const updateRelationship = async(newRelationshipStatus) => {
+    }
+    
+    const updateRelationship = async (newRelationshipStatus) => {
         try {
             await axios.post('http://localhost:3001/mypage.follow', {
-                relationship: newRelationshipStatus,
-              });
-              // relationship 상태 업데이트
-              setRelationship(newRelationshipStatus);
-              console.log('서버로 관계 상태 전송 성공:', newRelationshipStatus);
+                requested_sign_id: follower.User,
+            });
+            setRelationship(newRelationshipStatus);
+            console.log('서버로 관계 상태 전송 성공:', newRelationshipStatus);
         } catch (error) {
             console.error('서버로 관계 상태 전송 실패:', error);
         }
-      };
+    };
 
     useEffect(() => {
         // 서버에서 다이어리 데이터와 핀의 개수를 가져오는 함수
