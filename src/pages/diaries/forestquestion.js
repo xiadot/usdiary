@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import TodayQuestionPopup from "./todayQuestionPopup";
@@ -6,7 +7,9 @@ import TodayQuestionPopup from "./todayQuestionPopup";
 import '../../assets/css/forestquestion.css';
 
 const ForestQuestion = () => {
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const location = useLocation();
+  const { diary } = location.state || {};
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [title, setTitle] = useState('');
   const [editorData, setEditorData] = useState('');
@@ -20,7 +23,38 @@ const ForestQuestion = () => {
   const [answer_id, setAnswerId] = useState(null);
   const editorRef = useRef();
 
+  const dummyQuestions = {
+    1: { question: '첫 번째 질문입니다.', answer: '첫 번째 답변입니다.', photo: null },
+    2: { question: '두 번째 질문입니다.', answer: '두 번째 답변입니다.', photo: 'path/to/photo1.jpg' },
+    9: { question: '세 번째 질문입니다.', answer: '세 번째 답변입니다.', photo: 'path/to/photo2.jpg' },
+  };
+
   useEffect(() => {
+    const fetchTodayQuestion = () => {
+      if (diary && diary.diary_id) {
+        // diary_id에 맞는 질문 데이터 가져오기
+        const questionData = dummyQuestions[diary.diary_id];
+
+        if (questionData) {
+          setTodayQuestion(questionData.question);
+          setQuestionId(diary.diary_id);
+          setInitialAnswer(questionData.answer);
+          setInitialPhoto(questionData.photo);
+          setAnswerId(1); // 가정: 답변 ID는 1로 설정
+        } else {
+          // diary_id에 맞는 질문이 없을 경우 처리
+          setTodayQuestion('해당 질문을 찾을 수 없습니다.');
+          setInitialAnswer('');
+          setInitialPhoto(null);
+        }
+      }
+    };
+
+    fetchTodayQuestion();
+  }, [diary]);
+
+
+  /* useEffect(() => {
     const fetchTodayQuestion = async () => {
       try {
         const response = await axios.get('http://localhost:3001/questions/random');
@@ -41,7 +75,7 @@ const ForestQuestion = () => {
     };
 
     fetchTodayQuestion();
-  }, []);
+  }, []); **/
 
   const onChangeGetHTML = () => {
     if (editorRef.current) {
@@ -56,7 +90,8 @@ const ForestQuestion = () => {
         title,
         content: editorData,
         date: selectedDate.toISOString(),
-        visibility: selectedDiv
+        visibility: selectedDiv,
+        user_id: diary.user_id
       });
 
       alert('문서가 성공적으로 발행되었습니다.');
@@ -131,10 +166,15 @@ const ForestQuestion = () => {
 
   useEffect(() => {
     const savedAnswer = localStorage.getItem('todayAnswer');
-    setTodayQuestionContent(savedAnswer
-      ? `<div class="today-question-text">${todayQuestion}</div><div class="today-answer-text">${savedAnswer}</div>`
-      : `<div class="today-question-text">${todayQuestion}</div><div class="today-answer-text">answer</div>`);
-  }, [showTodayQuestionPopup, todayQuestion]);
+
+    // savedAnswer가 존재하는지 확인
+    const answerToShow = savedAnswer || (initialAnswer ? initialAnswer : '답변이 없습니다.');
+
+    setTodayQuestionContent(
+      `<div class="today-question-text">${todayQuestion}</div><div class="today-answer-text">${answerToShow}</div>`
+    );
+  }, [showTodayQuestionPopup, todayQuestion, initialAnswer]);
+
 
   useEffect(() => {
     if (showTodayQuestionPopup) {
@@ -168,14 +208,14 @@ const ForestQuestion = () => {
   };
 
   return (
-    <div>   
+    <div>
       <div className="forest__forestquestion">
         <div className="forest__forestquestion__check">
           <div className="forest__forestquestion__check-title">
             <div className="forest__forestquestion__check-title-name">Today's Question</div>
             <div
-              className="forest__forestquestion__check-title-plusbtn"
-              onClick={handleTodayQuestionButtonClick}
+              className={`forest__forestquestion__check-title-plusbtn ${diary ? 'disabled' : ''}`}
+              onClick={!diary ? handleTodayQuestionButtonClick : undefined} // diary가 없을 때만 클릭 이벤트 활성화
             >
               +
             </div>
@@ -193,7 +233,7 @@ const ForestQuestion = () => {
           </div>
         </div>
       </div>
-      
+
       {showTodayQuestionPopup && (
         <TodayQuestionPopup
           question={todayQuestion}

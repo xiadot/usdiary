@@ -15,18 +15,18 @@ const dummyUser = {
 };
 
 const dummyDiaries = [
-    { diary_id: 1, user_id: 1, board_id: 1, board_name: '숲', diary_title: '일기 1', diary_content: "<p>오늘은 정말 멋진 날이었다.<strong>볼드처리</strong></p><img src='https://example.com/image1.png' alt='image1'/><p>나무가 아름답게 보였다.</p><img src='https://example.com/image2.png' alt='image2'/><p>하늘도 정말 맑았다.</p>", createdAt: '2024-09-01T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 2, user_id: 1, board_id: 2, board_name: '도시', diary_title: '일기 2', diary_content: '내용 2', createdAt: '2024-09-02T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 3, user_id: 1, board_id: 3, board_name: '바다', diary_title: '일기 3', diary_content: '내용 3', createdAt: '2024-09-03T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 4, user_id: 2, board_id: 1, board_name: '숲', diary_title: '일기 4', diary_content: '내용 4', createdAt: '2024-09-04T11:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 5, user_id: 2, board_id: 2, board_name: '도시', diary_title: '일기 5', diary_content: '내용 5', createdAt: '2024-09-05T12:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 6, user_id: 2, board_id: 3, board_name: '바다', diary_title: '일기 6', diary_content: '내용 6', createdAt: '2024-09-06T13:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 7, user_id: 3, board_id: 1, board_name: '숲', diary_title: '일기 7', diary_content: '내용 7', createdAt: '2024-09-07T14:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 8, user_id: 3, board_id: 2, board_name: '도시', diary_title: '일기 8', diary_content: '내용 8', createdAt: '2024-09-08T15:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 9, user_id: 3, board_id: 1, board_name: '바다', diary_title: '일기 9', diary_content: '내용 9', createdAt: '2024-09-09T16:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 10, user_id: 1, board_id: 1, board_name: '숲', diary_title: '일기 10', diary_content: '내용 10 나는 오늘 아침에 오후 3시에 일어나서 민서와 같이 햄버거를 시켜먹었다 그리고 나서 뭐햇더라 좀 누워있으니까 애기 옴 그리고 코딩 하기 전에 육바연에서 육연덮밥 시켜 먹었음', createdAt: '2024-09-10T17:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 11, user_id: 1, board_id: 2, board_name: '도시', diary_title: '일기 11', diary_content: '내용 11', createdAt: '2024-09-11T18:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 12, user_id: 4, board_id: 3, board_name: '바다', diary_title: '일기 12', diary_content: '내용 12', createdAt: '2024-09-12T19:00:00Z', post_photo: 'https://via.placeholder.com/300 ' }
+    { diary_id: 1, user_id: 1, board_id: 1, board_name: '숲', diary_title: '일기 1', diary_content: "<p>오늘은 정말 멋진 날이었다.<strong>볼드처리</strong></p><img src='https://example.com/image1.png' alt='image1'/><p>나무가 아름답게 보였다.</p><img src='https://example.com/image2.png' alt='image2'/><p>하늘도 정말 맑았다.</p>", createdAt: '2024-10-01T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
+    { diary_id: 2, user_id: 1, board_id: 2, board_name: '도시', diary_title: '일기 2', diary_content: '내용 2', createdAt: '2024-10-02T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
+    { diary_id: 3, user_id: 1, board_id: 3, board_name: '바다', diary_title: '일기 3', diary_content: '내용 3', createdAt: '2024-10-03T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
+    { diary_id: 4, user_id: 2, board_id: 1, board_name: '숲', diary_title: '일기 4', diary_content: '내용 4', createdAt: '2024-10-04T11:00:00Z', post_photo: 'https://via.placeholder.com/300' },
+    { diary_id: 5, user_id: 2, board_id: 2, board_name: '도시', diary_title: '일기 5', diary_content: '내용 5', createdAt: '2024-10-05T12:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
+    { diary_id: 6, user_id: 2, board_id: 3, board_name: '바다', diary_title: '일기 6', diary_content: '내용 6', createdAt: '2024-10-06T13:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
+    { diary_id: 7, user_id: 3, board_id: 1, board_name: '숲', diary_title: '일기 7', diary_content: '내용 7', createdAt: '2024-10-07T14:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
+    { diary_id: 8, user_id: 3, board_id: 2, board_name: '도시', diary_title: '일기 8', diary_content: '내용 8', createdAt: '2024-10-08T15:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
+    { diary_id: 9, user_id: 1, board_id: 1, board_name: '바다', diary_title: '일기 9', diary_content: '내용 9', createdAt: '2024-10-09T16:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
+    { diary_id: 10, user_id: 1, board_id: 1, board_name: '숲', diary_title: '일기 10', diary_content: '내용 10 나는 오늘 아침에 오후 3시에 일어나서 민서와 같이 햄버거를 시켜먹었다 그리고 나서 뭐햇더라 좀 누워있으니까 애기 옴 그리고 코딩 하기 전에 육바연에서 육연덮밥 시켜 먹었음', createdAt: '2024-10-10T17:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
+    { diary_id: 11, user_id: 1, board_id: 2, board_name: '도시', diary_title: '일기 11', diary_content: '내용 11', createdAt: '2024-10-11T18:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
+    { diary_id: 12, user_id: 4, board_id: 3, board_name: '바다', diary_title: '일기 12', diary_content: '내용 12', createdAt: '2024-10-12T19:00:00Z', post_photo: 'https://via.placeholder.com/300 ' }
 ];
 
 
