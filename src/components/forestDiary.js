@@ -94,6 +94,7 @@ const ForestComponent = () => {
         const response = await fetch('/diaries', {
           method: 'POST',
           headers: {
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(diaryData), // 서버로 데이터 전송
