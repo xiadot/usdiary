@@ -14,6 +14,10 @@ const ForestDiary = () => {
     setShowQuestion(true);
   };
 
+  const switchToDiary = () => {
+    setShowQuestion(false);
+  };
+
   return (
     <div className={`wrap ${showQuestion ? 'page2' : 'page1'}`}>
       <Menu />
@@ -24,7 +28,7 @@ const ForestDiary = () => {
             <img src={todays_question} className="forest__question-image" alt="todays_question"/>
           </div>
         ) : (
-          <Question />
+          <Question onBack={switchToDiary} />
         )}
         {/* 일기작성 */}
         <ForestComponent />

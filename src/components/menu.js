@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Logo_US from '../assets/images/Logo_US.png';
 import Logo_EARTH from '../assets/images/Logo_EARTH.png';
 import alarm_white from '../assets/images/alarm_white.png';
 import alarm_black from '../assets/images/alarm_black.png';
 import '../assets/css/login.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import Alarm from '../components/alarm';
 
 const Menu = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [isAlarmOpen, setAlarmOpen] = useState(false);  // 알림 팝업 상태 추가
     const [activeButton, setActiveButton] = useState('');
 
     // 현재 경로에 따라 활성화된 버튼 결정
     useEffect(() => {
-        if (location.pathname === '/forest' || location.pathname === '/city' || location.pathname === '/sea'|| location.pathname === '/friend') {
+        if (location.pathname === '/forest' || location.pathname === '/city' || location.pathname === '/sea' || location.pathname === '/friend') {
             setActiveButton('home');
         } else if (location.pathname === '/forest_diary' || location.pathname === '/city_diary' || location.pathname === '/sea_diary'
             || location.pathname === '/forestquestion' || location.pathname === '/city_diary/checklist' || location.pathname === '/sea_diary/special_day') {
             setActiveButton('diary');
         } else if (location.pathname === '/map') {
             setActiveButton('map');
-        } else if (location.pathname === '/mypage/myRate' || location.pathname === '/mypage/follow' || location.pathname === '/mypage/level') {
+        } else if (location.pathname === '/profile' || location.pathname === '/profilefix' || location.pathname === '/mypage/myRate' || location.pathname === '/contact' || location.pathname === '/mypage/follow' || location.pathname === '/mypage/level' || location.pathname === '/notification') {
             setActiveButton('profile');
         }
     }, [location.pathname]);
@@ -53,8 +55,18 @@ const Menu = () => {
 
     const handleMapClick = (e) => {
         e.preventDefault();
-        navigate('/map')
-    }
+        navigate('/map');
+    };
+
+    const handleProfileClick = (e) => {
+        e.preventDefault();
+        navigate('/profile');
+    };
+
+    // 알림 팝업 상태를 토글하는 함수
+    const handleAlarmClick = () => {
+        setAlarmOpen(!isAlarmOpen);  // 현재 상태의 반대값으로 설정
+    };
 
     return (
         <div className="menu">
@@ -66,12 +78,15 @@ const Menu = () => {
                 <div className={`btn ${activeButton === 'home' ? 'active' : ''}`} onClick={handleHomeClick} id="home">HOME</div>
                 <div className={`btn ${activeButton === 'diary' ? 'active' : ''}`} onClick={handleDiaryClick} id="diary">DIARY</div>
                 <div className={`btn ${activeButton === 'map' ? 'active' : ''}`} onClick={handleMapClick} id="map">MAP</div>
-                <div className={`btn ${activeButton === 'profile' ? 'active' : ''}`} id="profile">PROFILE</div>
-                <div className="btn" id="alarm">
+                <div className={`btn ${activeButton === 'profile' ? 'active' : ''}`} onClick={handleProfileClick} id="profile">PROFILE</div>
+                <div className="btn" onClick={handleAlarmClick} id="alarm">
                     <img src={alarm_white} className="alarm_white" alt="Alarm White" />
                     <img src={alarm_black} className="alarm_black" alt="Alarm Black" />
                 </div>
             </div>
+
+            {/* 알림 팝업 */}
+            <Alarm isOpen={isAlarmOpen} onClose={handleAlarmClick} />
         </div>
     );
 };

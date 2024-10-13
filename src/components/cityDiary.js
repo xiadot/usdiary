@@ -14,11 +14,11 @@ const CityComponent = () => {
 
     const [currentDate, setCurrentDate] = useState(new Date()); // 현재 날짜
     const [selectedDate, setSelectedDate] = useState(new Date()); // 선택된 날짜
-    const [title, setTitle] = useState(''); // 제목
-    const [editorData, setEditorData] = useState(''); // 에디터 내용
+    const [diary_title, setTitle] = useState(''); // 제목
+    const [diary_content, setEditorData] = useState(''); // 에디터 내용
     const [access_level, setSelectedDiv] = useState(0); // 공개범위
     const [diaryData, setDiaryData] = useState(null);
-    const [firstImageUrl, setFirstImageUrl] = useState(null);
+    const [post_photo, setFirstImageUrl] = useState(null);
     const editorRef = useRef(); // 에디터 ref
 
     const fetchDiaryData = useCallback(async () => {
@@ -86,9 +86,11 @@ const CityComponent = () => {
     const handleSubmit = async () => {
       const diaryData = {
         createdAt: selectedDate,
-        diary_title: title,
-        diary_content: editorData,
-        post_photo: firstImageUrl // 첫 번째 이미지 URL 저장
+        diary_title: diary_title,
+        diary_content: diary_content,
+        access_level: access_level,
+        post_photo: post_photo,
+        board_id: 2
       };
   
       try {
@@ -123,7 +125,7 @@ const CityComponent = () => {
             <div className="city__diary-title-edit">
                 <input
                     type="text"
-                    value={title}
+                    value={diary_title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder={diaryData ? diaryData.diary_title : "제목"}
                     className="city__diary-title-edit-input"

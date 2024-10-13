@@ -3,8 +3,8 @@ import axios from 'axios';
 import '../../assets/css/forestquestion.css';
 
 const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, initialPhoto, onDelete }) => {
-  const [answer, setAnswer] = useState(initialAnswer || '');
-  const [photo, setPhoto] = useState(initialPhoto || null);
+  const [answer_text, setAnswer] = useState(initialAnswer || '');  // 변경된 변수
+  const [answer_photo, setPhoto] = useState(initialPhoto || null);  // 변경된 변수
   const fileInputRef = useRef(null);
 
   const handleAnswerChange = (event) => {
@@ -25,19 +25,19 @@ const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, ini
   const handleSave = async () => {
     try {
       const formData = new FormData();
-      formData.append('answer', answer);
-      if (photo) {
-        formData.append('photo', photo);
+      formData.append('answer_text', answer_text);  // 변경된 변수
+      if (answer_photo) {
+        formData.append('answer_photo', answer_photo);  // 변경된 변수
       }
 
-      await axios.post(`http://localhost:3001/questions/${question_id}/answers`, formData, {
+      await axios.post(`http://localhost:3001/contents/questions/${question_id}/answers`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
       alert('답변이 성공적으로 저장되었습니다.');
-      onClose(); // 상태 업데이트와 팝업 닫기
+      onClose();
     } catch (error) {
       console.error('Error saving the answer:', error);
       alert('답변 저장에 실패했습니다.');
@@ -46,9 +46,9 @@ const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, ini
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3001/questions/${question_id}/answers`);
+      await axios.delete(`http://localhost:3001/contents/questions/${question_id}/answers`);  // 변경된 API 경로
       alert('답변이 성공적으로 삭제되었습니다.');
-      onDelete(); // 삭제 후 팝업 닫기
+      onDelete();
     } catch (error) {
       console.error('Error deleting the answer:', error);
       alert('답변 삭제에 실패했습니다.');
@@ -67,7 +67,7 @@ const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, ini
             <div className="forestquestion_popup-question-text">{question}</div>
             <textarea 
               className="forestquestion_popup-answer-box" 
-              value={answer}
+              value={answer_text}
               onChange={handleAnswerChange}
             />
             <input 
@@ -77,7 +77,7 @@ const TodayQuestionPopup = ({ onClose, question, question_id, initialAnswer, ini
               onChange={handlePhotoChange}
               ref={fileInputRef}
             />
-            {photo && <img src={photo} className="forestquestion_popup-photo-display" alt="selected" />}
+            {answer_photo && <img src={answer_photo} className="forestquestion_popup-photo-display" alt="selected" />}
             <button className="forestquestion_popup-save-button" onClick={handleSave}>저장</button>
             <button className="forestquestion_popup-delete-button" onClick={handleDelete}>삭제</button>
           </div>

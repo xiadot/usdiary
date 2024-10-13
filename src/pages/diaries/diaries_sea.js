@@ -15,6 +15,10 @@ const SeaDiary = () => {
     setShowSpecialday(true);
   };
 
+  const switchToDiary = () => {
+    setShowSpecialday(false);
+  };
+
   return (
     <div className={`wrap ${showSpecialday ? 'page2' : 'page1'}`}>
       <Menu/>
@@ -35,7 +39,7 @@ const SeaDiary = () => {
           {/* 페이지2 */}
           <div className="sea">
             {/* 오늘의장소 */}
-            <SpecialDay />
+            <SpecialDay onBack={switchToDiary} />
             {/* 일기작성 */}
             <SeaComponent />
           </div>

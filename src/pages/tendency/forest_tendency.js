@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Menu from '../../components/menu';
+import GuidePopup from '../../components/guide';
 import '../../assets/css/forest_tendency.css';
 import BigtreeImage from '../../assets/images/bigtree.png';
 import MincityImage from '../../assets/images/mincity.png';
@@ -37,7 +38,7 @@ function ForestTendency() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/users/{userId}/tendency`, {
+      const response = await fetch(`http://localhost:3001/users/${userId}/tendency`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,6 +63,8 @@ function ForestTendency() {
   };
 
   return (
+    <div className="Tendency">
+      <GuidePopup/>
     <div className="Forest_Tendency">
       <Menu />
       <div className="forest_tendency">
@@ -74,7 +77,7 @@ function ForestTendency() {
               <h2>숲이란?</h2>
               <div className="forest_tendency_text-container">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ligula sapien, rutrum sed vestibulum eget, rhoncus ac erat. Aliquam erat volutpat. Sed convallis scelerisque enim at fermentum.
+                  숲은 여유롭게 하루를 보내는 사람들을 위한 기록장입니다. 하루를 천천히 흘려보내며 작은 것에서 큰 의미를 찾아내는 무너에게 최적의 공간입니다. 느리게 가는 만큼 세상을 더 깊이 바라보고 느끼는 여유로움을 통해, 하루의 가치를 새롭게 발견할 수 있을 거예요. 비슷한 무너들과 함께 어우러지는 숲속을 usdiary가 만들어드립니다. 숲에서 마음을 가꾸고, 하루를 차분히 정리해보세요.
                 </p>
               </div>
             </div>
@@ -82,12 +85,12 @@ function ForestTendency() {
               <h2>숲에는 이런 기능이 있어요</h2>
               <div className="forest_tendency_text-container">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ligula sapien, rutrum sed vestibulum eget, rhoncus ac erat. Aliquam erat volutpat. Sed convallis scelerisque enim at fermentum.
+                  usdiary에서는 하루를 간단하고 즐겁게 기록할 수 있는 '오늘의 질문'이 제공됩니다. 일상적인 질문부터 깊이 있는 질문까지 다양한 주제로 하루를 색다르게 돌아보며 기록하는 시간을 가질 수 있습니다. 그날의 느낌과 생각을 자연스럽게 풀어내며, 일상에 새로운 시선을 더해보세요.
                 </p>
               </div>
             </div>
             <button className="forest_tendency_submit-button" onClick={handleSubmit}>숲 성향으로 결정하기</button>
-            <p className="forest_tende_ncynote">* 일주일 동안 성향 변경이 가능합니다</p>
+            <p className="forest_tendency_note">* 일주일 동안 성향 변경이 가능합니다</p>
           </div>
           <img src={BigtreeImage} alt="forest_tendency_Description" className="forest_tendency_info-image" />
           <button className="forest_tendency_city-tendency-button" onClick={handleCityTendencyClick}>
@@ -96,6 +99,7 @@ function ForestTendency() {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
