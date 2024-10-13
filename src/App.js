@@ -19,9 +19,14 @@ import City from './pages/home/city';
 import ForestQuestion from './pages/diaries/forestquestion'
 import CheckList from './pages/checklist/checklist';
 import SpecialDay from './pages/diaries/special_day';
+import ProfilePage from './pages/mypages/profile';
+import ProfileFix from './pages/mypages/profilefix';
 import Follow from './pages/mypage/follow/follow';
 import MyRate from './pages/mypage/myRate';
 import Level from './pages/mypage/level';
+import Notification from './pages/mypages/notification';
+import NotificationDetail from './pages/mypages/notification_detail';
+import Contact from './pages/mypages/contact';
 
 const App = () => {
 
@@ -73,6 +78,17 @@ const App = () => {
 
         {/* 오늘의 질문 페이지 경로 */}
         <Route path="/forestquestion" element={<ForestQuestion />}/>
+
+        {/* 마이페이지 프로필 수정 페이지 경로 */}
+        <Route path="/profile" element={<ProfilePage />}/>
+        <Route path="/profilefix" element={<ProfileFix />}/>
+
+        {/* 공지사항 페이지 경로 */}
+        <Route path="/notification" element={<Notification />}/>
+        <Route path="/notification/:id" element={<NotificationDetail />}/>
+
+        {/* 문의사항 페이지 경로 */}
+        <Route path="/contact" element={<Contact />}/>
 
         {/* 팔로우 페이지 경로 */}
         <Route path="/mypage/follow" element={<Follow />}/>
