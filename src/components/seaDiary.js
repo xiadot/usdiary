@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Viewer, Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import axios from 'axios'; // axios import
 
 import sea from '../assets/images/sea.png';
 import DateSelector from './dateSelector'; // DateSelector 컴포넌트 import
@@ -22,8 +23,8 @@ const SeaComponent = () => {
 
     const fetchDiaryData = useCallback(async () => {
       try {
-        const response = await fetch(`/api/diaries?date=${selectedDate.toISOString().split('T')[0]}`); // API 엔드포인트에 날짜를 기반으로 요청
-        const data = await response.json();
+        const response = await axios.get(`/api/diaries?date=${selectedDate.toISOString().split('T')[0]}`); // axios로 API 요청
+        const data = response.data;
         setDiaryData(data); // 불러온 데이터 설정
         setTitle(data.diary_title); // 제목 업데이트
         if (editorRef.current) {
@@ -93,14 +94,8 @@ const SeaComponent = () => {
       };
   
       try {
-        const response = await fetch('/diaries', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(diaryData), // 서버로 데이터 전송
-        });
-        const result = await response.json();
+        const response = await axios.post('/diaries', diaryData); // axios로 POST 요청
+        const result = response.data;
         console.log('저장 완료:', result);
       } catch (error) {
         console.error("Error submitting diary:", error);

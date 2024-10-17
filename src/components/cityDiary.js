@@ -1,8 +1,8 @@
-// cityDiary.js
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Viewer, Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import axios from 'axios'; // axios import
 
 import city from '../assets/images/city.png';
 import DateSelector from './dateSelector'; // DateSelector 컴포넌트 import
@@ -21,29 +21,29 @@ const CityComponent = () => {
     const [post_photo, setFirstImageUrl] = useState(null);
     const editorRef = useRef(); // 에디터 ref
 
+    // fetchDiaryData에서 axios 사용
     const fetchDiaryData = useCallback(async () => {
-      try {
-        const response = await fetch(`/api/diaries?date=${selectedDate.toISOString().split('T')[0]}`); // API 엔드포인트에 날짜를 기반으로 요청
-        const data = await response.json();
-        setDiaryData(data); // 불러온 데이터 설정
-        setTitle(data.diary_title); // 제목 업데이트
-        if (editorRef.current) {
-          editorRef.current.getInstance().setHTML(data.diary_content); // 에디터 내용 설정
+        try {
+            const response = await axios.get(`/api/diaries?date=${selectedDate.toISOString().split('T')[0]}`); // axios로 요청
+            setDiaryData(response.data); // 불러온 데이터 설정
+            setTitle(response.data.diary_title); // 제목 업데이트
+            if (editorRef.current) {
+                editorRef.current.getInstance().setHTML(response.data.diary_content); // 에디터 내용 설정
+            }
+        } catch (error) {
+            console.error("Error fetching diary data:", error);
         }
-      } catch (error) {
-        console.error("Error fetching diary data:", error);
-      }
     }, [selectedDate]);
 
     useEffect(() => {
-      if (diary) {
-        setTitle(diary.diary_title); // 제목 업데이트
-        if (editorRef.current) {
-          editorRef.current.getInstance().setHTML(diary.diary_content); // 내용 설정
+        if (diary) {
+            setTitle(diary.diary_title); // 제목 업데이트
+            if (editorRef.current) {
+                editorRef.current.getInstance().setHTML(diary.diary_content); // 내용 설정
+            }
+        } else {
+            fetchDiaryData(); // 다이어리가 없을 때만 데이터 fetch
         }
-      } else {
-        fetchDiaryData(); // 다이어리가 없을 때만 데이터 fetch
-      }
     }, [diary, fetchDiaryData]);
 
     // 선택된 날짜로 currentDate 업데이트
@@ -69,9 +69,9 @@ const CityComponent = () => {
     };
 
     const extractFirstImageUrl = (html) => {
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const img = doc.querySelector('img'); // 첫 번째 이미지 요소 선택
-      return img ? img.src : null; // 이미지가 있으면 src 속성을 반환
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const img = doc.querySelector('img'); // 첫 번째 이미지 요소 선택
+        return img ? img.src : null; // 이미지가 있으면 src 속성을 반환
     };
 
     const onChangeGetHTML = () => {
@@ -84,28 +84,21 @@ const CityComponent = () => {
     };
 
     const handleSubmit = async () => {
-      const diaryData = {
-        createdAt: selectedDate,
-        diary_title: diary_title,
-        diary_content: diary_content,
-        access_level: access_level,
-        post_photo: post_photo,
-        board_id: 2
-      };
-  
-      try {
-        const response = await fetch('/diaries', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(diaryData), // 서버로 데이터 전송
-        });
-        const result = await response.json();
-        console.log('저장 완료:', result);
-      } catch (error) {
-        console.error("Error submitting diary:", error);
-      }
+        const diaryData = {
+            createdAt: selectedDate,
+            diary_title: diary_title,
+            diary_content: diary_content,
+            access_level: access_level,
+            post_photo: post_photo,
+            board_id: 2
+        };
+
+        try {
+            const response = await axios.post('/diaries', diaryData); // axios로 POST 요청
+            console.log('저장 완료:', response.data);
+        } catch (error) {
+            console.error("Error submitting diary:", error);
+        }
     };
 
     return (

@@ -44,10 +44,14 @@ import PlaceList from './PlaceList';
 import axios from 'axios';
 
 const SpecialDay = ({ onBack }) => {
-  const [diary_emotion, setEmotion] = useState('');
-  const [diary_memo, setMemo] = useState('');
+  const [today_mood, setEmotion] = useState('');
+  const [place_memo, setMemo] = useState('');
   const [visibleDiv, setVisibleDiv] = useState('totalPlace');
   const [places, setPlaces] = useState([]);
+  const [place_id, setPlaceId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
 
   const handleSave = async () => {
     const divNumbers = {
@@ -67,27 +71,25 @@ const SpecialDay = ({ onBack }) => {
       stadium: '14',
       auditorium: '15'
     };
-
+  
     // visibleDiv 값을 숫자로 변환
     const cate_num = divNumbers[visibleDiv];
   
     // 서버로 전송할 데이터
     const data = {
-      cate_num: cate_num,          // visibleDiv에 매핑된 숫자
-      diary_emotion: diary_emotion,    // 오늘의 기분
-      diary_memo: diary_memo           // 한 줄 메모
+      cate_num: cate_num, // visibleDiv에 매핑된 숫자
+      today_mood: today_mood, // 오늘의 기분
+      place_memo: place_memo  // 한 줄 메모
     };
-
+  
     try {
-      const response = await fetch('/diaries/special_day', {
-        method: 'POST',
+      const response = await axios.post('/contents/places', data, {
         headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)  // 데이터를 JSON으로 변환해 전송
+        }
       });
-
-      if (response.ok) {
+  
+      if (response.status === 200) {
         console.log('데이터가 성공적으로 저장되었습니다.');
       } else {
         console.error('데이터 저장에 실패했습니다.');
@@ -154,8 +156,26 @@ const SpecialDay = ({ onBack }) => {
 
 
   // 가정: 데이터를 서버에서 불러오는 경우
+
+  useEffect(() => {
+    const fetchPlaceId = async () => {
+      try {
+        const response = await axios.get('/path/to/get/place_id'); // place_id를 서버에서 받아옴
+        setPlaceId(response.data.place_id); // 받아온 place_id를 상태에 저장
+      } catch (error) {
+        console.error("place_id를 불러오는 데 실패했습니다.", error);
+        setError("place_id를 불러오는 데 실패했습니다.");
+      }
+    };
+
+    // place_id를 서버에서 받아오기
+    fetchPlaceId();
+  }, []); // 컴포넌트 마운트 시에만 실행
+
   useEffect(() => {
     const fetchData = async () => {
+      if (!place_id) return; // place_id가 없으면 데이터를 불러오지 않음
+
       const divNumbers = {
         sea: '1',
         mountain: '2',
@@ -176,31 +196,37 @@ const SpecialDay = ({ onBack }) => {
 
       const currentMonth = new Date().getMonth() + 1;
 
+      setIsLoading(true);
+
       try {
-        const response = await axios.get(`/diaries/places`, {
+        const response = await axios.get(`/contents/places/${place_id}`, {
           params: {
             type: divNumbers[visibleDiv],
             month: currentMonth
           }
         });
-        setPlaces(response.data); // axios는 응답 데이터를 자동으로 JSON 파싱해줍니다.
+        setPlaces(response.data);
+        setError(null);
       } catch (error) {
         console.error("데이터를 불러오는 데 실패했습니다.", error);
+        setError("데이터를 불러오는 데 실패했습니다.");
         setPlaces([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    if (visibleDiv) {
+    if (place_id && visibleDiv) {
       fetchData();
     }
-  }, [visibleDiv]);
+  }, [place_id, visibleDiv]);
 
   const handleToggle = (divName) => () => {
     setVisibleDiv(visibleDiv === divName ? 'totalPlace' : divName);
   };
 
   const handleBackClick = () => {
-    if (diary_emotion || diary_memo) { // diary_emotion 또는 diary_memo 값이 있을 경우
+    if (today_mood || place_memo) { // diary_emotion 또는 diary_memo 값이 있을 경우
       const confirmLeave = window.confirm("입력한 내용이 저장되지 않았습니다. 정말 돌아가시겠습니까?");
       if (!confirmLeave) {
         return; // 사용자가 '취소'를 선택하면 종료
@@ -447,11 +473,11 @@ const SpecialDay = ({ onBack }) => {
           )} 
 
           <div className="specialDay-emotion">
-              <input placeholder='오늘의 기분 (10자 제한)' spellCheck="false" maxlength='10' value={diary_emotion} onChange={(e) => setEmotion(e.target.value)}/>
+              <input placeholder='오늘의 기분 (10자 제한)' spellCheck="false" maxlength='10' value={today_mood} onChange={(e) => setEmotion(e.target.value)}/>
           </div>
           
           <div className="specialDay-memo">
-              <textarea placeholder='한 줄 메모 (30자 제한)' spellCheck="false" maxlength='30' value={diary_memo} onChange={(e) => setMemo(e.target.value)}/>
+              <textarea placeholder='한 줄 메모 (30자 제한)' spellCheck="false" maxlength='30' value={place_memo} onChange={(e) => setMemo(e.target.value)}/>
           </div>
 
           <div className="specialDay-save" onClick={handleSave}>저장</div>
