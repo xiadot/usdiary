@@ -74,7 +74,7 @@ const Friend = () => {
                         Friend
                     </h1>
                     <p className="friend-page__description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ligula sapien, rutrum sed vestibulum eget, rhoncus ac erat. Aliquam erat volutpat. Sed convallis scelerisque enim at fermentum.
+                        무너와 함께 나누는 특별한 하루입니다. <br /> 소중한 무너가 어떤 하루를 보냈는지, 그들의 생각과 감정을 함께 느껴보세요. <br /> 서로의 기록을 공유하며, 새로운 발견과 교감을 나누는 시간이 될 것입니다. <br /> 무너의 이야기를 통해 더 깊이 연결되고, 그들의 하루를 이해하는 특별한 경험을 해보세요.
                     </p>
                 </div>
                 <div className="friend-page__filter-box">

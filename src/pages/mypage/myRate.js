@@ -1,79 +1,96 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 import '../../assets/css/follow.css';
 import '../../assets/css/myRate.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import defaultImage from '../../assets/images/default.png'
+
 import Menu from '../../components/menu';
 import ProfileMenu from '../../components/profileMenu';
-import 'react-datepicker/dist/react-datepicker.css';
-import defalut from '../../assets/images/default.png'
 
-const dummyUser = {
-    profileImage: 'https://via.placeholder.com/100',
-    nickname: '홍길동',
-    user_tendency: '숲',
+const base64UrlToBase64 = (base64Url) => {
+    // Base64Url에서 '-'를 '+'로, '_'를 '/'로 변환
+    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    // Base64 문자열의 길이를 4의 배수로 맞추기 위해 '=' 추가
+    while (base64.length % 4) {
+        base64 += '=';
+    }
+    return base64;
 };
-
-const dummyDiaries = [
-    { diary_id: 1, user_id: 1, board_id: 1, board_name: '숲', diary_title: '일기 1', diary_content: "<p>오늘은 정말 멋진 날이었다.<strong>볼드처리</strong></p><img src='https://example.com/image1.png' alt='image1'/><p>나무가 아름답게 보였다.</p><img src='https://example.com/image2.png' alt='image2'/><p>하늘도 정말 맑았다.</p>", createdAt: '2024-10-01T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 2, user_id: 1, board_id: 2, board_name: '도시', diary_title: '일기 2', diary_content: '내용 2', createdAt: '2024-10-02T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 3, user_id: 1, board_id: 3, board_name: '바다', diary_title: '일기 3', diary_content: '내용 3', createdAt: '2024-10-03T10:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 4, user_id: 2, board_id: 1, board_name: '숲', diary_title: '일기 4', diary_content: '내용 4', createdAt: '2024-10-04T11:00:00Z', post_photo: 'https://via.placeholder.com/300' },
-    { diary_id: 5, user_id: 2, board_id: 2, board_name: '도시', diary_title: '일기 5', diary_content: '내용 5', createdAt: '2024-10-05T12:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 6, user_id: 2, board_id: 3, board_name: '바다', diary_title: '일기 6', diary_content: '내용 6', createdAt: '2024-10-06T13:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 7, user_id: 3, board_id: 1, board_name: '숲', diary_title: '일기 7', diary_content: '내용 7', createdAt: '2024-10-07T14:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 8, user_id: 3, board_id: 2, board_name: '도시', diary_title: '일기 8', diary_content: '내용 8', createdAt: '2024-10-08T15:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 9, user_id: 1, board_id: 1, board_name: '바다', diary_title: '일기 9', diary_content: '내용 9', createdAt: '2024-10-09T16:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 10, user_id: 1, board_id: 1, board_name: '숲', diary_title: '일기 10', diary_content: '내용 10 나는 오늘 아침에 오후 3시에 일어나서 민서와 같이 햄버거를 시켜먹었다 그리고 나서 뭐햇더라 좀 누워있으니까 애기 옴 그리고 코딩 하기 전에 육바연에서 육연덮밥 시켜 먹었음', createdAt: '2024-10-10T17:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 11, user_id: 1, board_id: 2, board_name: '도시', diary_title: '일기 11', diary_content: '내용 11', createdAt: '2024-10-11T18:00:00Z', post_photo: 'https://via.placeholder.com/300 ' },
-    { diary_id: 12, user_id: 4, board_id: 3, board_name: '바다', diary_title: '일기 12', diary_content: '내용 12', createdAt: '2024-10-12T19:00:00Z', post_photo: 'https://via.placeholder.com/300 ' }
-];
-
 
 const MyRate = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(null);
     const [diaryCards, setDiaryCards] = useState([]);
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            console.log('토큰이 없습니다. 로그인 필요');
+            return;
+        }
+
+        // JWT를 '.' 기준으로 분리하여 payload 부분 가져오기
+        const tokenParts = token.split('.');
+        if (tokenParts.length !== 3) {
+            console.error('JWT 형식이 잘못되었습니다.');
+            return;
+        }
+
+        const userDataFromToken = JSON.parse(atob(base64UrlToBase64(tokenParts[1])));
+        setUser(userDataFromToken);
+    }, []);
+
+    useEffect(() => {
+        if (user) {
+            fetchDiaries(user.user_id);
+        }
+    }, [user]);
+
+    const fetchDiaries = async (user_id) => {
+        try {
+            const response = await axios.get(`/diaries?user_id=${user_id}`);
+            setDiaryCards(response.data)
+        } catch (error) {
+            console.error('일기를 가져오는 중 오류 발생:', error);
+        }
+    };
+
+    if (!user) {
+        return <div>Loading...</div>; // 사용자 데이터 로딩 중
+    }
+
     const handleDiaryClick = (diary) => {
-        console.log(diary);
-        switch (diary.board_id) {
-            case 1:
-                navigate('/forest_diary', { state: { from: 'myRate', diary } });
-                break;
-            case 2:
-                navigate('/city_diary', { state: { from: 'myRate', diary } });
-                break;
-            case 3:
-                navigate('/sea_diary', { state: { diary } });
-                break;
-            default:
-                console.log('Unknown board_id');
+        const routes = {
+            1: '/forest_diary',
+            2: '/city_diary',
+            3: '/sea_diary',
+        };
+        const route = routes[diary.board_id];
+        if (route) {
+            navigate(route, { state: { from: 'myRate', diary } });
+        } else {
+            console.log('Unknown board_id');
         }
     };
 
     const filterDiariesByPreference = (user_tendency) => {
-        // user_id가 1인 일기들로 먼저 필터링
-        const userDiaries = dummyDiaries.filter(diary => diary.user_id === 1);
-
-        return userDiaries.filter(diary => {
-            const categories = {
-                '숲': 1,
-                '도시': 2,
-                '바다': 3,
-            };
-            return diary.board_id === categories[user_tendency];
-        });
+        const categories = {
+            '숲': 1,
+            '도시': 2,
+            '바다': 3,
+        };
+        return diaryCards.filter(diary => diary.board_id === categories[user_tendency]);
     };
 
-    const preferenceDiaries = filterDiariesByPreference(dummyUser.user_tendency);
-
-    // user_id가 1인 일기들의 총 개수
-    const totalDiaries = dummyDiaries.filter(diary => diary.user_id === 1).length;
-
-    const percentage = ((preferenceDiaries.length / totalDiaries) * 100).toFixed(2);
-
+    const preferenceDiaries = filterDiariesByPreference(user.user_tendency);
+    const totalDiaries = diaryCards.length;
+    const percentage = totalDiaries ? ((preferenceDiaries.length / totalDiaries) * 100).toFixed(2) : 0;
 
     const getDaysInMonth = (year, month) => {
         const date = new Date(year, month, 1);
@@ -102,12 +119,12 @@ const MyRate = () => {
         const localDay = new Date(day);
         localDay.setHours(0, 0, 0, 0); // 날짜만 남기기
 
-        const diary = dummyDiaries.find(d => {
+        const diary = diaryCards.find(d => {
             const diaryDate = new Date(d.createdAt);
             diaryDate.setHours(diaryDate.getHours() - 9);
             diaryDate.setHours(0, 0, 0, 0); // 날짜만 남기기
 
-            return d.user_id === 1 && localDay.toDateString() === diaryDate.toDateString();
+            return d.user_id === user.user_id && localDay.toDateString() === diaryDate.toDateString();
         });
 
         switch (diary ? diary.board_id : null) {
@@ -130,10 +147,10 @@ const MyRate = () => {
     };
 
     const updateDiaryCards = (date) => {
-        const diariesOnSelectedDate = dummyDiaries.filter(diary => {
+        const diariesOnSelectedDate = diaryCards.filter(diary => {
             const diaryDate = new Date(diary.createdAt);
             diaryDate.setHours(diaryDate.getHours() - 9);
-            return diaryDate.toDateString() === date.toDateString() && diary.user_id === 1;
+            return diaryDate.toDateString() === date.toDateString() && diary.user_id === user.user_id;
         });
         setDiaryCards(diariesOnSelectedDate);
     };
@@ -161,16 +178,19 @@ const MyRate = () => {
                 <ProfileMenu />
                 <div className='myrate__profile-contents'>
                     <div className='profile-info'>
-                        <img src={dummyUser.profileImage} alt='Profile' className='profile-image' />
-                        <div className='profile-summary'>
-                            <h3 className='profile-tendency'>{dummyUser.nickname}님은 {percentage}% {dummyUser.user_tendency} 성향이에요</h3>
-                            <div className='progress-bar'>
-                                <div
-                                    className='progress-bar-fill'
-                                    style={{ width: `${percentage}%` }}
-                                ></div>
-                            </div>
-                        </div>
+                        {user ? (
+                            <>
+                                <img src={user.Profile.profile_img} alt='Profile' className='profile-image' />
+                                <div className='profile-summary'>
+                                    <h3 className='profile-tendency'>{user.user_nick}님은 {percentage}% {user.user_tendency} 성향이에요</h3>
+                                    <div className='progress-bar'>
+                                        <div className='progress-bar-fill' style={{ width: `${percentage}%` }}></div>
+                                    </div>
+                                </div>
+                            </>
+                        ) : (
+                            <p>로딩 중...</p>
+                        )}
                     </div>
                     <div className='calendar'>
                         <div className='calendar__header'>
@@ -206,7 +226,6 @@ const MyRate = () => {
                             <div className='diary-box'>
                                 <h4>내가 작성한 일기</h4>
                             </div>
-
                         </div>
                         {selectedDate && diaryCards.length > 0 && (
                             <div className='selected-date-box'>
@@ -219,7 +238,7 @@ const MyRate = () => {
                                 <div className='myrate__diary-card' key={diary.diary_id} onClick={() => handleDiaryClick(diary)}>
                                     {diary.post_photo && (
                                         <img
-                                            src={diary.post_photo}
+                                            src={diary.post_photo || defaultImage}
                                             alt={`${diary.diary_title} 이미지`}
                                             className='myrate__diary-card__image'
                                         />

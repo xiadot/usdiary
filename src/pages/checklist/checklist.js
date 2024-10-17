@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
@@ -20,9 +20,9 @@ export const postDiary = async (diary) => {
   }
 };
 
-export const putRoutine = async (id, updatedRoutine) => {
+export const putRoutine = async (routine_id, updatedRoutine) => {
   try {
-    const response = await axios.put(`/routines/${id}`, updatedRoutine);
+    const response = await axios.put(`/routines/${routine_id}`, updatedRoutine);
     return response.data;
   } catch (error) {
     console.error('Failed to update routine:', error);
@@ -30,18 +30,18 @@ export const putRoutine = async (id, updatedRoutine) => {
   }
 };
 
-export const deleteRoutine = async (id) => {
+export const deleteRoutine = async (routine_id) => {
   try {
-    await axios.delete(`/routines/${id}`);
+    await axios.delete(`/routines/${routine_id}`);
   } catch (error) {
     console.error('Failed to delete routine:', error);
     throw error;
   }
 };
 
-export const putTodo = async (id, updatedTodo) => {
+export const putTodo = async (todo_id, updatedTodo) => {
   try {
-    const response = await axios.put(`/todos/${id}`, updatedTodo);
+    const response = await axios.put(`/todos/${todo_id}`, updatedTodo);
     return response.data;
   } catch (error) {
     console.error('Failed to update todo:', error);
@@ -49,9 +49,9 @@ export const putTodo = async (id, updatedTodo) => {
   }
 };
 
-export const deleteTodo = async (id) => {
+export const deleteTodo = async (todo_id) => {
   try {
-    await axios.delete(`/todos/${id}`);
+    await axios.delete(`/todos/${todo_id}`);
   } catch (error) {
     console.error('Failed to delete todo:', error);
     throw error;
@@ -71,28 +71,20 @@ const CheckList = ({ onBack }) => {
   useEffect(() => {
     // 다이어리 객체가 있는 경우에만 초기 데이터를 설정
     if (diary) {
-      // 여기에 다이어리의 user_id와 diary_id를 이용하여 API 호출하여 데이터를 가져오거나
-      // 더미 데이터를 설정할 수 있습니다.
+      // 루틴과 투두를 초기화
+      const fetchRoutinesAndTodos = async () => {
+        try {
+          const routinesResponse = await axios.get(`/routines?user_id=${diary.user_id}`);
+          setRoutines(routinesResponse.data);
+          
+          const todosResponse = await axios.get(`/todos?diary_id=${diary.diary_id}`);
+          setTodos(todosResponse.data);
+        } catch (error) {
+          console.error('Failed to fetch routines and todos:', error);
+        }
+      };
 
-      // 더미 루틴 데이터
-      const allRoutines = [
-        { routine_id: 1, title: "아침 운동", content: "혈당 관리용", is_completed: true, user_id: 1 },
-        { routine_id: 2, title: "아침 식사", is_completed: false, user_id: 2 },
-        { routine_id: 3, title: "일일 목표 설정", is_completed: false, user_id: 1 },
-      ];
-
-      const allTodos = [
-        { todo_id: 1, title: "레포트 작성", is_completed: true, diary_id: 11 },
-        { todo_id: 2, title: "회의 준비", is_completed: false, diary_id: 2 },
-        { todo_id: 3, title: "장보기", is_completed: false, diary_id: 11 },
-      ];
-
-      // 다이어리의 user_id 및 diary_id를 바탕으로 초기 데이터 설정
-      const initialRoutines = allRoutines.filter(routine => routine.user_id === diary.user_id);
-      const initialTodos = allTodos.filter(todo => todo.diary_id === diary.diary_id);
-
-      setRoutines(initialRoutines);
-      setTodos(initialTodos);
+      fetchRoutinesAndTodos();
     }
   }, [diary]);
 
@@ -135,7 +127,7 @@ const CheckList = ({ onBack }) => {
   const handleRoutineSubmit = async (newRoutines) => {
     try {
       await postDiary(newRoutines);
-      const updatedRoutines = await axios.get('/routines');
+      const updatedRoutines = await axios.get(`/routines?user_id=${diary.user_id}`);
       setRoutines(updatedRoutines.data);
     } catch (error) {
       console.error('Failed to update routines:', error);
@@ -146,7 +138,7 @@ const CheckList = ({ onBack }) => {
   const handleTodoSubmit = async (newTodos) => {
     try {
       await postDiary(newTodos);
-      const updatedTodos = await axios.get('/todos');
+      const updatedTodos = await axios.get(`/todos?diary_id=${diary.diary_id}`);
       setTodos(updatedTodos.data);
     } catch (error) {
       console.error('Failed to update todos:', error);
@@ -177,7 +169,7 @@ const CheckList = ({ onBack }) => {
           <hr />
           <div className="checklist-routine-bottom">
             {routines.map((routine, index) => (
-              <div className="checklist-routine-bottom-box" key={routine.id}>
+              <div className="checklist-routine-bottom-box" key={routine.routine_id}>
                 <div className="checklist-routine-bottom-box-toggleSwitch">
                   <input
                     type="checkbox"
@@ -190,8 +182,8 @@ const CheckList = ({ onBack }) => {
                     <span></span>
                   </label>
                 </div>
-                <div className="checklist-routine-bottom-box-title">{routine.title}</div>
-                <div className="checklist-routine-bottom-box-content">{routine.content}</div>
+                <div className="checklist-routine-bottom-box-title">{routine.routine_title}</div>
+                <div className="checklist-routine-bottom-box-content">{routine.description}</div>
               </div>
             ))}
           </div>
@@ -206,7 +198,7 @@ const CheckList = ({ onBack }) => {
           <hr />
           <div className="checklist-todo-bottom">
             {todos.map((todo, index) => (
-              <div className="checklist-todo-bottom-box" key={todo.id}>
+              <div className="checklist-todo-bottom-box" key={todo.todo_id}>
                 <div className="checklist-todo-bottom-box-toggleSwitch">
                   <input
                     type="checkbox"
@@ -219,8 +211,8 @@ const CheckList = ({ onBack }) => {
                     <span></span>
                   </label>
                 </div>
-                <div className="checklist-todo-bottom-box-title">{todo.title}</div>
-                <div className="checklist-todo-bottom-box-content">{todo.content}</div>
+                <div className="checklist-todo-bottom-box-title">{todo.todo_title}</div>
+                <div className="checklist-todo-bottom-box-content">{todo.description}</div>
               </div>
             ))}
           </div>

@@ -23,38 +23,33 @@ const ForestQuestion = ({ onBack }) => {
   const [diary_id, setDiaryId] = useState(null);  // 변경된 변수
   const editorRef = useRef();
 
-  const dummyQuestions = {
-    1: { question: '첫 번째 질문입니다.', answer: '첫 번째 답변입니다.', photo: null },
-    2: { question: '두 번째 질문입니다.', answer: '두 번째 답변입니다.', photo: 'path/to/photo1.jpg' },
-    9: { question: '세 번째 질문입니다.', answer: '세 번째 답변입니다.', photo: 'path/to/photo2.jpg' },
-  };
-
   useEffect(() => {
-    const fetchTodayQuestion = () => {
+    const fetchTodayQuestion = async () => {
       if (diary && diary.diary_id) {
-        // diary_id에 맞는 질문 데이터 가져오기
-        const questionData = dummyQuestions[diary.diary_id];
-
-        if (questionData) {
-          setTodayQuestion(questionData.question);
-          setQuestionId(diary.diary_id);
-          setInitialAnswer(questionData.answer);
-          setInitialPhoto(questionData.photo);
-          setAnswerId(1); // 가정: 답변 ID는 1로 설정
-        } else {
-          // diary_id에 맞는 질문이 없을 경우 처리
-          setTodayQuestion('해당 질문을 찾을 수 없습니다.');
+        try {
+          // 질문 데이터 가져오기
+          const questionResponse = await axios.get(`http://localhost:3001/questions/${diary.diary_id}`);
+          setTodayQuestion(questionResponse.data.question_text); // question_text로 설정
+          setQuestionId(questionResponse.data.question_id); // question_id 설정
+  
+          // 답변 데이터 가져오기
+          const answerResponse = await axios.get(`http://localhost:3001/contents/questions/${questionResponse.data.question_id}/answers/${diary.diary_id}`);
+          setInitialAnswer(answerResponse.data.answer_text || ''); 
+          setInitialPhoto(answerResponse.data.answer_photo || null);
+          setDiaryId(answerResponse.data.diary_id || null);
+        } catch (error) {
+          console.error('Error fetching the question or answer:', error);
+          setTodayQuestion('질문을 가져오는 데 실패했습니다.');
           setInitialAnswer('');
           setInitialPhoto(null);
         }
       }
     };
-
+  
     fetchTodayQuestion();
-  }, [diary]);
+  }, [diary]);  
 
-
-  /* useEffect(() => {
+  useEffect(() => {
     const fetchTodayQuestion = async () => {
       try {
         const response = await axios.get('http://localhost:3001/questions/random');
@@ -75,7 +70,7 @@ const ForestQuestion = ({ onBack }) => {
     };
 
     fetchTodayQuestion();
-  }, []); **/
+  }, []);
 
   const onChangeGetHTML = () => {
     if (editorRef.current) {
