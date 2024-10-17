@@ -89,6 +89,9 @@ const ForestComponent = () => {
   };
 
   const handleSubmit = async () => {
+          // 로컬 스토리지에서 토큰 가져오기
+      const token = localStorage.getItem('token');
+    
     const diaryData = {
       createdAt: selectedDate,
       diary_title: diary_title,
@@ -102,6 +105,7 @@ const ForestComponent = () => {
       const response = await fetch('/diaries', {
         method: 'POST',
         headers: {
+            'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(diaryData), // 서버로 데이터 전송

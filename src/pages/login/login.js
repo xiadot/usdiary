@@ -49,7 +49,7 @@ const Login = () => {
                 // 전체 user 객체를 포함한 응답 데이터에서 필요한 값만 추출
                 const userTendency = result.data.user?.user_tendency;
                 const token = result.data.token;// optional chaining을 사용하여 안전하게 접근
-
+                localStorage.setItem('token', token);
                 console.log('User Tendency:', userTendency);
                 console.log('Token:', token);
                 // userTendency를 state로 전달하여 홈 화면으로 이동
