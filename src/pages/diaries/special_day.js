@@ -271,7 +271,7 @@ const SpecialDay = ({ onBack }) => {
           </div>
         ) : (
           <>
-            {places.length === 0 && visibleDiv === 'totalPlace' && (
+            {visibleDiv === 'totalPlace' && (
               <div className="specialDay-choice1">
                 <div className="specialDay-choice1-box" onClick={handleToggleDiv1}>
                   <img src={place_nature} alt='place_nature' />
