@@ -7,14 +7,17 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 0 100px;
+    padding: 0 95px;
     width: 100%;
 }
 
 .sea-page__header {
-    display: flex; /* 수직 정렬 */
-    align-items: center; /* 좌측 정렬 */
-    height: 180px; /* 헤더의 높이 설정 */
+    display: flex;
+    /* 수직 정렬 */
+    align-items: center;
+    /* 좌측 정렬 */
+    height: 180px;
+    /* 헤더의 높이 설정 */
     margin-top: 20px;
 }
 
@@ -23,15 +26,15 @@
     font-weight: bold;
     font-size: clamp(55px, 4.5vw, 110px);
     letter-spacing: -1pt;
-    line-height: 1.2;  
-    color: #164BB0;  
+    line-height: 1.2;
+    color: #164BB0;
 }
 
 .sea-page__description {
     font-family: 'Noto Sans', sans-serif;
-    margin: 40px;
-    width: 500px;
-    font-size: clamp(15px, 1vw, 30px);
+    margin: 35px;
+    width: 750px;
+    font-size: clamp(13px, 1vw, 30px);
     color: #828282;
     line-height: 2.0;
 }
@@ -84,13 +87,14 @@
 }
 
 .sea-page__diary-cards .diary-card {
-    width: 270px; /* 4개의 카드가 한 줄에 배치되도록 */
+    width: 270px;
+    /* 4개의 카드가 한 줄에 배치되도록 */
     box-sizing: border-box;
 }
 
 
 .sea-page__pagination {
-    
+
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -100,8 +104,10 @@
     font-family: 'Noto Sans', sans-serif;
     font-weight: bold;
     background-color: #fff;
-    border: 2px solid #7D9FE3; /* 테두리 색상 */
-    color: #333; /* 기본 글씨 색상 */
+    border: 2px solid #7D9FE3;
+    /* 테두리 색상 */
+    color: #333;
+    /* 기본 글씨 색상 */
     padding: 10px 15px;
     margin: 0 5px;
     cursor: pointer;
@@ -111,12 +117,13 @@
 }
 
 .sea-page__pagination button.active {
-    
-    color: #164BB0; /* 선택된 버튼의 글씨 색상 */
-    border-color: #164BB0; /* 선택된 버튼의 테두리 색상 */
+
+    color: #164BB0;
+    /* 선택된 버튼의 글씨 색상 */
+    border-color: #164BB0;
+    /* 선택된 버튼의 테두리 색상 */
 }
 
 .sea-page__pagination button:hover {
     background-color: #ddd;
 }
-

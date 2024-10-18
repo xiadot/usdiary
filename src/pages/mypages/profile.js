@@ -4,6 +4,18 @@ import '../../assets/css/profile.css';
 import Menu from '../../components/menu';
 import ProfileMenu from '../../components/profileMenu';
 
+const base64UrlToBase64 = (base64Url) => {
+  // Base64Url에서 '-'를 '+'로, '_'를 '/'로 변환
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+
+  // Base64 문자열의 길이를 4의 배수로 맞추기 위해 '=' 추가
+  while (base64.length % 4) {
+    base64 += '=';
+  }
+
+  return base64;
+};
+
 const ProfilePage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -19,9 +31,16 @@ const ProfilePage = () => {
       return;
     }
 
-    const userDataFromToken = JSON.parse(atob(token.split('.')[1]));
+    // JWT를 '.' 기준으로 분리하여 payload 부분 가져오기
+    const tokenParts = token.split('.');
+    if (tokenParts.length !== 3) {
+      console.error('JWT 형식이 잘못되었습니다.');
+      return;
+    }
+
+    const userDataFromToken = JSON.parse(atob(base64UrlToBase64(tokenParts[1])));
     setUserData(userDataFromToken);
-  }, []); 
+  }, []);
 
   // 비밀번호 확인 함수
   const handleConfirm = async () => {
@@ -67,19 +86,19 @@ const ProfilePage = () => {
           <div className="pro_profile-section">
             <div className="pro_profile-image-space">
               {/* 프로필 이미지와 닉네임 표시 */}
-              <img 
-                src={userData.profile_img || '/default-profile.png'} 
-                alt="Profile" 
+              <img
+                src={userData.profile_img || '/default-profile.png'}
+                alt="Profile"
                 className="pro_profile-img"
               />
               <p className="pro_profile-username">{userData.user_nick}</p>
             </div>
             <div className="pro_additional-circle"></div>
             <div className="pro_password-container">
-              <input 
-                type="password" 
-                className="pro_password-input" 
-                placeholder="비밀번호 확인" 
+              <input
+                type="password"
+                className="pro_password-input"
+                placeholder="비밀번호 확인"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

@@ -42,6 +42,7 @@ const iconMap = {
 
 const SeaPopup = ({ diary_id, onClose }) => {
     const [diary, setDiary] = useState(null);
+    const [todayPlace, setTodayPlace] = useState(null);
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false); // 로딩 상태 초기화
     const [liked, setLiked] = useState(false); // 좋아요 상태
@@ -69,7 +70,11 @@ const SeaPopup = ({ diary_id, onClose }) => {
                 const diaryResponse = await axios.get(`/diaries/${diary_id}`);
                 const fetchedDiary = diaryResponse.data;
                 setDiary(fetchedDiary);
-                setSelectedIcon(iconMap[fetchedDiary.cate_num]);
+
+                const placeResponse = await axios.get(`/diaries/${diary_id}/today_place`);
+                const fetchedPlace = placeResponse.data;
+                setTodayPlace(fetchedPlace);
+                setSelectedIcon(iconMap[fetchedPlace.cate_num]);
 
                 // 댓글 데이터 가져오기
                 const commentsResponse = await axios.get(`/diaries/${diary_id}/comments`);
@@ -185,7 +190,7 @@ const SeaPopup = ({ diary_id, onClose }) => {
     };
 
     const hasComments = comments.length > 0;
-    const showPlaceSection = diary?.cate_num !== undefined && diary?.cate_num !== null;
+    const showPlaceSection = todayPlace?.cate_num !== undefined && todayPlace?.cate_num !== null;
 
     const toggleLike = async (e) => {
         e.stopPropagation();
@@ -240,10 +245,10 @@ const SeaPopup = ({ diary_id, onClose }) => {
                             <div className='sea-popup__place-section'>
                                 <h2 className="sea-popup__place-title">Today's Place</h2>
                                 <div className='sea-popup__container'>
-                                    <img src={selectedIcon} alt="Category Icon" className={`sea-popup__category-icon ${getIconClass(diary.cate_num)}`} />
+                                    <img src={selectedIcon} alt="Category Icon" className={`sea-popup__category-icon ${getIconClass(todayPlace.cate_num)}`} />
                                     <div className="sea-popup__icon-text">
-                                        <div className="sea-popup__icon-emotion">{diary.diary_emotion}</div>
-                                        <div className="sea-popup__icon-memo">{diary.diary_memo}</div>
+                                        <div className="sea-popup__icon-emotion">{todayPlace?.today_mood}</div>
+                                        <div className="sea-popup__icon-memo">{todayPlace.place_memo}</div>
                                     </div>
                                 </div>
                             </div>
