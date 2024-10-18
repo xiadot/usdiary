@@ -14,7 +14,7 @@ function CityTendency() {
     // 사용자 정보를 가져오는 API 호출
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('authToken'); // 로컬스토리지에서 토큰 가져오기
+        const token = localStorage.getItem('token'); // 로컬스토리지에서 토큰 가져오기
         if (!token) {
           throw new Error('No token found');
         }
