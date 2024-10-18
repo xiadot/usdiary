@@ -110,6 +110,10 @@ const SpecialDay = ({ onBack }) => {
   };
 
   const isReadOnly = diary && diary_emotion && diary_memo;
+  const [place_id, setPlaceId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
 
   const handleSave = async () => {
     const divNumbers = {
@@ -129,34 +133,26 @@ const SpecialDay = ({ onBack }) => {
       stadium: '14',
       auditorium: '15'
     };
-
+  
     // visibleDiv 값을 숫자로 변환
     const cate_num = divNumbers[visibleDiv];
 
     // 서버로 전송할 데이터
     const data = {
-      place_id: 0,                // 새로 등록할 장소 ID (서버에서 관리)
-      today_mood: diary_emotion,  // 오늘의 기분
-      place_memo: diary_memo,     // 한 줄 메모
-      cate_num: cate_num,         // visibleDiv에 매핑된 숫자
-      sign_id: diary.User?.sign_id || 0,                 // 추가적인 식별자 (필요 시)
-      diary_id: diary?.diary_id || 0,                // 연관된 다이어리 ID (필요 시)
-      createdAt: new Date().toISOString(), // 현재 시간 (등록 시점)
-      updatedAt: new Date().toISOString()  // 현재 시간 (등록 시점)
+      cate_num: cate_num, // visibleDiv에 매핑된 숫자
+      today_mood: today_mood, // 오늘의 기분
+      place_memo: place_memo  // 한 줄 메모
     };
-
+  
     try {
-      const response = await fetch('/contents/places', {
-        method: 'POST',
+      const response = await axios.post('/contents/places', data, {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}` // JWT 토큰 추가
-        },
-        body: JSON.stringify(data)  // 데이터를 JSON으로 변환해 전송
+          'Content-Type': 'application/json'
+        }
       });
   
-      if (response.ok) {
-        console.log('오늘의 장소가 성공적으로 등록되었습니다.');
+      if (response.status === 200) {
+        console.log('데이터가 성공적으로 저장되었습니다.');
       } else {
         console.error('데이터 저장에 실패했습니다.', await response.text());
       }

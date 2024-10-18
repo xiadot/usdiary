@@ -73,8 +73,11 @@ const Todo = ({ onClose, onArrowClick, onSubmit }) => {
       const response = await postTodos(todos);
       console.log('투두가 서버에 저장되었습니다:', response);
       onSubmit(todos); // 체크리스트에 해당 값 등재
+      alert('투두가 성공적으로 저장되었습니다.');
+
     } catch (error) {
       console.error('투두를 저장하는 데 실패했습니다:', error);
+      alert('투두를 저장하는 데 실패했습니다. 다시 시도해주세요.');
     }
   };
 

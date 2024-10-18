@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Viewer, Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import axios from 'axios'; // axios 임포트
 
 import tree from '../assets/images/tree.png';
 import DateSelector from './dateSelector'; // DateSelector 컴포넌트 불러오기
@@ -23,14 +24,16 @@ const ForestComponent = () => {
   const [isEditing, setIsEditing] = useState(false);
   const editorRef = useRef(); // 에디터 ref
 
+  // Axios로 다이어리 데이터 fetch
   const fetchDiaryData = useCallback(async () => {
     try {
-      const response = await fetch(`/api/diaries?date=${selectedDate.toISOString().split('T')[0]}`); // API 엔드포인트에 날짜를 기반으로 요청
-      const data = await response.json();
-      setDiaryData(data); // 불러온 데이터 설정
-      setTitle(data.diary_title); // 제목 업데이트
+      const response = await axios.get(`/api/diaries`, {
+        params: { date: selectedDate.toISOString().split('T')[0] } // 날짜를 query parameter로 전달
+      });
+      setDiaryData(response.data); // 불러온 데이터 설정
+      setTitle(response.data.diary_title); // 제목 업데이트
       if (editorRef.current) {
-        editorRef.current.getInstance().setHTML(data.diary_content); // 에디터 내용 설정
+        editorRef.current.getInstance().setHTML(response.data.diary_content); // 에디터 내용 설정
       }
     } catch (error) {
       console.error("Error fetching diary data:", error);
@@ -89,9 +92,9 @@ const ForestComponent = () => {
   };
 
   const handleSubmit = async () => {
-          // 로컬 스토리지에서 토큰 가져오기
-      const token = localStorage.getItem('token');
-    
+    // 로컬 스토리지에서 토큰 가져오기
+    const token = localStorage.getItem('token');
+
     const diaryData = {
       createdAt: selectedDate,
       diary_title: diary_title,
@@ -105,7 +108,7 @@ const ForestComponent = () => {
       const response = await fetch('/diaries', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(diaryData), // 서버로 데이터 전송
