@@ -40,41 +40,12 @@ const Question = () => {
     const token = params.get('token');
 
     if (token) {
-      // 기존 로컬 스토리지의 정보 모두 삭제 (초기화)
-      localStorage.clear();
-
-      // 새로 받은 토큰 저장
+      // 토큰을 로컬 스토리지에 저장
       localStorage.setItem('token', token);
-      
       // 쿼리 파라미터를 제거한 후 질문 페이지로 리다이렉트
       navigate('/question', { replace: true });
     }
   }, [navigate]);
-
-  // JWT 토큰을 통해 사용자 정보 조회
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      // JWT 토큰으로 사용자 정보 요청
-      fetch('http://localhost:3001/users/me', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.data) {
-          setUserNick(data.data.user_nick); // 사용자 닉네임 상태 업데이트
-        }
-      })
-      .catch(error => {
-        console.error('사용자 정보 조회 실패:', error);
-      });
-    }
-  }, []);
 
   const handleAnswer = (answerIndex) => {
     setSelectedAnswers((prevSelected) => {
