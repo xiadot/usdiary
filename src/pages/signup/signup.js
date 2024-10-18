@@ -14,7 +14,7 @@ const SignUp = () => {
         user_pwd: '',
         confirmPassword: '',
         user_email: '',
-        phone: '',
+        user_phone: '',
         user_birthday: '',
         user_gender: '',
     });
@@ -67,6 +67,9 @@ const SignUp = () => {
         if (!formData.confirmPassword) newErrors.confirmPassword = '비밀번호 확인을 입력해주세요.';
         if (!formData.user_email) newErrors.user_email = '이메일을 입력해주세요.';
         if (!formData.user_birthday) newErrors.user_birthday = '생일을 입력해주세요.';
+        if (!formData.user_phone) newErrors.user_phone = '전화번호를 입력해주세요.';
+    if (!formData.user_gender) newErrors.user_gender = '성별을 선택해주세요.';
+
     
         if (formData.user_pwd && !/^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,15}$/.test(formData.user_pwd)) {
             newErrors.user_pwd = '특수문자를 포함한 6~15자로 입력해주시기 바랍니다.';
@@ -95,8 +98,9 @@ const SignUp = () => {
                 user_nick: formData.user_nick,
                 sign_id: formData.sign_id,
                 user_pwd: formData.user_pwd,
+                confirmPassword: formData.confirmPassword,
                 user_email: formData.user_email,
-                phone: formData.phone,
+                user_phone: formData.user_phone,
                 user_birthday: formData.user_birthday,
                 user_gender: formData.user_gender,
                 verificationCode: verificationCode.join('') // 인증번호 추가
@@ -114,6 +118,9 @@ const SignUp = () => {
                 const result = await response.json();
     
                 if (response.ok) {
+                     // 회원가입 성공 시 토큰을 localStorage에 저장
+                    const token = result.data.token;
+                    localStorage.setItem('authToken', token); // 로컬스토리지에 토큰 저장
                     navigate('/question');
                 } else {
                     console.error('회원가입 실패:', result.message);
@@ -335,12 +342,12 @@ const SignUp = () => {
                     </div>
 
                     <div className="SignUp-page__input-group">
-                        <label htmlFor="phone" className="SignUp-page__label">전화번호</label>
+                        <label htmlFor="user_phone" className="SignUp-page__label">전화번호</label>
                         <input
                             type="tel"
-                            id="phone"
-                            name="phone"
-                            value={formData.phone}
+                            id="user_phone"
+                            name="user_phone"
+                            value={formData.user_phone}
                             onChange={handleInputChange}
                             className="SignUp-page__input"
                             placeholder="010-XXXX-XXXX"

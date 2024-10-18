@@ -14,19 +14,32 @@ function CityTendency() {
     // 사용자 정보를 가져오는 API 호출
     const fetchUserData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/users/me'); // 사용자 정보 API 호출
+        const token = localStorage.getItem('token'); // 로컬스토리지에서 토큰 가져오기
+        if (!token) {
+          throw new Error('No token found');
+        }
+  
+        const response = await fetch('http://localhost:3001/users/me', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+  
         if (!response.ok) {
           throw new Error('서버에 오류가 발생했습니다.');
         }
+  
         const data = await response.json();
-        setUserNick(data.user_nick); // userNick 상태 업데이트
+        setUserNick(data.data.user_nick); // 서버에서 응답받은 데이터를 사용
+        console.log('Fetched userNick:', data.data.user_nick); // 닉네임 콘솔 출력
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
-
+  
     fetchUserData(); // 컴포넌트 마운트 시 사용자 정보 가져오기
   }, []);
+  
 
   const handleSubmit = async () => {
     const userId = localStorage.getItem('userId');

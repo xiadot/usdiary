@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../assets/css/questions.css';
 import Menu from '../../components/menu';
@@ -32,6 +32,19 @@ const Question = () => {
   const [forestCount, setForestCount] = useState(0);
   const [cityCount, setCityCount] = useState(0);
   const navigate = useNavigate();
+
+  // 쿼리 파라미터에서 JWT 토큰을 추출하여 로컬 스토리지에 저장하는 로직
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    if (token) {
+      // 토큰을 로컬 스토리지에 저장
+      localStorage.setItem('token', token);
+      // 쿼리 파라미터를 제거한 후 질문 페이지로 리다이렉트
+      navigate('/question', { replace: true });
+    }
+  }, [navigate]);
 
   const handleAnswer = (answerIndex) => {
     setSelectedAnswers((prevSelected) => {
@@ -67,29 +80,29 @@ const Question = () => {
     <div className='Question'>
       <Menu/>
       <div className="Question-container">
-      <div className="Question-box">
-        <div className="navigation">
-          {currentQuestion > 0 && (
-            <button className="nav-button" onClick={() => setCurrentQuestion(currentQuestion - 1)}>&lt;</button>
-          )}
-        </div>
-        <div className="question">{questions[currentQuestion].question}</div>
-        <div className="answers">
-          {questions[currentQuestion].answers.map((answer, index) => (
-            <button
-              key={index}
-              className={`answer-button ${selectedAnswers[currentQuestion] === index ? 'selected' : ''}`}
-              onClick={() => handleAnswer(index)}
-            >
-              {answer}
-            </button>
-          ))}
-        </div>
-        <div className="navigation">
-          <button className="nav-button" onClick={handleNext}>&gt;</button>
+        <div className="Question-box">
+          <div className="navigation">
+            {currentQuestion > 0 && (
+              <button className="nav-button" onClick={() => setCurrentQuestion(currentQuestion - 1)}>&lt;</button>
+            )}
+          </div>
+          <div className="question">{questions[currentQuestion].question}</div>
+          <div className="answers">
+            {questions[currentQuestion].answers.map((answer, index) => (
+              <button
+                key={index}
+                className={`answer-button ${selectedAnswers[currentQuestion] === index ? 'selected' : ''}`}
+                onClick={() => handleAnswer(index)}
+              >
+                {answer}
+              </button>
+            ))}
+          </div>
+          <div className="navigation">
+            <button className="nav-button" onClick={handleNext}>&gt;</button>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };
