@@ -31,7 +31,6 @@ const Question = () => {
   const [selectedAnswers, setSelectedAnswers] = useState([null, null]);
   const [forestCount, setForestCount] = useState(0);
   const [cityCount, setCityCount] = useState(0);
-  const [userNick, setUserNick] = useState(''); // 사용자 닉네임 상태 추가
   const navigate = useNavigate();
 
   // 쿼리 파라미터에서 JWT 토큰을 추출하여 로컬 스토리지에 저장하는 로직
@@ -82,8 +81,6 @@ const Question = () => {
       <Menu/>
       <div className="Question-container">
         <div className="Question-box">
-          {/* 사용자 닉네임 출력 */}
-          <h2>{userNick}님, 환영합니다!</h2>
           <div className="navigation">
             {currentQuestion > 0 && (
               <button className="nav-button" onClick={() => setCurrentQuestion(currentQuestion - 1)}>&lt;</button>
