@@ -76,8 +76,10 @@ const Routine = ({ onClose, onArrowClick, onSubmit }) => {
       const response = await postRoutines(routines);
       console.log('루틴이 서버에 저장되었습니다:', response);
       onSubmit(routines); // 체크리스트에 해당 값 등재
+      alert('루틴이 성공적으로 저장되었습니다.');
     } catch (error) {
       console.error('루틴을 저장하는 데 실패했습니다:', error);
+      alert('루틴을 저장하는 데 실패했습니다. 다시 시도해주세요.');
     }
   };
 

@@ -5,7 +5,6 @@ import '../../../assets/css/follow.css';
 import exit from '../../../assets/images/exit.png';
 
 const RequestMooner = ({ onClose }) => {
-    // 하드코딩된 유저 데이터
     const [entireUsers, setEntireUsers] = useState([]);
 
     useEffect(() => {
