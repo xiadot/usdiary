@@ -83,8 +83,8 @@ const SpecialDay = ({ onBack }) => {
           
           setTodayPlace(fetchedPlace);
           setSelectedIcon(iconMap[fetchedPlace.cate_num]);
-          setEmotion(fetchedPlace.today_mood);
-          setMemo(fetchedPlace.place_memo);
+          setEmotion(fetchedPlace.diary_emotion);
+          setMemo(fetchedPlace.diary_memo);
         } catch (error) {
           console.error('오늘의 장소를 불러오는 데 실패했습니다.', error);
         }
@@ -140,8 +140,8 @@ const SpecialDay = ({ onBack }) => {
     // 서버로 전송할 데이터
     const data = {
       cate_num: cate_num, // visibleDiv에 매핑된 숫자
-      today_mood: today_mood, // 오늘의 기분
-      place_memo: place_memo  // 한 줄 메모
+      today_mood: diary_emotion, // 오늘의 기분
+      place_memo: diary_memo  // 한 줄 메모
     };
   
     try {
@@ -265,13 +265,13 @@ const SpecialDay = ({ onBack }) => {
           <div className='sea-popup__container' style={{ boxShadow: 'none', marginBottom: '5px', height: '400px' }}>
             <img src={selectedIcon} alt="Category Icon" className={`sea-popup__category-icon ${getIconClass(todayPlace.cate_num)}`} />
             <div className="sea-popup__icon-text">
-              <div className="sea-popup__icon-emotion">{todayPlace?.today_mood}</div>
-              <div className="sea-popup__icon-memo">{todayPlace.place_memo}</div>
+              <div className="sea-popup__icon-emotion">{todayPlace?.diary_emotion}</div>
+              <div className="sea-popup__icon-memo">{todayPlace.diary_memo}</div>
             </div>
           </div>
         ) : (
           <>
-            {places.length === 0 && visibleDiv === 'totalPlace' && (
+            {visibleDiv === 'totalPlace' && (
               <div className="specialDay-choice1">
                 <div className="specialDay-choice1-box" onClick={handleToggleDiv1}>
                   <img src={place_nature} alt='place_nature' />

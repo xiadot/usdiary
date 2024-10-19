@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import '../assets/css/diaryCard.css';
 import axios from 'axios';
 
-const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nick, board_name, isFriendPage, diary_id, onClick}) => {
+const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nick, board_name, isFriendPage, diary_id, onClick }) => {
     const [liked, setLiked] = useState(false);
 
     const formatDate = (date) => {
@@ -39,7 +39,7 @@ const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nic
         } catch (error) {
             console.error('Failed to update like status', error);
         }
-    };    
+    };
 
     const EmptyHeart = () => (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -82,7 +82,9 @@ const DiaryCard = ({ diary_title, createdAt, diary_content, post_photo, user_nic
             <div className="diary-content">
                 <h2 className="diary-title">{diary_title}</h2>
                 <p className="diary-date">{formattedDate}</p>
-                <p className="diary-summary">{diary_content.length > 20 ? diary_content.substring(0, 20) + ' ...' : diary_content}</p>
+                <p className="diary-summary">{diary_content.replace(/<[^>]+>/g, '').length > 20
+                    ? diary_content.replace(/<[^>]+>/g, '').substring(0, 20) + ' ...'
+                    : diary_content.replace(/<[^>]+>/g, '')}</p>
             </div>
         </div>
     );
