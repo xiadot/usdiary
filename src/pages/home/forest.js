@@ -148,6 +148,7 @@ const Forest = () => {
                                 post_photo={`${baseURL}${diary.post_photo}`}    // imageUrl → post_photo
                                 board_name={diary.Board.board_name}     // boardName → board_name
                                 user_nick={diary.User.user_nick}        // nickname → user_nick
+                                like_count={diary.like_count}
                                 diary_id={diary.diary_id}
                                 onClick={() => handleDiaryClick(diary.diary_id)}
                             />
